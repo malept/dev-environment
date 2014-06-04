@@ -1,0 +1,10 @@
+.*.sw?
+.sw?
+*.pyc
+*.egg-info
+dev.db
+.vagrant
+*.sqlite
+*.sqlite3
+doc/tags
+pycomplexity.vim/doc/tags
