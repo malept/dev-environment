@@ -29,11 +29,20 @@ _XFCONF_TYPE_MAP = {
 
 def _check_current_value(xfce_kwargs, value):
     '''
-    Check the current value with the passed value
+    Check the current value with the passed value.
+
+    Possible values:
+
+    :data:`True`
+        Current value equal to passed value
+    :data:`False`
+        Current value not equal to passed value
+    :data:`None`
+        Key does not exist
     '''
     current_value = __salt__['xfce.get'](**xfce_kwargs)
     if current_value is False:
-        return False
+        return None
     if xfce_kwargs['prop_type'] == 'bool':
         value = str(value).lower()
     return str(current_value) == str(value)
@@ -48,14 +57,18 @@ def _do(name, xfce_kwargs, preferences):
     }
 
     messages = []
+    create_if_not_exists = xfce_kwargs['create_if_not_exists']
 
     for key, value in preferences.iteritems():
         prop_type = _XFCONF_TYPE_MAP.get(type(value), 'string')
         xfce_kwargs.update(prop_name=key, prop_value=value,
                            prop_type=prop_type)
-        if _check_current_value(xfce_kwargs, value):
+        current_value_equal = _check_current_value(xfce_kwargs, value)
+        if current_value_equal:
             messages.append('{0} is already set to {1}'.format(key, value))
         else:
+            xfce_kwargs['create_if_not_exists'] = \
+                current_value_equal is None and create_if_not_exists
             result = __salt__['xfce.set'](**xfce_kwargs)
             if result['retcode'] == 0:
                 messages.append('Setting {0} to {1}'.format(key, value))
