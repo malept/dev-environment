@@ -15,6 +15,9 @@ virtualbox-guest-x11:
 {%- endif %}
 {%- endif %}
 
+gnome-keyring:
+  pkg.installed
+
 synapse:
   pkg.installed
 
