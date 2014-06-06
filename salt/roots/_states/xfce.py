@@ -109,3 +109,16 @@ def session_preferences(name, user=None, create_if_not_exists=False, **prefs):
     }
 
     return _do(name, xfce_kwargs, prefs)
+
+
+def desktop_preferences(name, user=None, create_if_not_exists=False, **prefs):
+    '''
+    desktop_preferences: set values in the ``xfce4-desktop`` channel.
+    '''
+    xfce_kwargs = {
+        'user': user,
+        'channel': 'xfce4-desktop',
+        'create_if_not_exists': create_if_not_exists,
+    }
+
+    return _do(name, xfce_kwargs, prefs)
