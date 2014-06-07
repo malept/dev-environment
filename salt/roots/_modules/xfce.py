@@ -14,10 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-try:
-    from shlex import quote
-except ImportError:
-    from pipes import quote
+from contextlib import contextmanager
+import dbus
+from dbus.bus import BusConnection
+import os
+import pwd
+from subprocess import PIPE, Popen
 
 # Don't shadow built-in identifiers.
 __func_alias__ = {
@@ -25,33 +27,51 @@ __func_alias__ = {
 }
 
 
-def _xfconf_query(user, channel, prop_name, prop_value=None, prop_type=None,
-                  create_if_not_exists=False):
-    cmd = ('dbus-launch --exit-with-session xfconf-query '
-           '-c {0} -p {1}').format(quote(channel), quote(prop_name))
-    if prop_value is not None:
-        if create_if_not_exists:
-            cmd += ' -n'
-        if prop_type is not None:
-            cmd += ' -t {0}'.format(quote(prop_type))
-            if prop_type == 'bool':
-                prop_value = str(prop_value).lower()
-        cmd += ' -s {0}'.format(quote(str(prop_value)))
-    result = __salt__['cmd.run_all'](cmd, runas=user)
-    if prop_value is None:
-        if result['retcode'] == 0:
-            return result['stdout']
-        else:
-            return False
+class _DBusDaemon(object):
+    def __init__(self, user):
+        self.user = user
+        uinfo = pwd.getpwnam(user)
+        self.uid = uinfo.pw_uid
+
+    def __enter__(self):
+        self.process = Popen(['sudo', '-u', self.user, 'dbus-daemon',
+                              '--session', '--print-address=1'], stdout=PIPE)
+        self.address = self.process.stdout.readline().strip()
+        # Need to set the effective UID to gain access to the user's DBus data.
+        self._old_euid = os.geteuid()
+        os.seteuid(self.uid)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        os.seteuid(self._old_euid)
+        self.process.terminate()
+
+
+@contextmanager
+def _xfconf(user, existing_xfconf=None):
+    if existing_xfconf:
+        yield existing_xfconf
     else:
-        return result
+        with _DBusDaemon(user) as daemon:
+            bus = BusConnection(daemon.address)
+            xfconf = dbus.Interface(bus.get_object('org.xfce.Xfconf',
+                                                   '/org/xfce/Xfconf'),
+                                    'org.xfce.Xfconf')
+            yield xfconf
 
 
-def get(user=None, channel=None, prop_name=None, **kwargs):
-    return _xfconf_query(user, channel, prop_name)
+def get(user, channel, prop_name, **kwargs):
+    with _xfconf(user) as xfconf:
+        return xfconf.GetProperty(channel, prop_name)
 
 
-def set_(user=None, channel=None, prop_name=None, prop_value=None,
-         prop_type=None, create_if_not_exists=False):
-    return _xfconf_query(user, channel, prop_name, prop_value, prop_type,
-                         create_if_not_exists)
+def exists(user, channel, prop_name, existing_xfconf=None, **kwargs):
+    with _xfconf(user, existing_xfconf) as xfconf:
+        return xfconf.PropertyExists(channel, prop_name)
+
+
+def set_(user, channel, prop_name, prop_value, create_if_not_exists=False,
+         **kwargs):
+    with _xfconf(user) as xfconf:
+        if exists(user, channel, prop_name, xfconf) or create_if_not_exists:
+            xfconf.SetProperty(channel, prop_name, prop_value)

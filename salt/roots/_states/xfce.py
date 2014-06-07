@@ -18,14 +18,6 @@ import logging
 
 log = logging.getLogger(__name__)
 
-# Maps Python types to Xfconf types.
-_XFCONF_TYPE_MAP = {
-    int: 'int',
-    float: 'float',
-    bool: 'bool',
-    # TODO array -> list, much more complex.
-}
-
 
 def _check_current_value(xfce_kwargs, value):
     '''
@@ -40,12 +32,11 @@ def _check_current_value(xfce_kwargs, value):
     :data:`None`
         Key does not exist
     '''
-    current_value = __salt__['xfce.get'](**xfce_kwargs)
-    if current_value is False:
+    current_value_exists = __salt__['xfce.exists'](**xfce_kwargs)
+    if not current_value_exists:
         return None
-    if xfce_kwargs['prop_type'] == 'bool':
-        value = str(value).lower()
-    return str(current_value) == str(value)
+    current_value = __salt__['xfce.get'](**xfce_kwargs)
+    return current_value == value
 
 
 def _do(name, xfce_kwargs, preferences):
@@ -60,23 +51,22 @@ def _do(name, xfce_kwargs, preferences):
     create_if_not_exists = xfce_kwargs['create_if_not_exists']
 
     for key, value in preferences.iteritems():
-        prop_type = _XFCONF_TYPE_MAP.get(type(value), 'string')
-        xfce_kwargs.update(prop_name=key, prop_value=value,
-                           prop_type=prop_type)
+        xfce_kwargs.update(prop_name=key, prop_value=value)
         current_value_equal = _check_current_value(xfce_kwargs, value)
         if current_value_equal:
             messages.append('{0} is already set to {1}'.format(key, value))
         else:
             xfce_kwargs['create_if_not_exists'] = \
                 current_value_equal is None and create_if_not_exists
-            result = __salt__['xfce.set'](**xfce_kwargs)
-            if result['retcode'] == 0:
+            try:
+                __salt__['xfce.set'](**xfce_kwargs)
+            except Exception as e:
+                messages.append(str(e))
+                ret['result'] = False
+            else:
                 messages.append('Setting {0} to {1}'.format(key, value))
                 ret['changes'][key] = '{0}:{1}'.format(key, value)
                 ret['result'] = True
-            else:
-                messages.append(result['stdout'])
-                ret['result'] = False
 
         ret['comment'] = ', '.join(messages)
 
