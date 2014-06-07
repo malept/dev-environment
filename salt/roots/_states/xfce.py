@@ -88,27 +88,22 @@ def wm_preferences(name, user=None, create_if_not_exists=False, **kwargs):
     return _do(name, xfce_kwargs, prefs)
 
 
-def session_preferences(name, user=None, create_if_not_exists=False, **prefs):
-    '''
-    session_preferences: set values in the ``xfce4-session`` channel.
-    '''
-    xfce_kwargs = {
-        'user': user,
-        'channel': 'xfce4-session',
-        'create_if_not_exists': create_if_not_exists,
-    }
+def _create_prefs_func(func_name, channel):
+    '''State function creator for Xfconf channel preferences.'''
 
-    return _do(name, xfce_kwargs, prefs)
+    def assert_prefs(name, user=None, create_if_not_exists=False, **prefs):
+        xfce_kwargs = {
+            'user': user,
+            'channel': channel,
+            'create_if_not_exists': create_if_not_exists,
+        }
 
+        return _do(name, xfce_kwargs, prefs)
+    assert_prefs.__doc__ = '''\
+{0}: set values in the ``{1}`` channel.'''.format(func_name, channel)
+    return assert_prefs
 
-def desktop_preferences(name, user=None, create_if_not_exists=False, **prefs):
-    '''
-    desktop_preferences: set values in the ``xfce4-desktop`` channel.
-    '''
-    xfce_kwargs = {
-        'user': user,
-        'channel': 'xfce4-desktop',
-        'create_if_not_exists': create_if_not_exists,
-    }
-
-    return _do(name, xfce_kwargs, prefs)
+session_preferences = _create_prefs_func('session_preferences',
+                                         'xfce4-session')
+desktop_preferences = _create_prefs_func('desktop_preferences',
+                                         'xfce4-desktop')
