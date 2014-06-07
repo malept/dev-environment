@@ -26,7 +26,7 @@
     - mode: 644
     - makedirs: True
 
-user_desktop_prefs:
+desktop_prefs:
   xfce.desktop_preferences:
     - user: {{ grains['username'] }}
     - create_if_not_exists: True
@@ -41,14 +41,14 @@ user_desktop_prefs:
     - /desktop-icons/icon-size: 48
     - /windowlist-menu/show: False
 
-user_session_prefs:
+session_prefs:
   xfce.session_preferences:
     - user: {{ grains['username'] }}
     - create_if_not_exists: True
     - /startup/ssh-agent/enabled: True
     - /startup/ssh-agent/type: gnome-keyring-daemon
 
-user_wm_prefs:
+wm_prefs:
   xfce.wm_preferences:
     - user: {{ grains['username'] }}
     - use_compositing: True
