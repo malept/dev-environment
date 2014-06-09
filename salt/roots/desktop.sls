@@ -54,3 +54,11 @@ font-packages:
       - fonts-lklug-sinhala
       - fonts-tibetan-machine
       - ttf-ancient-fonts
+
+# Theme-related
+themes:
+  pkg.installed:
+    - pkgs:
+      - gnome-wise-icon-theme
+      - shiki-colors-xfwm-theme
+      - shiki-wise-theme
