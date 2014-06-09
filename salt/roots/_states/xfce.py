@@ -108,3 +108,5 @@ session_preferences = _create_prefs_func('session_preferences',
 desktop_preferences = _create_prefs_func('desktop_preferences',
                                          'xfce4-desktop')
 panel_preferences = _create_prefs_func('panel_preferences', 'xfce4-panel')
+xsettings_preferences = _create_prefs_func('xsettings_preferences',
+                                           'xsettings')

@@ -78,3 +78,13 @@ panel_prefs:
     - /plugins/plugin-5: clock
     - /plugins/plugin-6: systray
     - /plugins/plugin-7: xfsm-logout-plugin
+
+xsettings_prefs:
+  xfce.xsettings_preferences:
+    - user: {{ grains['username'] }}
+    - create_if_not_exists: True
+    - /Net/IconThemeName: gnome-wise
+    - /Net/ThemeName: Shiki-Wise
+    - /Xft/Antialias: 1
+    - /Xft/HintStyle: hintfull
+    - /Xft/RGBA: rgb
