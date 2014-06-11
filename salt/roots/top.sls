@@ -9,3 +9,4 @@ base:
     - user.dotfiles.vim
     - system
     - desktop
+    - ruby
