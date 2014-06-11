@@ -27,6 +27,9 @@ gnome-keyring:
 synapse:
   pkg.installed
 
+xfce4-terminal:
+  pkg.installed
+
 # Browsers
 
 iceweasel:
