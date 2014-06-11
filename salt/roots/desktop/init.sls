@@ -78,3 +78,11 @@ themes:
     - group: {{ grains.get('usergroup', grains['username']) }}
     - mode: 644
     - makedirs: True
+
+/etc/lightdm/lightdm-gtk-greeter.conf:
+  file.managed:
+    - source: salt://desktop/files/lightdm-gtk-greeter.conf.jinja
+    - template: jinja
+    - require:
+      - pkg: lightdm
+      - file: {{ wallpaper['filename'] }}
