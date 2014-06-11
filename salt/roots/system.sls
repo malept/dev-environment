@@ -23,3 +23,6 @@ unzip:
 
 vim-gtk:
   pkg.installed
+
+python-pip:
+  pkg.installed
