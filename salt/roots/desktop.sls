@@ -68,3 +68,13 @@ themes:
       - gnome-wise-icon-theme
       - shiki-colors-xfwm-theme
       - shiki-wise-theme
+
+{% from 'wallpaper.sls' import wallpaper -%}
+{{ wallpaper['filename'] }}:
+  file.managed:
+    - source: {{ wallpaper['source'] }}
+    - source_hash: {{ wallpaper['source_hash'] }}
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - mode: 644
+    - makedirs: True
