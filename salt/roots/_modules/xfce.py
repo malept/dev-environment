@@ -70,8 +70,10 @@ def exists(user, channel, prop_name, existing_xfconf=None, **kwargs):
         return xfconf.PropertyExists(channel, prop_name)
 
 
-def set_(user, channel, prop_name, prop_value, create_if_not_exists=False,
-         **kwargs):
+def set_(user, channel, prop_name, prop_value, array_type=None,
+         create_if_not_exists=False, **kwargs):
     with _xfconf(user) as xfconf:
         if exists(user, channel, prop_name, xfconf) or create_if_not_exists:
+            if isinstance(prop_value, list):
+                prop_value = dbus.Array(prop_value, signature=array_type)
             xfconf.SetProperty(channel, prop_name, prop_value)

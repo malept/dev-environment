@@ -51,6 +51,9 @@ def _do(name, xfce_kwargs, preferences):
     create_if_not_exists = xfce_kwargs['create_if_not_exists']
 
     for key, value in preferences.iteritems():
+        xfce_kwargs.pop('array_type', None)
+        if isinstance(value, list):
+            xfce_kwargs['array_type'] = 'v'
         xfce_kwargs.update(prop_name=key, prop_value=value)
         current_value_equal = _check_current_value(xfce_kwargs, value)
         if current_value_equal:
