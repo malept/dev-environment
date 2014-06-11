@@ -4,5 +4,7 @@
 	excludesfile = ~/.config/git/ignore
 [user]
 	name = Mark Lee
+{%- if grains['osrelease']|int >= 8 %}
 [push]
 	default = simple
+{%- endif %}
