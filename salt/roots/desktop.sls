@@ -10,9 +10,15 @@ lightdm:
 {%- if grains['node_type'] == 'vagrant' %}
 virtualbox-guest-x11:
   pkg.installed:
-{%- if grains['oscodename'] == 'wheezy' %}
+  {%- if grains['oscodename'] == 'wheezy' %}
     - fromrepo: wheezy-backports
-{%- endif %}
+  {%- endif %}
+{%- elif grains['node_type'] == 'vmware' %}
+open-vm-tools-desktop:
+  pkg.installed:
+  {%- if grains['oscodename'] == 'wheezy' %}
+    - fromrepo: wheezy-backports
+  {%- endif %}
 {%- endif %}
 
 gnome-keyring:
