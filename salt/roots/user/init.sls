@@ -37,8 +37,7 @@ session_prefs:
   xfce.session_preferences:
     - user: {{ grains['username'] }}
     - create_if_not_exists: True
-    - /startup/ssh-agent/enabled: True
-    - /startup/ssh-agent/type: gnome-keyring-daemon
+    - /compat/LaunchGNOME: True
 
 wm_prefs:
   xfce.wm_preferences:
