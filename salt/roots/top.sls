@@ -9,6 +9,9 @@ base:
     - user.dotfiles.vim
     - system
     - desktop
+{% if salt['pillar.get']('campfire:enabled') %}
+    - desktop.snakefire
+{% endif %}
     - ruby
     - databases
     - postgres.apt
