@@ -7,6 +7,12 @@ mysql:
       - mysql-client-{{ mysql_majmin }}
       - mysql-server-{{ mysql_majmin }}
       - mysql-workbench
+
+  service:
+    - running
+    - enable: True
+    - require:
+      - pkg: mysql
 {%- endif %}
 
 {% set elasticsearch_version = salt['pillar.get']('elasticsearch:version', false) -%}
