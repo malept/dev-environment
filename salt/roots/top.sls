@@ -11,3 +11,6 @@ base:
     - desktop
     - ruby
     - databases
+    - postgres.apt
+    - postgres
+    - postgres.config
