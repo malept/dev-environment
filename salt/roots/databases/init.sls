@@ -7,6 +7,7 @@ mysql:
       - mysql-client-{{ mysql_majmin }}
       - mysql-server-{{ mysql_majmin }}
       - mysql-workbench
+      - libmysqlclient-dev
 
   service:
     - running
