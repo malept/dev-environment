@@ -4,6 +4,10 @@
 	excludesfile = ~/.config/git/ignore
 [user]
 	name = Mark Lee
+{%- set git_email = salt['pillar.get']('git:email', false) %}
+{%- if git_email %}
+	email = {{ git_email }}
+{%- endif %}
 {%- if grains['osrelease']|int >= 8 %}
 [push]
 	default = simple
