@@ -51,3 +51,9 @@ mri-deps:
       - pkg: rvm-deps
       - pkg: mri-deps
 {% endfor -%}
+
+capybara-webkit-deps:
+  pkg.installed:
+    - pkgs:
+      - qt4-qmake
+      - libqt4-dev
