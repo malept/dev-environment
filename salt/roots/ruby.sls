@@ -38,17 +38,16 @@ mri-deps:
       - subversion
       - ruby
 
-ruby-1.9.3-p392:
+{% set ruby_versions = salt['pillar.get']('ruby:versions', []) -%}
+{% set ruby_default_version = salt['pillar.get']('ruby:default_version', false) -%}
+{% for version in ruby_versions -%}
+{{ version }}:
   rvm.installed:
-    - user: {{ grains['username'] }}
-    - require:
-      - pkg: rvm-deps
-      - pkg: mri-deps
-
-ruby-2.0.0-p247:
-  rvm.installed:
+{% if version == ruby_default_version %}
     - default: True
+{% endif %}
     - user: {{ grains['username'] }}
     - require:
       - pkg: rvm-deps
       - pkg: mri-deps
+{% endfor -%}
