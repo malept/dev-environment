@@ -1,7 +1,6 @@
 snakefire-deps:
   pkg.installed:
     - pkgs:
-      - python-virtualenv
       - python-qt4
       - python-keyring
       - python-gnomekeyring
@@ -25,6 +24,7 @@ python-six:
     - require:
       - pkg: snakefire-deps
       - pkg: python-six
+      - pkg: python-virtualenv
 
 /home/{{ grains['username'] }}/.local/share/applications/cricava-snakefire.desktop:
   file.symlink:

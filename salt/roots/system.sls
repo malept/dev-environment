@@ -26,3 +26,6 @@ vim-gtk:
 
 python-pip:
   pkg.installed
+
+python-virtualenv:
+  pkg.installed

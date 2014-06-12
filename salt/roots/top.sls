@@ -17,3 +17,4 @@ base:
     - postgres.apt
     - postgres
     - postgres.config
+    - aws
