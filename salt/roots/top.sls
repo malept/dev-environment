@@ -18,3 +18,4 @@ base:
     - postgres
     - postgres.config
     - aws
+    - nodejs
