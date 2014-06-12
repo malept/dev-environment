@@ -47,3 +47,6 @@ cql:
     - require:
       - pkg: python-pip
 {%- endif %}{# cassandra #}
+
+memcached:
+  pkg.installed
