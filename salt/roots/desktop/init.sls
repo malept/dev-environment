@@ -30,6 +30,9 @@ synapse:
 xfce4-terminal:
   pkg.installed
 
+file-roller:
+  pkg.installed
+
 # Browsers
 
 iceweasel:
