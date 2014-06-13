@@ -19,3 +19,4 @@ base:
     - postgres.config
     - aws
     - nodejs
+    - phantomjs
