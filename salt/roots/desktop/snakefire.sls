@@ -1,3 +1,5 @@
+{% from 'venv_bin.sls' import venv_with_binary with context -%}
+
 snakefire-deps:
   pkg.installed:
     - pkgs:
@@ -16,15 +18,7 @@ python-six:
     - dist: wheezy-backports
 {%- endif %}
 
-/home/{{ grains['username'] }}/.local/share/virtualenv/snakefire:
-  virtualenv.managed:
-    - user: {{ grains['username'] }}
-    - system_site_packages: True
-    - requirements: salt://desktop/files/snakefire-requirements.txt
-    - require:
-      - pkg: snakefire-deps
-      - pkg: python-six
-      - pkg: python-virtualenv
+{{ venv_with_binary('snakefire', 'snakefire', 'salt://desktop/files/snakefire-requirements.txt', ('pkg', 'snakefire-deps'), ('pkg', 'python-six')) }}
 
 /home/{{ grains['username'] }}/.local/share/applications/cricava-snakefire.desktop:
   file.symlink:
@@ -36,13 +30,6 @@ python-six:
 /home/{{ grains['username'] }}/.local/share/icons/hicolor/scalable/apps/cricava-snakefire.png:
   file.symlink:
     - target: /home/{{ grains['username'] }}/.local/share/virtualenv/snakefire/src/snakefire/resources/snakefire.png
-    - user: {{ grains['username'] }}
-    - group: {{ grains.get('usergroup', grains['username']) }}
-    - makedirs: True
-
-/home/{{ grains['username'] }}/.local/bin/snakefire:
-  file.symlink:
-    - target: /home/{{ grains['username'] }}/.local/share/virtualenv/snakefire/bin/snakefire
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
     - makedirs: True
