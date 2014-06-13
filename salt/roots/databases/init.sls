@@ -42,11 +42,6 @@ cassandra:
 
   pkg.installed:
     - refresh: True
-
-cql:
-  pip.installed:
-    - require:
-      - pkg: python-pip
 {%- endif %}{# cassandra #}
 
 memcached:
