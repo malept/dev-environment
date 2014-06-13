@@ -1,2 +1,6 @@
 alias PYSHS='python -m SimpleHTTPServer'
 alias manify='groff -T utf8 -man'
+
+if [[ -d ~/.config/bash_aliases.d ]]; then
+    source ~/.config/bash_aliases.d/*
+fi
