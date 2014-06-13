@@ -42,6 +42,18 @@ cassandra:
 
   pkg.installed:
     - refresh: True
+
+cqlsh-deps:
+  pkg.installed:
+    - pkgs:
+      - python-concurrent.futures
+      - python-six
+      - python-snappy
+      - libev-dev
+    - require_in:
+      - pip: cassandra-driver
+  pip.installed:
+    - name: cassandra-driver
 {%- endif %}{# cassandra #}
 
 memcached:
