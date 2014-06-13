@@ -29,3 +29,8 @@ python-pip:
 
 python-virtualenv:
   pkg.installed
+
+{%- if salt['pillar.get']('xlsx2csv:enabled', false) %}
+{% from 'venv_bin.sls' import venv_with_binary with context -%}
+{{ venv_with_binary('xlsx2csv', 'xlsx2csv', 'salt://system/files/xlsx2csv-requirements.txt') }}
+{%- endif %}
