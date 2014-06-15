@@ -1,9 +1,10 @@
 xfce:
   pkg.installed:
     - pkgs:
+      - python-dbus
       - xfce4
       - xfce4-indicator-plugin
-      - python-dbus
+      - xfce4-terminal
 
 lightdm:
   pkg.installed
@@ -22,40 +23,25 @@ open-vm-tools-desktop:
   {%- endif %}
 {%- endif %}
 
-gnome-keyring:
-  pkg.installed
-
-synapse:
-  pkg.installed
-
-xfce4-terminal:
-  pkg.installed
-
-file-roller:
-  pkg.installed
+desktop-apps:
+  pkg.installed:
+    - pkgs:
+      - file-roller
+      - gnome-keyring
+      - synapse
 
 # Browsers
 
-iceweasel:
+browsers:
   pkg.installed:
+    - pkgs:
+      - iceweasel
+      - chromium
 {%- if grains['oscodename'] == 'wheezy' %}
     - fromrepo: wheezy-backports
 {%- endif %}
 
-chromium:
-  pkg.installed
-
 # Fonts
-
-droid-sans-mono-slashed:
-  archive.extracted:
-    - name: /home/{{ grains['username'] }}/.fonts/
-    - source: http://www.cosmix.org/software/files/DroidSansMonoSlashed.zip
-    - source_hash: sha256=71768814dc4de0ea6248d09a2d2285bd47e9558f82945562eb78487c71348107
-    - archive_format: zip
-    - if_missing: /home/{{ grains['username'] }}/.fonts/DroidSansMonoSlashed.ttf
-    - requires:
-      - pkg: unzip
 
 font-packages:
   pkg.installed:
@@ -69,6 +55,16 @@ font-packages:
       - fonts-vlgothic
       - ttf-ancient-fonts
       - unifont
+
+  ## Droid Sans Mono Slashed
+  archive.extracted:
+    - name: /home/{{ grains['username'] }}/.fonts/
+    - source: http://www.cosmix.org/software/files/DroidSansMonoSlashed.zip
+    - source_hash: sha256=71768814dc4de0ea6248d09a2d2285bd47e9558f82945562eb78487c71348107
+    - archive_format: zip
+    - if_missing: /home/{{ grains['username'] }}/.fonts/DroidSansMonoSlashed.ttf
+    - requires:
+      - pkg: unzip
 
 # Theme-related
 themes:
