@@ -15,6 +15,8 @@
       - scanner
       - users
       - video
+    - require:
+      - pkg: sshfs # so the fuse group is added correctly
 
 {% from 'wallpaper.sls' import wallpaper -%}
 
