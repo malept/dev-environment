@@ -9,14 +9,18 @@ base:
     - user.dotfiles.vim
     - system
     - desktop
-{% if salt['pillar.get']('campfire:enabled') %}
+{%- if salt['pillar.get']('campfire:enabled') %}
     - desktop.snakefire
-{% endif %}
+{%- endif %}
+{%- if salt['pillar.get']('ruby:enabled') %}
     - ruby
+{%- endif %}
     - databases
     - postgres.apt
     - postgres
     - postgres.config
+{%- if salt['pillar.get']('aws:enabled') %}
     - aws
+{%- endif %}
     - nodejs
     - phantomjs

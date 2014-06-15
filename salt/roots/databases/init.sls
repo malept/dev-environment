@@ -56,5 +56,7 @@ cqlsh-deps:
     - name: cassandra-driver
 {%- endif %}{# cassandra #}
 
+{% if salt['pillar.get']('memcached:enabled') -%}
 memcached:
   pkg.installed
+{%- endif %}

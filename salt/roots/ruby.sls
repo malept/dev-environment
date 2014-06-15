@@ -52,8 +52,10 @@ mri-deps:
       - pkg: mri-deps
 {% endfor -%}
 
+{% if salt['pillar.get']('ruby:capybara-webkit:enabled') -%}
 capybara-webkit-deps:
   pkg.installed:
     - pkgs:
       - qt4-qmake
       - libqt4-dev
+{%- endif %}
