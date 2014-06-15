@@ -35,7 +35,11 @@ desktop-apps:
 browsers:
   pkg.installed:
     - pkgs:
+{%- if grains['os'] == 'Debian' %}
       - iceweasel
+{%- else %}
+      - firefox
+{%- endif %}
       - chromium
 {%- if grains['oscodename'] == 'wheezy' %}
     - fromrepo: wheezy-backports
