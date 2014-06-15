@@ -3,6 +3,7 @@ xfce:
     - pkgs:
       - xfce4
       - xfce4-indicator-plugin
+      - python-dbus
 
 lightdm:
   pkg.installed

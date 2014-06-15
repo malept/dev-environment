@@ -15,8 +15,7 @@
 # limitations under the License.
 
 from contextlib import contextmanager
-import dbus
-from dbus.bus import BusConnection
+from importlib import import_module
 import os
 import pwd
 from subprocess import PIPE, Popen
@@ -25,6 +24,9 @@ from subprocess import PIPE, Popen
 __func_alias__ = {
     'set_': 'set'
 }
+
+dbus = None
+BusConnection = None
 
 
 class _DBusDaemon(object):
@@ -52,6 +54,12 @@ def _xfconf(user, existing_xfconf=None):
     if existing_xfconf:
         yield existing_xfconf
     else:
+        global dbus
+        global BusConnection
+        if dbus is None:
+            dbus = import_module('dbus')
+        if BusConnection is None:
+            BusConnection = import_module('dbus.bus').BusConnection
         with _DBusDaemon(user) as daemon:
             bus = BusConnection(daemon.address)
             xfconf = dbus.Interface(bus.get_object('org.xfce.Xfconf',

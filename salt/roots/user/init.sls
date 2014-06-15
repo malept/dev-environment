@@ -22,6 +22,8 @@ desktop_prefs:
   xfce.desktop_preferences:
     - user: {{ grains['username'] }}
     - create_if_not_exists: True
+    - require:
+      - pkg: xfce
     - /backdrop/screen0/monitor0/image-path: {{ wallpaper['filename'] }}
     - /backdrop/screen0/monitor0/image-show: True
     - /backdrop/screen0/monitor0/last-image: {{ wallpaper['filename'] }}
@@ -37,17 +39,23 @@ session_prefs:
   xfce.session_preferences:
     - user: {{ grains['username'] }}
     - create_if_not_exists: True
+    - require:
+      - pkg: xfce
     - /compat/LaunchGNOME: True
 
 wm_prefs:
   xfce.wm_preferences:
     - user: {{ grains['username'] }}
+    - require:
+      - pkg: xfce
     - use_compositing: True
 
 panel_prefs:
   xfce.panel_preferences:
     - user: {{ grains['username'] }}
     - create_if_not_exists: True
+    - require:
+      - pkg: xfce
     - /panels: 1
     - /panels/panel-0/length: 100
     - /panels/panel-0/plugin-ids:
@@ -74,6 +82,8 @@ xsettings_prefs:
   xfce.xsettings_preferences:
     - user: {{ grains['username'] }}
     - create_if_not_exists: True
+    - require:
+      - pkg: xfce
     - /Net/IconThemeName: gnome-wise
     - /Net/ThemeName: Shiki-Wise
     - /Xft/Antialias: 1
