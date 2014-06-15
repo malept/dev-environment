@@ -66,7 +66,9 @@ font-packages:
       - fonts-knda
       - fonts-lklug-sinhala
       - fonts-tibetan-machine
+      - fonts-vlgothic
       - ttf-ancient-fonts
+      - unifont
 
 # Theme-related
 themes:
