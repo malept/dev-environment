@@ -24,3 +24,4 @@ base:
 {%- endif %}
     - nodejs
     - phantomjs
+    - webserver

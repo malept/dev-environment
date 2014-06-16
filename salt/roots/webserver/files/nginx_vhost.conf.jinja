@@ -1,0 +1,31 @@
+{% extends 'nginx/templates/config.site.jinja' %}
+{% set pget = salt['pillar.get'] -%}
+
+{# Path for static files #}
+{% block root %}{{ config.get('docroot', '/var/www/html') }}{% endblock %}
+
+{# Custom 404 page #}
+{% block path_404 %}{{ config.get('path_404', '/404.html') }}{% endblock %}
+
+{% block footer %}
+
+    location / {
+        if (!-f $request_filename) {
+            proxy_pass http://localhost:{{ config.proxy_port }};
+        }
+    }
+
+    ####
+    # Expires settings for webfonts
+    ####
+
+    location ~* \.(?:ttf|ttc|otf|eot|woff)$ {
+        # Set cache rules for webfonts.
+        #
+        # See http://wiki.nginx.org/HttpCoreModule#location
+        # And https://github.com/h5bp/server-configs/issues/85
+        # And https://github.com/h5bp/server-configs/issues/86
+        expires 1M;
+        access_log off;
+        add_header Cache-Control "public";
+{% endblock %}
