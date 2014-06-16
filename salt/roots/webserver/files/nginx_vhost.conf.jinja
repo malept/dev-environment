@@ -1,5 +1,6 @@
 {% extends 'nginx/templates/config.site.jinja' %}
-{% set pget = salt['pillar.get'] -%}
+
+{% block server_name %}{{ hostname }}{% endblock %}
 
 {# Path for static files #}
 {% block root %}{{ config.get('docroot', '/var/www/html') }}{% endblock %}
@@ -7,14 +8,33 @@
 {# Custom 404 page #}
 {% block path_404 %}{{ config.get('path_404', '/404.html') }}{% endblock %}
 
+{% macro proxy_block() %}
+        proxy_set_header  X-Real-IP        $remote_addr;
+        proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header  Host             $http_host;
+        proxy_redirect off;
+        proxy_pass http://proxy-{{ hostname }};
+{% endmacro %}
+
 {% block footer %}
 
+{%- if config.get('proxy') and not config.get('proxy_only') %}
+    location @{{ hostname }} {
+{{ proxy_block() }}
+    }
+{%- endif %}
+
+    error_log /tmp/error-{{ hostname }}.log info;
+
     location / {
-        if (!-f $request_filename) {
-            proxy_pass http://localhost:{{ config.proxy_port }};
-        }
+{%- if config.get('proxy') and config.get('proxy_only') %}
+{{ proxy_block() }}
+{%- else %}
+        try_files $uri @{{ hostname }};
+{%- endif %}
     }
 
+{% if salt['pillar.get']('nginx:expires', true) %}
     ####
     # Expires settings for webfonts
     ####
@@ -28,4 +48,12 @@
         expires 1M;
         access_log off;
         add_header Cache-Control "public";
+    }
+{% endif %}
+{% if config.get('proxy') -%}
+}
+
+upstream proxy-{{ hostname }} {
+    server 127.0.0.1:{{ config.proxy_port }};
+{% endif -%}
 {% endblock %}
