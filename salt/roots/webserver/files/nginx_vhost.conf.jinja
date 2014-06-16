@@ -13,24 +13,22 @@
         proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
         proxy_set_header  Host             $http_host;
         proxy_redirect off;
-        proxy_pass http://proxy-{{ hostname }};
+        proxy_pass http://proxy-{{ app_name }};
 {% endmacro %}
 
 {% block footer %}
 
 {%- if config.get('proxy') and not config.get('proxy_only') %}
-    location @{{ hostname }} {
+    location @{{ app_name }} {
 {{ proxy_block() }}
     }
 {%- endif %}
-
-    error_log /tmp/error-{{ hostname }}.log info;
 
     location / {
 {%- if config.get('proxy') and config.get('proxy_only') %}
 {{ proxy_block() }}
 {%- else %}
-        try_files $uri @{{ hostname }};
+        try_files $uri @{{ app_name }};
 {%- endif %}
     }
 
@@ -53,7 +51,7 @@
 {% if config.get('proxy') -%}
 }
 
-upstream proxy-{{ hostname }} {
+upstream proxy-{{ app_name }} {
     server 127.0.0.1:{{ config.proxy_port }};
 {% endif -%}
 {% endblock %}

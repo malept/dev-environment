@@ -7,15 +7,17 @@ include:
     - target: /var/log/nginx
 {%- endif %}
 
-{% macro vhost_config(hostname, template_path, config, enabled) -%}
-{% set dest_filename = '{0}.conf'.format(hostname) -%}
-nginx-vhost-{{ hostname }}:
+{% macro vhost_config(app_name, template_path, config, enabled) -%}
+{% set dest_filename = '{0}.conf'.format(app_name) -%}
+{% set hostname = '{0}.dev'.format(app_name.replace('_', '-')) -%}
+nginx-vhost-{{ app_name }}:
   file.managed:
     - name: /etc/nginx/sites-available/{{ dest_filename }}
     - source: salt://{{ template_path }}.jinja
     - mode: 644
     - template: jinja
     - context:
+      app_name: {{ app_name }}
       config: {{ config|json() }}
       hostname: {{ hostname }}
     - watch_in:
