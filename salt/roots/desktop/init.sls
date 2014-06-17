@@ -67,7 +67,7 @@ font-packages:
     - source_hash: sha256=71768814dc4de0ea6248d09a2d2285bd47e9558f82945562eb78487c71348107
     - archive_format: zip
     - if_missing: /home/{{ grains['username'] }}/.fonts/DroidSansMonoSlashed.ttf
-    - requires:
+    - require:
       - pkg: unzip
 
 # Theme-related

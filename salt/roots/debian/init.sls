@@ -14,5 +14,5 @@ debian.wheezy-mozilla:
     - name: deb http://mozilla.debian.net/ wheezy-backports iceweasel-release
     - dist: wheezy-backports
     - file: /etc/apt/sources.list.d/wheezy-mozilla.list
-    - requires:
+    - require:
       - pkg: pkg-mozilla-archive-keyring
