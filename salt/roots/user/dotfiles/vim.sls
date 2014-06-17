@@ -3,6 +3,7 @@ https://github.com/malept/vimfiles.git:
     - rev: master
     - submodules: True
     - target: /home/{{ grains['username'] }}/Code/vimfiles
+    - user: {{ grains['username'] }}
 
 {%- macro user_vim_dir(name) %}
 /home/{{ grains['username'] }}/.local/share/vim/{{ name }}:
