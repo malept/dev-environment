@@ -22,6 +22,9 @@ base:
 {%- if salt['pillar.get']('aws:enabled') %}
     - aws
 {%- endif %}
+{%- if grains['os'] in ['Debian', 'Ubuntu'] and salt['pillar.get']('heroku:enabled') %}
+    - heroku
+{%- endif %}
     - nodejs
     - phantomjs
     - webserver
