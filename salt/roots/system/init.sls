@@ -21,9 +21,6 @@ sshfs:
 unzip:
   pkg.installed
 
-vim-gtk:
-  pkg.installed
-
 python-pip:
   pkg.installed
 
