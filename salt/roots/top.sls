@@ -25,6 +25,9 @@ base:
 {%- if grains['os'] in ['Debian', 'Ubuntu'] and salt['pillar.get']('heroku:enabled') %}
     - heroku
 {%- endif %}
+{%- if salt['pillar.get']('dropbox:enabled') %}
+    - dropbox
+{%- endif %}
     - nodejs
     - phantomjs
     - webserver
