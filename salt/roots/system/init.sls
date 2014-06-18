@@ -35,4 +35,15 @@ python-virtualenv:
 {%- if salt['pillar.get']('chef:enabled', false) %}
 chef:
   pkg.installed
+
+{%- if salt['pillar.get']('aws:enabled', false) %}
+ruby-dev:
+  pkg.installed
+
+knife-ec2:
+  gem.installed:
+    - require:
+      - pkg: chef
+      - pkg: ruby-dev
+{%- endif %}
 {%- endif %}
