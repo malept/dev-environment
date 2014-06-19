@@ -18,6 +18,11 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
+# vim-profile
+alias vimp='~/Code/vimfiles/vim-profile'
+alias gvimp='~/Code/vimfiles/gvim-profile'
+alias viewp='~/Code/vimfiles/view-profile'
+
 if [[ -d ~/.config/bash_aliases.d ]]; then
     source ~/.config/bash_aliases.d/*
 fi
