@@ -15,7 +15,7 @@
 {%- endmacro %}
 
 {{ config_file('bash_aliases') }}
-{{ config_file('bashrc') }}
+{{ config_file('bashrc', templated=true) }}
 {{ config_file('gitconfig', templated=true) }}
 {{ config_file('gitignore', '.config/git/ignore') }}
 {{ config_file('profile') }}
