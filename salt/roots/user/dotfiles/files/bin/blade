@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# Wrapper for knife when knife is installed globally and the user is
+# running RVM.
+#
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+
+rvm use system
+
+knife "$@"
