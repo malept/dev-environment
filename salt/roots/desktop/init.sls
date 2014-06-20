@@ -29,6 +29,9 @@ desktop-apps:
       - file-roller
       - gnome-keyring
       - synapse
+{%- if salt['pillar.get']('libreoffice:enabled') %}
+      - libreoffice
+{%- endif %}
 
 # Browsers
 
