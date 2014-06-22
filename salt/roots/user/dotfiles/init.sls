@@ -36,3 +36,4 @@
 {{ config_file('gitignore', '.config/git/ignore') }}
 {{ config_file('profile') }}
 {{ config_file('gemrc') }}
+{{ config_file('irbrc') }}
