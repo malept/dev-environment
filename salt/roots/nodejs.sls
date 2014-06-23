@@ -20,6 +20,7 @@ get-npm:
     - user: {{ grains['username'] }}
     - names:
       - tar xf {{ local_tgz }}
+    - creates: /usr/src/npm/package
     - watch:
       - file: {{ local_tgz }}
 
@@ -41,12 +42,18 @@ install-npm:
     - env:
       - npm_config_prefix: /opt/node
     - names:
-      - ./configure --prefix=/opt/node
+      - ./configure --prefix=/opt/node; test -f npmrc
       - node cli.js install marked
       - make install
-      - chmod +x /opt/node/lib/node_modules/npm/bin/npm-cli.js
-    - require:
+      - test -f /opt/node/lib/node_modules/npm/bin/npm-cli.js; chmod +x /opt/node/lib/node_modules/npm/bin/npm-cli.js
+    - creates: /opt/node/bin/npm
+    - watch:
       - file: /opt/node
+
+/opt/node/bin/npm:
+  file.exists:
+    - require:
+      - cmd: install-npm
 
 {%- set npm_deptype = 'file' %}
 npm:
@@ -55,6 +62,7 @@ npm:
     - target: /opt/node/bin/npm
     - require:
       - cmd: install-npm
+      - file: /opt/node/bin/npm
 {%- else %}
 {%- set npm_deptype = 'pkg' %}
 npm:
