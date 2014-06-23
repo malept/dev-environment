@@ -15,6 +15,12 @@ silversearcher-ag:
       - the-silver-searcher: http://swiftsignal.com/packages/ubuntu/quantal/the-silver-searcher_0.14-1_amd64.deb
 {%- endif %}
 
+tmux:
+  pkg.installed:
+{%- if grains['oscodename'] == 'wheezy' %}
+    - fromrepo: wheezy-backports
+{%- endif %}
+
 sshfs:
   pkg.installed
 
