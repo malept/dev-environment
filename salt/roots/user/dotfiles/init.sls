@@ -37,3 +37,4 @@
 {{ config_file('profile') }}
 {{ config_file('gemrc') }}
 {{ config_file('irbrc') }}
+{{ config_file('npmrc') }}
