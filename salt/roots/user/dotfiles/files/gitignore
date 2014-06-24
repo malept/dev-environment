@@ -6,5 +6,8 @@ dev.db
 .vagrant
 *.sqlite
 *.sqlite3
+/.ruby-gemset
+/.ruby-version
+/tags
 doc/tags
 pycomplexity.vim/doc/tags
