@@ -42,10 +42,8 @@ install-npm:
     - env:
       - npm_config_prefix: /opt/node
     - names:
-      - ./configure --prefix=/opt/node; test -f npmrc
-      - node cli.js install marked
-      - make install
-      - test -f /opt/node/lib/node_modules/npm/bin/npm-cli.js; chmod +x /opt/node/lib/node_modules/npm/bin/npm-cli.js
+      - './configure --prefix=/opt/node && node cli.js install marked && make install'
+    - unless: test -f /opt/node/bin/npm
     - creates: /opt/node/bin/npm
     - watch:
       - file: /opt/node
@@ -71,9 +69,11 @@ npm:
 
 node-linters:
   npm.installed:
+    - user: {{ grains['username'] }}
     - names:
       - coffeelint
       - csslint
       - jshint
     - require:
       - {{ npm_deptype }}: npm
+      - file: /home/{{ grains['username'] }}/.npmrc
