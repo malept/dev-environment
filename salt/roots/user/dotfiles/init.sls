@@ -38,3 +38,4 @@
 {{ config_file('gemrc') }}
 {{ config_file('irbrc') }}
 {{ config_file('npmrc') }}
+{{ config_file('synapse-gtkrc', '.config/synapse/gtkrc') }}
