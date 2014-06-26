@@ -32,6 +32,9 @@ desktop-apps:
 {%- if salt['pillar.get']('libreoffice:enabled') %}
       - libreoffice
 {%- endif %}
+{%- if salt['pillar.get']('pidgin:enabled') %}
+      - pidgin
+{%- endif %}
 
 # Browsers
 
