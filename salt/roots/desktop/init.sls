@@ -4,6 +4,7 @@ xfce:
       - python-dbus
       - xfce4
       - xfce4-indicator-plugin
+      - xfce4-screenshooter-plugin
       - xfce4-terminal
 
 lightdm:

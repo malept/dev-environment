@@ -64,6 +64,7 @@ panel_prefs:
       - 1
       - 3
       - 4
+      - 8
       - 2
       - 6
       - 5
@@ -79,6 +80,7 @@ panel_prefs:
     - /plugins/plugin-5: clock
     - /plugins/plugin-6: systray
     - /plugins/plugin-7: xfsm-logout-plugin
+    - /plugins/plugin-8: screenshooter
 
 xsettings_prefs:
   xfce.xsettings_preferences:
