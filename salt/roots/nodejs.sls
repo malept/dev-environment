@@ -67,13 +67,3 @@ npm:
   pkg.installed
 {%- endif %}
 
-node-linters:
-  npm.installed:
-    - user: {{ grains['username'] }}
-    - names:
-      - coffeelint
-      - csslint
-      - jshint
-    - require:
-      - {{ npm_deptype }}: npm
-      - file: /home/{{ grains['username'] }}/.npmrc

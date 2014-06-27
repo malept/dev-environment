@@ -29,5 +29,6 @@ base:
     - dropbox
 {%- endif %}
     - nodejs
+    - static-analysis
     - phantomjs
     - webserver
