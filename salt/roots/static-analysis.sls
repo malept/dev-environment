@@ -39,6 +39,7 @@ checkers:
 {%- endfor %}
 {%- endif %}
 
+{% from 'nodejs.sls' import npm_deptype with context %}
 node-linters:
   npm.installed:
     - user: {{ grains['username'] }}
