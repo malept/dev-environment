@@ -8,7 +8,9 @@ base:
     - user.dotfiles
     - user.dotfiles.vim
     - system
+{%- if salt['pillar.get']('X11:enabled') %}
     - desktop
+{%- endif %}
 {%- if salt['pillar.get']('campfire:enabled') %}
     - desktop.snakefire
 {%- endif %}

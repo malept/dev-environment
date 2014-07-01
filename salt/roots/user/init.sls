@@ -18,7 +18,8 @@
     - require:
       - pkg: sshfs # so the fuse group is added correctly
 
-{% from 'wallpaper.sls' import wallpaper -%}
+{%- if salt['pillar.get']('X11:enabled') %}
+{%- from 'wallpaper.sls' import wallpaper %}
 
 desktop_prefs:
   xfce.desktop_preferences:
@@ -93,3 +94,4 @@ xsettings_prefs:
     - /Xft/Antialias: 1
     - /Xft/HintStyle: hintfull
     - /Xft/RGBA: rgb
+{%- endif %}
