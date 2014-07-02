@@ -29,6 +29,7 @@ desktop-apps:
     - pkgs:
       - file-roller
       - gnome-keyring
+      - gucharmap
       - synapse
 {%- if salt['pillar.get']('libreoffice:enabled') %}
       - libreoffice
