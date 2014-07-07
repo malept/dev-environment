@@ -5,6 +5,7 @@ file_roots:
     - /srv/salt
     - /srv/salt-formulae/nginx-formula
     - /srv/salt-formulae/postgres-formula
+    - /srv/salt-formulae/node-formula
 grains:
   node_type: vmware
   username: mark

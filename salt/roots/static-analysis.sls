@@ -39,7 +39,7 @@ checkers:
 {%- endfor %}
 {%- endif %}
 
-{% from 'nodejs.sls' import npm_deptype with context %}
+{% from 'node/map.jinja' import npm_requirement with context %}
 node-linters:
   npm.installed:
     - user: {{ grains['username'] }}
@@ -48,5 +48,5 @@ node-linters:
       - csslint
       - jshint
     - require:
-      - {{ npm_deptype }}: npm
+      - {{ npm_requirement }}
       - file: /home/{{ grains['username'] }}/.npmrc

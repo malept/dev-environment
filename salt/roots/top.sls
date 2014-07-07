@@ -30,7 +30,7 @@ base:
 {%- if salt['pillar.get']('dropbox:enabled') %}
     - dropbox
 {%- endif %}
-    - nodejs
+    - node
     - static-analysis
     - phantomjs
     - webserver
