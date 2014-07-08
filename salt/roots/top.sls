@@ -34,3 +34,6 @@ base:
     - static-analysis
     - phantomjs
     - webserver
+{%- if salt['pillar.get']('gmusicprocurator:enabled') %}
+    - gmusicprocurator
+{%- endif %}

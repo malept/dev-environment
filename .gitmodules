@@ -9,3 +9,6 @@
 	path = salt/formulae/node-formula
 	url = https://github.com/tfolio/node-formula.git
 	branch = tfolio
+[submodule "salt/formulae/gmusicprocurator-formula"]
+	path = salt/formulae/gmusicprocurator-formula
+	url = https://github.com/malept/gmusicprocurator-formula.git
