@@ -30,6 +30,7 @@
 {{ bin_file('awsify') }}
 {{ bin_file('blade') }}
 
+{{ config_file('agignore') }}
 {{ config_file('bash_aliases') }}
 {{ config_file('bashrc', templated=true) }}
 {{ config_file('gitconfig', templated=true) }}
