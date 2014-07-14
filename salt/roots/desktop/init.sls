@@ -48,6 +48,9 @@ browsers:
 {%- else %}
       - firefox
 {%- endif %}
+{%- if salt['pillar.get']('firefox:mp3_support') %}
+      - gstreamer1.0-plugins-ugly
+{%- endif %}
       - chromium
 {%- if grains['oscodename'] == 'wheezy' %}
     - fromrepo: wheezy-backports
