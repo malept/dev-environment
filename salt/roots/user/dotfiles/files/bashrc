@@ -119,5 +119,5 @@ WORKON_HOME=$HOME/.local/share/virtualenv
 PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 {% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).iteritems() -%}
-{{ env_var }}={{ env_value }}
+export {{ env_var }}={{ env_value }}
 {% endfor -%}
