@@ -56,6 +56,15 @@ browsers:
     - fromrepo: wheezy-backports
 {%- endif %}
 
+octosplit-firefox:
+  file.managed:
+    - name: /home/{{ grains['username'] }}/.mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/octosplit.xpi
+    - source: https://addons.mozilla.org/firefox/downloads/file/266454/octosplit-0.0.12-fx.xpi
+    - source_hash: sha256=0a7c035598c0c80952ce3c9f7f2d9e0dfb92db8eff9e3e33e4ed542a6de3b63e
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - makedirs: True
+
 # Fonts
 
 font-packages:
