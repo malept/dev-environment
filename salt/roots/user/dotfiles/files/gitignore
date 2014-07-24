@@ -3,6 +3,7 @@
 *.pyc
 *.egg-info
 dev.db
+.sass-cache
 .vagrant
 *.sqlite
 *.sqlite3
