@@ -1,0 +1,94 @@
+# vim: set ft=ruby :
+lambda do
+  # Originally from https://gist.github.com/iain/368237 perhaps?
+  ansi = {
+    RESET: "\e[0m",
+    BOLD: "\e[1m",
+    UNDERLINE: "\e[4m",
+    LGRAY: "\e[0;37m",
+    GRAY: "\e[1;30m",
+    RED: "\e[31m",
+    GREEN: "\e[32m",
+    YELLOW: "\e[33m",
+    BLUE: "\e[34m",
+    MAGENTA: "\e[35m",
+    CYAN: "\e[36m",
+    WHITE: "\e[37m"
+  }
+
+  __msg = lambda do |msg|
+    puts "#{ansi[:BOLD]}#{msg}#{ansi[:RESET]}"
+  end
+
+  __log_rails_sql = lambda do
+    __msg.call 'Enabling Rails SQL logging…'
+    odd_or_even_queries = false
+    ActiveSupport::Notifications.subscribe('sql.active_record') do |*args|
+      odd_or_even_queries = !odd_or_even_queries
+      color = odd_or_even_queries ? ansi[:CYAN] : ansi[:MAGENTA]
+      event = ActiveSupport::Notifications::Event.new(*args)
+      time = format('%.1fms', event.duration)
+      name = event.payload[:name]
+      sql = event.payload[:sql].gsub("\n", ' ').squeeze(' ')
+      puts " #{ansi[:UNDERLINE]}#{color}#{name} (#{time})#{ansi[:RESET]} #{sql}"
+    end
+  end
+
+  # Originally from https://github.com/pry/pry/wiki/Setting-up-Rails-or-Heroku-to-use-Pry#without_gemfile
+  rails = File.join(Dir.getwd, 'config', 'environment.rb')
+  if File.exist?(rails) && ENV['SKIP_RAILS'].nil?
+    require rails
+    case Rails.version[0..0].to_i
+    when 2
+      require 'console_app'
+      require 'console_with_helpers'
+    when 3..4
+      require 'rails/console/app'
+      require 'rails/console/helpers'
+
+      __log_rails_sql.call unless ENV['PRY_DISABLE_SQL_LOG']
+    else
+      warn "#{ansi[:BOLD]}[WARN]#{ansi[:RESET]} #{ansi[:YELLOW]}cannot load Rails console commands (Not on Rails2 or Rails3?)#{ansi[:RESET]}"
+    end
+  end
+
+  if defined?(::Bundler) && $LOAD_PATH.select { |p| p.include?('gems/pry-') }.empty?
+    __msg.call 'Ensuring pry is loaded properly…'
+    # Originally from http://lucapette.com/pry/pry-everywhere/
+    global_gemset = ENV['GEM_PATH'].split(':').grep(/ruby.*@global/).first
+    if global_gemset
+      all_global_gem_paths = Dir.glob("#{global_gemset}/gems/*")
+      all_global_gem_paths.each do |p|
+        gem_path = "#{p}/lib"
+        $LOAD_PATH << gem_path
+      end
+    end
+  end
+
+  # Hirb, originally from https://github.com/pry/pry/wiki/FAQ#hirb
+  begin
+    require 'hirb'
+  rescue LoadError
+    # Missing goodies, bummer
+  end
+
+  if defined? Hirb
+    # Slightly dirty hack to fully support in-session Hirb.disable/enable toggling
+    Hirb::View.instance_eval do
+      def enable_output_method
+        @output_method = true
+        @old_print = Pry.config.print
+        Pry.config.print = proc do |*args|
+          Hirb::View.view_or_page_output(args[1]) || @old_print.call(*args)
+        end
+      end
+
+      def disable_output_method
+        Pry.config.print = @old_print
+        @output_method = nil
+      end
+    end
+
+    Hirb.enable
+  end
+end.call
