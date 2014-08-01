@@ -8,7 +8,9 @@
 {%- if git_email %}
 	email = {{ git_email }}
 {%- endif %}
-{%- if grains['osrelease']|int >= 8 %}
 [push]
+{%- if grains['osrelease']|int >= 8 %}
 	default = simple
+{%- else %}
+  default = current
 {%- endif %}
