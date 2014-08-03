@@ -8,6 +8,8 @@
 {%- if git_email %}
 	email = {{ git_email }}
 {%- endif %}
+[alias]
+co = checkout
 [push]
 {%- if grains['osrelease']|int >= 8 %}
 	default = simple
