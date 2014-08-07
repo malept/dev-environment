@@ -60,3 +60,6 @@ cqlsh-deps:
 memcached:
   pkg.installed
 {%- endif %}
+
+pgadmin3:
+  pkg.installed
