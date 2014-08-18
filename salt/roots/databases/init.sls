@@ -60,3 +60,12 @@ cqlsh-deps:
 memcached:
   pkg.installed
 {%- endif %}
+
+{% if salt['pillar.get']('redis:enabled') -%}
+redis:
+  pkg.installed:
+    - name: redis-server
+{%- if grains['oscodename'] == 'wheezy' %}
+    - fromrepo: wheezy-backports
+{%- endif %}
+{%- endif %}
