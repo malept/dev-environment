@@ -1,3 +1,4 @@
+# vim: set ft=sh :
 alias PYSHS='python -m SimpleHTTPServer'
 alias manify='groff -T utf8 -man'
 
@@ -24,5 +25,8 @@ alias gvimp='~/Code/vimfiles/gvim-profile'
 alias viewp='~/Code/vimfiles/view-profile'
 
 if [[ -d ~/.config/bash_aliases.d ]]; then
-    source ~/.config/bash_aliases.d/*
+    for f in `ls ~/.config/bash_aliases.d/*`; do
+        source "$f"
+    done
+    unset f
 fi
