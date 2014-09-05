@@ -38,6 +38,11 @@ python-virtualenv:
 {{ venv_with_binary('xlsx2csv', 'xlsx2csv', 'salt://system/files/xlsx2csv-requirements.txt') }}
 {%- endif %}
 
+{%- if salt['pillar.get']('imagemagick:enabled', false) %}
+imagemagick:
+  pkg.installed
+{%- endif %}
+
 {%- if salt['pillar.get']('chef:enabled', false) %}
 chef:
   pkg.installed
