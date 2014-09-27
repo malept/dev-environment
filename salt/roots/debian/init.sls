@@ -17,7 +17,7 @@ debian.wheezy-mozilla:
     - require:
       - pkg: pkg-mozilla-archive-keyring
 
-{% if salt['pillar.get']('debian:repos:jessie') -%}
+{% if salt['pillar.get']('debian:repos:jessie', true) -%}
 debian.jessie:
   pkgrepo.managed:
     - humanname: Debian Jessie repository
