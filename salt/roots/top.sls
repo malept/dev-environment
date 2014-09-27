@@ -6,6 +6,7 @@ base:
 {%- endif %}
     - user
     - user.dotfiles
+    - user.dotfiles.node
     - user.dotfiles.vim
     - system
 {%- if salt['pillar.get']('X11:enabled') %}
