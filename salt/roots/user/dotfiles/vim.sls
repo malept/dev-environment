@@ -19,6 +19,7 @@ vimfiles:
     - user: {{ grains['username'] }}
     - require:
       - pkg: vim
+      - pkg: git
 
 {%- macro user_vim_dir(name) %}
 /home/{{ grains['username'] }}/.local/share/vim/{{ name }}:

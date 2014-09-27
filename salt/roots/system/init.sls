@@ -21,6 +21,9 @@ tmux:
     - fromrepo: wheezy-backports
 {%- endif %}
 
+git:
+  pkg.installed
+
 sshfs:
   pkg.installed
 
