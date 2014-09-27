@@ -1,0 +1,5 @@
+base:
+  '*':
+    - nginx
+    - postgres
+    - interpreters

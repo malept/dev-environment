@@ -13,6 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ## For masterless, mount your salt file root
   config.vm.synced_folder "salt/roots/", "/srv/salt/"
   config.vm.synced_folder "salt/formulae/", "/srv/salt-formulae/"
+  config.vm.synced_folder "salt/pillars/", "/srv/pillars/"
 
   ## Provision with salt
   config.vm.provision :salt do |salt|
