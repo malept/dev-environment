@@ -9,6 +9,7 @@ dev.db
 *.sqlite3
 /.ruby-gemset
 /.ruby-version
+/.server-port
 /tags
 doc/tags
 pycomplexity.vim/doc/tags
