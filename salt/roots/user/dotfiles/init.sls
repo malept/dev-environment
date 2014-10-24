@@ -24,5 +24,6 @@
 
 {%- if salt['pillar.get']('X11:enabled') %}
 {{ config_file('synapse-gtkrc', '.config/synapse/gtkrc') }}
+{{ config_file('tmux.conf', '.config/tmux/tmux.conf') }}
 {{ config_file('xfce4-screenshooter', '.config/xfce4/xfce4-screenshooter', templated=true) }}
 {%- endif %}
