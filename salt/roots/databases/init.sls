@@ -6,7 +6,9 @@ mysql:
     - pkgs:
       - mysql-client-{{ mysql_majmin }}
       - mysql-server-{{ mysql_majmin }}
+{%- if salt['pillar.get']('X11:enabled') %}
       - mysql-workbench
+{%- endif %}
       - libmysqlclient-dev
 
   service:
