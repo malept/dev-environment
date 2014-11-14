@@ -1,12 +1,13 @@
 .*.sw?
 .sw?
-*.pyc
+*.gem
 *.egg-info
+*.pyc
+*.sqlite
+*.sqlite3
 dev.db
 .sass-cache
 .vagrant
-*.sqlite
-*.sqlite3
 /.ruby-gemset
 /.ruby-version
 /.server-port
