@@ -10,7 +10,7 @@ dev.db
 .vagrant
 /.ruby-gemset
 /.ruby-version
-/.server-port
+.server-port
 /tags
 doc/tags
 pycomplexity.vim/doc/tags
