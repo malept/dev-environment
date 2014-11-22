@@ -19,11 +19,13 @@ base:
     - ruby
 {%- endif %}
     - databases
+{%- if salt['pillar.get']('postgres:enabled', true) %}
     - postgres.apt
     - postgres
     - postgres.config
 {%- if salt['pillar.get']('postgres:pgadmin3:enabled') %}
     - postgres.pgadmin3
+{%- endif %}
 {%- endif %}
 {%- if salt['pillar.get']('aws:enabled') %}
     - aws
