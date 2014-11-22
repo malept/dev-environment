@@ -1,2 +1,3 @@
 .vagrant
 .*.sw?
+salt/pillars/local/*.sls
