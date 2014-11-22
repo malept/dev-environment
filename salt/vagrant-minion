@@ -7,10 +7,6 @@ file_roots:
     - /srv/salt-formulae/postgres-formula
     - /srv/salt-formulae/node-formula
     - /srv/salt-formulae/gmusicprocurator-formula
-pillar_roots:
-  base:
-    - /srv/pillars/default
-    - /srv/pillars/local
 grains:
   node_type: vagrant
   username: vagrant
