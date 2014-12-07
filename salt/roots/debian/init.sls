@@ -1,3 +1,4 @@
+{%- if grains['oscodename'] == 'wheezy' -%}
 debian.wheezy-backports:
   pkgrepo.managed:
     - humanname: Debian Wheezy backports repository
@@ -16,6 +17,7 @@ debian.wheezy-mozilla:
     - file: /etc/apt/sources.list.d/wheezy-mozilla.list
     - require:
       - pkg: pkg-mozilla-archive-keyring
+{%- endif %}
 
 {% if salt['pillar.get']('debian:repos:jessie', true) -%}
 debian.jessie:

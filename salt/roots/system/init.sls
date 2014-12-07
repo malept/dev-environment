@@ -9,16 +9,20 @@ tops:
       - iftop
 
 silversearcher-ag:
-  pkg.installed:
 {%- if grains['oscodename'] == 'wheezy' %}
+  pkg.installed:
     - sources:
       - the-silver-searcher: http://swiftsignal.com/packages/ubuntu/quantal/the-silver-searcher_0.14-1_amd64.deb
+{%- else %}
+  pkg.installed
 {%- endif %}
 
 tmux:
-  pkg.installed:
 {%- if grains['oscodename'] == 'wheezy' %}
+  pkg.installed:
     - fromrepo: wheezy-backports
+{%- else %}
+  pkg.installed
 {%- endif %}
 
 git:
