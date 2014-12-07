@@ -29,11 +29,13 @@ checkers:
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
     - mode: 755
+    - makedirs: true
 
 {%- for checker in checker_list %}
 /home/{{ grains['username'] }}/.local/bin/{{ checker }}:
   file.symlink:
     - target: /home/{{ grains['username'] }}/.local/bin/static_analysis_wrapper
+    - makedirs: true
     - require:
       - file: /home/{{ grains['username'] }}/.local/bin/static_analysis_wrapper
 {%- endfor %}

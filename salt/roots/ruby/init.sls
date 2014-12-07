@@ -9,7 +9,11 @@ rvm-deps:
       - sed
       - curl
       - git-core
-      - subversion
+      - gnupg
+  cmd.run:
+    - user: {{ grains['username'] }}
+    - name: gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+    - unless: gpg --fingerprint | fgrep 'Key fingerprint = 409B 6B17 96C2 7546 2A17  0311 3804 BB82 D39D C0E3'
 
 mri-deps:
   pkg.installed:
@@ -35,7 +39,6 @@ mri-deps:
       - automake
       - libtool
       - bison
-      - subversion
       - ruby
 
 {% set ruby_versions = salt['pillar.get']('ruby:versions', []) -%}
@@ -49,6 +52,7 @@ mri-deps:
     - user: {{ grains['username'] }}
     - require:
       - pkg: rvm-deps
+      - cmd: rvm-deps
       - pkg: mri-deps
 {% endfor -%}
 
