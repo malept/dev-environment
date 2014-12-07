@@ -1,3 +1,4 @@
+{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
 xfce:
   pkg.installed:
     - pkgs:
@@ -6,6 +7,7 @@ xfce:
       - xfce4-indicator-plugin
       - xfce4-screenshooter-plugin
       - xfce4-terminal
+{%- endif %}
 
 lightdm:
   pkg.installed
