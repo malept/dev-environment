@@ -1,6 +1,7 @@
 [submodule "salt/formulae/postgres-formula"]
 	path = salt/formulae/postgres-formula
 	url = https://github.com/tfolio/postgres-formula
+	branch = tfolio
 [submodule "salt/formulae/nginx-formula"]
 	path = salt/formulae/nginx-formula
 	url = https://github.com/tfolio/nginx-formula.git
