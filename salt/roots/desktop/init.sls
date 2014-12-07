@@ -32,7 +32,9 @@ desktop-apps:
       - file-roller
       - gnome-keyring
       - gucharmap
+{%- if grains['oscodename'] == 'wheezy' %}
       - synapse
+{%- endif %}
 {%- if salt['pillar.get']('libreoffice:enabled') %}
       - libreoffice
 {%- endif %}
