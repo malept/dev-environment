@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from subprocess import check_call
+import sys
+from urlparse import urlparse
+
+
+class DBConsole(object):
+    def __init__(self, url):
+        self.url = url
+
+    @classmethod
+    def from_url(self, url):
+        parsed = urlparse(url)
+        return BINARIES[parsed.scheme](parsed)
+
+    def run_console(self, cmd):
+        cmd = cmd.format(user=self.url.username, password=self.url.password,
+                         host=self.url.hostname, database=self.url.path[1:])
+        check_call(cmd, shell=True)
+
+
+class MySQLConsole(DBConsole):
+    def run(self):
+        self.run_console('mysql -u {user} -p{password} -h {host} {database}')
+
+
+class PostgresConsole(DBConsole):
+    def run(self):
+        self.run_console('psql {}'.format(self.url.geturl()))
+
+
+BINARIES = {
+    'mysql2': MySQLConsole,
+    'postgres': PostgresConsole,
+}
+
+if len(sys.argv) > 1:
+    db_url = sys.argv[1]
+else:
+    db_url = raw_input('Enter URL: ')
+
+DBConsole.from_url(db_url).run()
