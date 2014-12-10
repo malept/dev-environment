@@ -35,6 +35,7 @@ desktop-apps:
 {%- if grains['oscodename'] == 'wheezy' %}
       - synapse
 {%- endif %}
+      - xclip
 {%- if salt['pillar.get']('libreoffice:enabled') %}
       - libreoffice
 {%- endif %}
