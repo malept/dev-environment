@@ -1,11 +1,9 @@
-{% from 'user/dotfiles/macros.sls' import config_file with context %}
-
-{{ config_file('npmrc') }}
-
-/opt/node:
+{% from "node/map.jinja" import default_npm_prefix, npm_prefix, npmrc with context %}
+{% if default_npm_prefix != npm_prefix %}
+{{ npm_prefix }}:
   file.directory:
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
     - require_in:
-      - file: /home/{{ grains['username'] }}/.npmrc
-
+      - file: {{ npmrc }}
+{% endif %}

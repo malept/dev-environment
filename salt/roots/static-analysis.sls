@@ -41,7 +41,7 @@ checkers:
 {%- endfor %}
 {%- endif %}
 
-{% from 'node/map.jinja' import npm_requirement with context %}
+{% from 'node/map.jinja' import npm_requirement, npmrc with context %}
 node-linters:
   npm.installed:
     - user: {{ grains['username'] }}
@@ -51,4 +51,4 @@ node-linters:
       - jshint
     - require:
       - {{ npm_requirement }}
-      - file: /home/{{ grains['username'] }}/.npmrc
+      - file: {{ npmrc }}

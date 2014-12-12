@@ -1,2 +1,3 @@
-node:
-  prefix: /usr
+npm:
+  config:
+    prefix: /opt/node
