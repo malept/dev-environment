@@ -7,6 +7,8 @@
 {{ bin_file('blade') }}
 {%- endif %}
 
+{{ bin_file('db_console') }}
+
 {{ config_file('bash_aliases') }}
 {{ config_file('bashrc', templated=true) }}
 {{ config_file('profile') }}
