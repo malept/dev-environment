@@ -1,2 +1,2 @@
 postgres:
-  minor_version: 9.3
+  minor_version: 9.4
