@@ -18,6 +18,8 @@
 {{ config_file('gitconfig', templated=true) }}
 {{ config_file('gitignore', '.config/git/ignore') }}
 
+{{ config_file('pip.conf', '.config/pip/pip.conf', templated=true) }}
+
 {%- if salt['pillar.get']('ruby:enabled') %}
 {{ config_file('gemrc') }}
 {{ config_file('irbrc') }}
