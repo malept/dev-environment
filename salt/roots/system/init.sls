@@ -51,6 +51,10 @@ imagemagick:
 chef:
   pkg.installed
 
+chef-client:
+  service.dead:
+    - enable: False
+
 {%- if salt['pillar.get']('aws:enabled', false) %}
 ruby-dev:
   pkg.installed
