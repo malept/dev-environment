@@ -18,11 +18,8 @@ silversearcher-ag:
 {%- endif %}
 
 tmux:
-{%- if grains['oscodename'] == 'wheezy' %}
-  pkg.installed:
+  pkg.installed{%- if grains['oscodename'] == 'wheezy' %}:
     - fromrepo: wheezy-backports
-{%- else %}
-  pkg.installed
 {%- endif %}
 
 git:

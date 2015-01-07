@@ -13,8 +13,7 @@ snakefire-deps:
       - libffi-dev
 
 python-six:
-  pkg.installed:
-{%- if grains['oscodename'] == 'wheezy' %}
+  pkg.installed{%- if grains['oscodename'] == 'wheezy' %}:
     - dist: wheezy-backports
 {%- endif %}
 
