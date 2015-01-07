@@ -1,7 +1,10 @@
-{%- macro venv_with_binary(venv_name, bin_name, req_txt_path) %}
+{%- macro venv_with_binary(venv_name, bin_name, req_txt_path, python=None) %}
 /home/{{ grains['username'] }}/.local/share/virtualenv/{{ venv_name }}:
   virtualenv.managed:
     - user: {{ grains['username'] }}
+{%- if python %}
+    - python: {{ python }}
+{%- endif %}
     - system_site_packages: True
     - requirements: {{ req_txt_path }}
     - require:
