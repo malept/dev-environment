@@ -2,7 +2,7 @@
 {%- if pjs_version %}
 {%- set pjs_basename = 'phantomjs-{0}-linux-{1}'.format(pjs_version, grains['cpuarch']) -%}
 phantomjs:
-{%- if grains['oscodename'] == 'wheezy' %}
+{%- if grains['oscodename'] in ['wheezy', 'jessie'] %}
   archive.extracted:
     - name: /opt/
     - source: https://bitbucket.org/ariya/phantomjs/downloads/{{ pjs_basename }}.tar.bz2
