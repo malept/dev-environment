@@ -1,0 +1,98 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
+
+from abc import ABCMeta, abstractmethod
+import os
+import sys
+
+try:
+    import boto.rds2
+    log_class = 'RDSLogBoto'
+except ImportError:
+    import json
+    from subprocess import check_output
+    log_class = 'RDSLogCLI'
+    AWS_RDS = os.environ.get('AWS_RDS', 'aws rds')
+
+AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
+
+
+class RDSLog(object):
+    __metaclass__ = ABCMeta
+
+    def __init__(self, region, rds_id):
+        self.region = region
+        self.rds_id = rds_id
+
+    @abstractmethod
+    def get_log_file_sizes(self, filename_contains):
+        pass
+
+    @abstractmethod
+    def get_log(self, filename, size):
+        pass
+
+
+class RDSLogBoto(RDSLog):
+    """
+    Uses boto to get logs.
+    """
+
+    def __init__(self, region, rds_id):
+        super(RDSLogBoto, self).__init__(region, rds_id)
+        self.rds = boto.rds2.connect_to_region(self.region)
+
+    def get_log_file_sizes(self, filename_contains):
+        response = self.rds.describe_db_log_files(self.rds_id,
+                                                  filename_contains)
+        log_files = response['DescribeDBLogFilesResponse'] \
+                            ['DescribeDBLogFilesResult'] \
+                            ['DescribeDBLogFiles']
+        return dict([(f['LogFileName'].replace('slowquery/', ''), f['Size'])
+                     for f in log_files])
+
+    def get_log(self, filename, size):
+        self.rds.download_db_log_file_portion(self.rds_id, filename)
+
+
+class RDSLogCLI(RDSLog):
+    """
+    Uses awscli to get logs.
+    """
+
+    @property
+    def common_args(self):
+        return '--db-instance-identifier={} --region={}'.format(self.rds_id,
+                                                                self.region)
+
+    def run_aws(self, subcommand, extra_params):
+        fmt = '{aws} {subcommand} {common_args} {extra}'
+        cmd = fmt.format(aws=AWS_RDS, subcommand=subcommand,
+                         common_args=self.common_args, extra=extra_params)
+        return json.loads(check_output(cmd, shell=True))
+
+    def get_log_file_sizes(self, filename_contains):
+        data = self.run_aws('describe-db-log-files',
+                            '--filename-contains={}'.format(filename_contains))
+        return dict([(f['LogFileName'], f['Size'])
+                     for f in data['DescribeDBLogFiles']])
+
+    def get_log(self, filename, size):
+        args = '--log-file-name={} --max-items={}'.format(filename, size)
+        data = self.run_aws('download-db-log-file-portion', args)
+        with open(os.path.basename(filename), 'w') as f:
+            f.write(''.join(data['LogFileData']))
+
+if __name__ == '__main__':
+    if len(sys.argv) < 3:
+        print('Usage: {} RDS_ID FILENAME'.format(sys.argv[0]), file=sys.stderr)
+        sys.exit(1)
+
+    RDS_ID = sys.argv[1]
+    FILENAME = sys.argv[2]
+
+    rds = globals()[log_class](AWS_REGION, RDS_ID)
+    sizes = rds.get_log_file_sizes(FILENAME)
+    rds.get_log(FILENAME, sizes[FILENAME])
