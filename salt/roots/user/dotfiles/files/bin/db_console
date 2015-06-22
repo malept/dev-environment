@@ -31,9 +31,16 @@ class PostgresConsole(DBConsole):
         self.run_console('psql {}'.format(self.url.geturl()))
 
 
+class Pgtop(DBConsole):
+    def run(self):
+        cmd = 'PGPASSWORD={password} pg_top -U {user} -h {host} -d {database}'
+        self.run_console(cmd)
+
+
 BINARIES = {
     'mysql2': MySQLConsole,
     'postgres': PostgresConsole,
+    'pgtop': Pgtop,
 }
 
 if len(sys.argv) > 1:
