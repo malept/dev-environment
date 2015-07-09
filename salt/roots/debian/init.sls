@@ -5,16 +5,18 @@ debian.wheezy-backports:
     - name: deb http://mirrors.kernel.org/debian wheezy-backports main contrib
     - dist: wheezy-backports
     - file: /etc/apt/sources.list.d/wheezy-backports.list
+{%- endif %}
 
+{%- if grains['oscodename'] in ['wheezy', 'jessie'] %}
 pkg-mozilla-archive-keyring:
   pkg.installed
 
-debian.wheezy-mozilla:
+debian.{{ grains['oscodename'] }}-mozilla:
   pkgrepo.managed:
-    - humanname: Debian Wheezy Mozilla repository
-    - name: deb http://mozilla.debian.net/ wheezy-backports iceweasel-release
-    - dist: wheezy-backports
-    - file: /etc/apt/sources.list.d/wheezy-mozilla.list
+    - humanname: Debian {{ grains['oscodename'] }} Mozilla repository
+    - name: deb http://mozilla.debian.net/ {{ grains['oscodename'] }}-backports iceweasel-release
+    - dist: {{ grains['oscodename'] }}-backports
+    - file: /etc/apt/sources.list.d/{{ grains['oscodename'] }}-mozilla.list
     - require:
       - pkg: pkg-mozilla-archive-keyring
 {%- endif %}

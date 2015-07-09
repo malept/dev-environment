@@ -57,8 +57,8 @@ browsers:
       - gstreamer1.0-plugins-ugly
 {%- endif %}
       - chromium
-{%- if grains['oscodename'] == 'wheezy' %}
-    - fromrepo: wheezy-backports
+{%- if grains['oscodename'] in ['wheezy', 'jessie'] %}
+    - fromrepo: {{ grains['oscodename'] }}-backports
 {%- endif %}
 
 # Fonts
