@@ -76,7 +76,12 @@ font-packages:
       - ttf-ancient-fonts
       - unifont
 
-  ## Droid Sans Mono Slashed
+user-font-dir:
+  file.directory:
+    - name: /home/{{ grains['username'] }}/.fonts/
+    - user: {{ grains['username'] }}
+
+font-droid-sans-mono-slashed:
   archive.extracted:
     - name: /home/{{ grains['username'] }}/.fonts/
     - source: http://www.cosmix.org/software/files/DroidSansMonoSlashed.zip
@@ -85,6 +90,7 @@ font-packages:
     - if_missing: /home/{{ grains['username'] }}/.fonts/DroidSansMonoSlashed.ttf
     - require:
       - pkg: unzip
+      - file: user-font-dir
 
 # Theme-related
 themes:
