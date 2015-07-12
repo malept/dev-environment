@@ -1,3 +1,5 @@
+{% from 'node/map.jinja' import npm_requirement with context %}
+
 America/Los_Angeles:
   timezone.system:
     - utc: True
@@ -36,6 +38,11 @@ python-pip:
 
 python-virtualenv:
   pkg.installed
+
+grunt-cli:
+  npm.installed:
+    - require:
+      - {{ npm_requirement }}
 
 /usr/local/bin:
   file.directory
