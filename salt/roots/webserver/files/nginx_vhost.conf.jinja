@@ -53,6 +53,6 @@
 }
 
 upstream proxy-{{ app_name }} {
-    server 127.0.0.1:{{ config.proxy_port }};
+    server localhost:{{ config.proxy_port }};
 {% endif -%}
 {% endblock %}
