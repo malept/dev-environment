@@ -1,3 +1,5 @@
+node:
+  install_from_ppa: true
 npm:
   config:
     prefix: /opt/node
