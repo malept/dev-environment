@@ -8,4 +8,8 @@ elasticsearch:
       {%- else %}
       - elasticsearch: https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/{{ elasticsearch_version }}/elasticsearch-{{ elasticsearch_version }}.deb
       {%- endif %}
+  service.running:
+    - enable: True
+    - require:
+      - pkg: elasticsearch
 {%- endif %}
