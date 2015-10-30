@@ -19,6 +19,11 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 
+# ruby
+alias rtest='RAILS_ENV=test ruby -I test'
+alias prtest='RAILS_ENV=test pry -I test'
+alias trake="RAILS_ENV=test rake"
+
 # vim-profile
 alias vimp='~/Code/vimfiles/vim-profile'
 alias gvimp='~/Code/vimfiles/gvim-profile'
