@@ -121,6 +121,9 @@ PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # Travis CI CLI
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
+# multirust
+[[ -d "/opt/multirust/bin" ]] && PATH="$PATH:/opt/multirust/bin"
+
 {% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).iteritems() -%}
 export {{ env_var }}={{ env_value }}
 {% endfor -%}
