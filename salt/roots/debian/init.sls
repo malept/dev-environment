@@ -52,3 +52,12 @@ debian.sid:
     - group: root
     - mode: 644
 {%- endif %}
+
+{% if salt['pillar.get']('debian:repos:experimental') %}
+debian.experimental:
+  pkgrepo.managed:
+    - humanname: Debian Experimental repository
+    - name: deb http://mirrors.kernel.org/debian experimental main contrib
+    - dist: experimental
+    - file: /etc/apt/sources.list.d/experimental.list
+{% endif %}
