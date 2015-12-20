@@ -8,12 +8,14 @@
       - bluetooth
       - cdrom
       - dip
+      - docker
       - floppy
       - fuse
       - netdev
       - plugdev
       - scanner
       - users
+      - vboxusers
       - video
     - require:
       - pkg: sshfs # so the fuse group is added correctly
