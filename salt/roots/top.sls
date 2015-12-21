@@ -15,6 +15,9 @@ base:
 {%- if salt['pillar.get']('campfire:enabled') %}
     - desktop.snakefire
 {%- endif %}
+{%- if salt['pillar.get']('github:enabled') %}
+    - github
+{%- endif %}
 {%- if salt['pillar.get']('python:enabled', true) %}
     - python
 {%- endif %}
