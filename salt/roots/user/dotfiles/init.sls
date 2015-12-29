@@ -24,6 +24,8 @@
 {{ config_file('psqlrc', '.config/psqlrc') }}
 {{ config_dir('.cache/psql') }}
 
+{{ config_file('tmux.conf', '.config/tmux/tmux.conf') }}
+
 {%- if salt['pillar.get']('ruby:enabled') %}
 {{ config_file('gemrc') }}
 {{ config_file('global.gems', '.rvm/gemsets/global.gems') }}
@@ -33,6 +35,5 @@
 
 {%- if salt['pillar.get']('X11:enabled') %}
 {{ config_file('synapse-gtkrc', '.config/synapse/gtkrc') }}
-{{ config_file('tmux.conf', '.config/tmux/tmux.conf') }}
 {{ config_file('xfce4-screenshooter', '.config/xfce4/xfce4-screenshooter', templated=true) }}
 {%- endif %}
