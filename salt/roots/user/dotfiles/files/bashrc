@@ -127,6 +127,8 @@ PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # github's hub
 [[ -d "/opt/github/bin" ]] && PATH="$PATH:/opt/github/bin"
 
+export PSQLRC=$HOME/.config/psqlrc
+
 {% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).iteritems() -%}
 export {{ env_var }}={{ env_value }}
 {% endfor -%}

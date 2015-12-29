@@ -26,3 +26,11 @@
     - mode: 644
     - makedirs: True
 {%- endmacro %}
+
+{%- macro config_dir(name) %}
+/home/{{ grains['username'] }}/{{ name }}:
+  file.directory:
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - makedirs: true
+{%- endmacro %}

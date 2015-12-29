@@ -21,6 +21,9 @@
 
 {{ config_file('pip.conf', '.config/pip/pip.conf', templated=true) }}
 
+{{ config_file('psqlrc', '.config/psqlrc') }}
+{{ config_dir('.cache/psql') }}
+
 {%- if salt['pillar.get']('ruby:enabled') %}
 {{ config_file('gemrc') }}
 {{ config_file('global.gems', '.rvm/gemsets/global.gems') }}
