@@ -44,6 +44,14 @@ grunt-cli:
     - require:
       - {{ npm_requirement }}
 
+{% set vagrant_version = salt['pillar.get']('vagrant:version', false) -%}
+{% if vagrant_version -%}
+vagrant:
+  pkg.installed:
+    - sources:
+      - vagrant: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb
+{%- endif %}
+
 /usr/local/bin:
   file.directory
 
