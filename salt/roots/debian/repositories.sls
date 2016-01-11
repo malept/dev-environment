@@ -61,3 +61,11 @@ debian.experimental:
     - dist: experimental
     - file: /etc/apt/sources.list.d/experimental.list
 {% endif %}
+
+{% if salt['pillar.get']('debian:repos:personal') %}
+debian.personal:
+  pkgrepo.managed:
+    - humanname: Personal Debian APT repository
+    - name: deb [trusted=yes] https://apt.fury.io/malept/ /
+    - file: /etc/apt/sources.list.d/personal.list
+{% endif %}

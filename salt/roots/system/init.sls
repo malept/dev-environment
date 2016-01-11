@@ -24,6 +24,12 @@ tmux:
     - fromrepo: wheezy-backports
 {%- endif %}
 
+{%- if salt['pillar.get']('debian:repos:personal') %}
+neovim:
+  pkg.installed:
+    - fromrepo: debian.personal
+{%- endif %}
+
 git:
   pkg.installed
 
