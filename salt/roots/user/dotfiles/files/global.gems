@@ -9,3 +9,5 @@ pry
 pry-byebug
 pry-rescue
 pry-stack_explorer
+fastri
+rcodetools
