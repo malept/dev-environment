@@ -1,5 +1,6 @@
 {%- macro venv_with_binary(venv_name, bin_name, req_txt_path, python=None) %}
-/home/{{ grains['username'] }}/.local/share/virtualenv/{{ venv_name }}:
+{%- set venv_dir = '/home/{}/.local/share/virtualenv/{}'.format(grains['username'], venv_name) %}
+{{ venv_dir }}:
   virtualenv.managed:
     - user: {{ grains['username'] }}
 {%- if python %}
@@ -15,8 +16,11 @@
 
 /home/{{ grains['username'] }}/.local/bin/{{ bin_name }}:
   file.symlink:
-    - target: /home/{{ grains['username'] }}/.local/share/virtualenv/{{ venv_name }}/bin/{{ bin_name }}
+    - target: {{ venv_dir }}/bin/{{ bin_name }}
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
     - makedirs: True
+    - require:
+      - virtualenv: {{ venv_dir }}
+
 {%- endmacro %}
