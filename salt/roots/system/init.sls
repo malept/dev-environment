@@ -1,4 +1,5 @@
 {% from 'node/map.jinja' import npm_requirement with context %}
+{% from 'venv_bin.sls' import venv_with_binary with context %}
 
 America/Los_Angeles:
   timezone.system:
@@ -28,6 +29,8 @@ tmux:
 neovim:
   pkg.installed:
     - fromrepo: debian.personal
+
+{{ venv_with_binary('neovim-remote', 'nvr', 'salt://system/files/neovim-remote-requirements.txt', python='/usr/bin/python3') }}
 {%- endif %}
 
 git:
@@ -63,7 +66,6 @@ vagrant:
   file.directory
 
 {%- if salt['pillar.get']('xlsx2csv:enabled', false) %}
-{% from 'venv_bin.sls' import venv_with_binary with context -%}
 {{ venv_with_binary('xlsx2csv', 'xlsx2csv', 'salt://system/files/xlsx2csv-requirements.txt') }}
 {%- endif %}
 
