@@ -56,6 +56,7 @@ vagrant:
   pkg.installed:
     - sources:
       - vagrant: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb
+    - version: {{ vagrant_version }}
 {%- endif %}
 
 /usr/local/bin:
