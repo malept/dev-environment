@@ -114,6 +114,10 @@ unset ANDROID_SDK
 # virtualenvwrapper
 WORKON_HOME=$HOME/.local/share/virtualenv
 
+# rubygems
+# See: https://github.com/rvm/rubygems-bundler/blob/ce619c06ec051a25bed6f0eb68bb6cd491054a70/README.md#note-for-rubygems--220
+RUBYGEMS_GEMDEPS="-"
+
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
