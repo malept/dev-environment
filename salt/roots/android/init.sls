@@ -12,3 +12,12 @@ android-sdk:
     - archive_user: root
 {%- endif %}
     - if_missing: /opt/android-sdk-linux
+
+/etc/udev/rules.d/51-android.rules:
+  file.managed:
+    - source: salt://android/files/51-android.rules
+    - user: root
+    - group: root
+    - mode: 644
+    - require:
+      - archive: android-sdk
