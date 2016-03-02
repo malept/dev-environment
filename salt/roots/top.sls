@@ -51,3 +51,6 @@ base:
 {%- if salt['pillar.get']('gmusicprocurator:enabled') %}
     - gmusicprocurator
 {%- endif %}
+{%- if salt['pillar.get']('android:enabled') %}
+    - android
+{%- endif %}
