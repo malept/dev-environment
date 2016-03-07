@@ -25,10 +25,20 @@ tmux:
     - fromrepo: wheezy-backports
 {%- endif %}
 
+{%- if salt['pillar.get']('neovim:enabled') %}
 {%- if salt['pillar.get']('debian:repos:personal') %}
 neovim:
   pkg.installed:
     - fromrepo: debian.personal
+{%- elif grains['os'] == 'Ubuntu' %}
+neovim:
+  pkg.installed:
+    - fromrepo: neovim
+    - require:
+      - pkgrepo: neovim
+  pkgrepo.managed:
+    - ppa: neovim-ppa/unstable
+{%- endif %}
 
 {{ venv_with_binary('neovim-remote', 'nvr', 'salt://system/files/neovim-remote-requirements.txt', python='/usr/bin/python3') }}
 {%- endif %}
