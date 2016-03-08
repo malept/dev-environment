@@ -1,12 +1,7 @@
 {% if grains['os'] == 'Ubuntu' %}
 deadsnakes.ppa:
   pkgrepo.managed:
-    - humanname: Deadsnakes PPA
-    - name: deb http://ppa.launchpad.net/fkrull/deadsnakes/ubuntu precise main
-    - dist: precise
-    - file: /etc/apt/sources.list.d/deadsnakes.list
-    - keyid: DB82666C
-    - keyserver: keyserver.ubuntu.com
+    - ppa: fkrull/deadsnakes
     - require_in:
       pkg:
         - python2.6-dev
@@ -15,12 +10,7 @@ deadsnakes.ppa:
 
 pypy.ppa:
   pkgrepo.managed:
-    - humanname: PyPy PPA
-    - name: deb http://ppa.launchpad.net/pypy/ppa/ubuntu precise main
-    - dist: precise
-    - file: /etc/apt/sources.list.d/pypy.list
-    - keyid: "68854915"
-    - keyserver: keyserver.ubuntu.com
+    - ppa: pypy/ppa
     - require_in:
       pkg: pypy-dev
 {% endif %}
