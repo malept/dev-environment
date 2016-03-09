@@ -12,9 +12,6 @@ base:
 {%- if salt['pillar.get']('X11:enabled') %}
     - desktop
 {%- endif %}
-{%- if salt['pillar.get']('campfire:enabled') %}
-    - desktop.snakefire
-{%- endif %}
 {%- if salt['pillar.get']('github:enabled') %}
     - github
 {%- endif %}
