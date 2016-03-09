@@ -21,8 +21,8 @@ silversearcher-ag:
 {%- endif %}
 
 tmux:
-  pkg.installed{%- if grains['oscodename'] == 'wheezy' %}:
-    - fromrepo: wheezy-backports
+  pkg.installed{%- if salt['pillar.get']('debian:repos:personal') %}:
+    - fromrepo: debian.personal
 {%- endif %}
 
 {%- if salt['pillar.get']('neovim:enabled') %}
