@@ -27,7 +27,9 @@ base:
 {%- if salt['pillar.get']('postgres:enabled', true) %}
     - postgres.apt
     - postgres
+{%- if salt['pillar.get']('postgres:config:managed', true) %}
     - postgres.config
+{%- endif %}
 {%- if salt['pillar.get']('postgres:pgadmin3:enabled') %}
     - postgres.pgadmin3
 {%- endif %}
