@@ -12,7 +12,7 @@ if ! test -d ~/Code; then
 fi
 cd ~/Code
 if ! test -d dev-environment; then
-    git clone https://github.com/malept/dev-environment
+    git clone --recursive https://github.com/malept/dev-environment
 fi
 cd dev-environment
 
@@ -27,6 +27,8 @@ fi
 
 if test -n "$LOCAL_PILLAR" -a -f "$LOCAL_PILLAR"; then
     cp "$LOCAL_PILLAR" "salt/pillars/local/init.sls"
+else
+    touch "salt/pillars/local/init.sls"
 fi
 
 # Yes, I know one-liners suck
