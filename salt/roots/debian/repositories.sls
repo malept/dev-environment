@@ -14,7 +14,7 @@ pkg-mozilla-archive-keyring:
 debian.{{ grains['oscodename'] }}-mozilla:
   pkgrepo.managed:
     - humanname: Debian {{ grains['oscodename'] }} Mozilla repository
-    - name: deb http://mozilla.debian.net/ {{ grains['oscodename'] }}-backports iceweasel-release
+    - name: deb http://mozilla.debian.net/ {{ grains['oscodename'] }}-backports firefox-release
     - dist: {{ grains['oscodename'] }}-backports
     - file: /etc/apt/sources.list.d/{{ grains['oscodename'] }}-mozilla.list
     - require:
