@@ -4,6 +4,8 @@ base:
 {%- if grains['os'] == 'Debian' %}
     - debian
 {%- endif %}
+    - salt.pkgrepo
+    - salt.standalone
     - user
     - user.dotfiles
     - user.dotfiles.node

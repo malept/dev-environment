@@ -3,6 +3,7 @@ file_client: local
 file_roots:
   base:
     - /srv/salt
+    - /srv/salt-formulae/salt-formula
     - /srv/salt-formulae/nginx-formula
     - /srv/salt-formulae/postgres-formula
     - /srv/salt-formulae/node-formula

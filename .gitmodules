@@ -13,3 +13,6 @@
 [submodule "salt/formulae/gmusicprocurator-formula"]
 	path = salt/formulae/gmusicprocurator-formula
 	url = https://github.com/malept/gmusicprocurator-formula.git
+[submodule "salt/formulae/salt-formula"]
+	path = salt/formulae/salt-formula
+	url = https://github.com/saltstack-formulas/salt-formula
