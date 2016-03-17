@@ -21,7 +21,7 @@ debian.{{ grains['oscodename'] }}-mozilla:
       - pkg: pkg-mozilla-archive-keyring
 {%- endif %}
 
-{% if salt['pillar.get']('debian:repos:jessie', true) -%}
+{% if grains['os'] == 'Debian' and salt['pillar.get']('debian:repos:jessie', true) -%}
 debian.jessie:
   pkgrepo.managed:
     - humanname: Debian Jessie repository
