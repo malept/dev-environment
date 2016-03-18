@@ -40,7 +40,9 @@ neovim:
     - ppa: neovim-ppa/unstable
 {%- endif %}
 
+{%- if salt['pillar.get']('neovim:remote:enabled') %}
 {{ venv_with_binary('neovim-remote', 'nvr', 'salt://system/files/neovim-remote-requirements.txt', python='/usr/bin/python3') }}
+{%- endif %}
 {%- endif %}
 
 git:
