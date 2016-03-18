@@ -1,3 +1,6 @@
+{% set vim_enabled = salt['pillar.get']('vim:enabled', true) %}
+{% set neovim_enabled = salt['pillar.get']('neovim:enabled') %}
+{%- if vim_enabled %}
 vim:
   pkg.installed:
     - pkgs:
@@ -9,7 +12,9 @@ vim:
 {%- if salt['pillar.get']('vim:ctags') %}
       - exuberant-ctags
 {%- endif %}
+{%- endif %}
 
+{%- if vim_enabled or neovim_enabled %}
 vimfiles:
   git.latest:
     - name: https://github.com/malept/vimfiles.git
@@ -18,7 +23,12 @@ vimfiles:
     - target: /home/{{ grains['username'] }}/Code/vimfiles
     - user: {{ grains['username'] }}
     - require:
+{%- if vim_enabled %}
       - pkg: vim
+{%- endif %}
+{%- if neovim_enabled %}
+      - pkg: neovim
+{%- endif %}
       - pkg: git
 
 {%- macro user_vim_dir(name) %}
@@ -40,3 +50,4 @@ vimfiles:
 {{ user_vim_dir('swap') }}
 {{ user_vim_dir('undo') }}
 {{ user_vim_dir('backup') }}
+{%- endif %}
