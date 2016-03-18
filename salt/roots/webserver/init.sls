@@ -1,5 +1,7 @@
+{%- if salt['pillar.get']('nginx:manage', true) %}
 include:
   - nginx
+{%- endif %}
 
 {%- if salt['pillar.get']('nginx:expires', true) %}
 /usr/share/nginx/logs:
