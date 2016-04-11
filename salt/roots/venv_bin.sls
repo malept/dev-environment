@@ -1,4 +1,4 @@
-{%- macro venv_with_binary(venv_name, bin_name, req_txt_path, python=None) %}
+{%- macro venv_with_binary(venv_name, bin_name, req_txt_path, python=None, binary_requirements=False) %}
 {%- set venv_dir = '/home/{}/.local/share/virtualenv/{}'.format(grains['username'], venv_name) %}
 {{ venv_dir }}:
   virtualenv.managed:
@@ -22,5 +22,12 @@
     - makedirs: True
     - require:
       - virtualenv: {{ venv_dir }}
+{%- if binary_requirements %}
+{%- if python and 'python3' in python %}
+      - pkg: python3-devel
+{%- else %}
+      - pkg: python2-devel
+{%- endif %}
+{%- endif %}
 
 {%- endmacro %}
