@@ -12,6 +12,7 @@ vim:
 {%- if salt['pillar.get']('vim:ctags') %}
       - exuberant-ctags
 {%- endif %}
+      - editorconfig
 {%- endif %}
 
 {%- if vim_enabled or neovim_enabled %}

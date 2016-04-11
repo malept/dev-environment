@@ -30,14 +30,25 @@ tmux:
 neovim:
   pkg.installed:
     - fromrepo: debian.personal
+    - require:
+      - pkg: neovim-runtime-deps
 {%- elif grains['os'] == 'Ubuntu' %}
 neovim:
   pkg.installed:
     - fromrepo: neovim
     - require:
       - pkgrepo: neovim
+      - pkg: neovim-runtime-deps
   pkgrepo.managed:
     - ppa: neovim-ppa/unstable
+{%- endif %}
+
+neovim-runtime-deps:
+  pkg.installed:
+    - pkgs:
+      - editorconfig
+{%- if salt['pillar.get']('vim:ctags') %}
+      - exuberant-ctags
 {%- endif %}
 
 {%- if salt['pillar.get']('neovim:remote:enabled') %}
