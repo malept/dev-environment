@@ -1,4 +1,4 @@
-{% if grains['os'] == 'Ubuntu' %}
+{%- if grains['os'] == 'Ubuntu' %}
 deadsnakes.ppa:
   pkgrepo.managed:
     - ppa: fkrull/deadsnakes
@@ -8,12 +8,14 @@ deadsnakes.ppa:
         - python3.3-dev
         - python3.4-dev
 
+{%- if salt['pillar.get']('python:pypy:enabled') %}
 pypy.ppa:
   pkgrepo.managed:
     - ppa: pypy/ppa
     - require_in:
       pkg: pypy-dev
-{% endif %}
+{%- endif %}
+{%- endif %}
 
 python-devel:
   pkg.installed:
@@ -27,7 +29,8 @@ python-devel:
 {%- endif %}
       - pypy-dev
 
-{% if grains['cpuarch'] == 'x86_64' %}{% set bits = '64' %}{% else %}{% set bits = '' %}{% endif %}
+{%- if salt['pillar.get']('python:pypy3:version') %}
+{%- if grains['cpuarch'] == 'x86_64' %}{% set bits = '64' %}{% else %}{% set bits = '' %}{% endif %}
 {% set pypy3_basename = 'pypy3-{}-linux{}'.format(salt['pillar.get']('python:pypy3:version'), bits) %}
 pypy3:
   archive.extracted:
@@ -40,3 +43,4 @@ pypy3:
 /usr/local/bin/pypy3:
   file.symlink:
     - target: /opt/{{ pypy3_basename }}/bin/pypy3
+{%- endif %}
