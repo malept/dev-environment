@@ -48,7 +48,7 @@ node-linters:
     - names:
       - coffeelint
       - csslint
-      - jshint
+      - eslint
       - jsonlint
     - require:
       - {{ npm_requirement }}
