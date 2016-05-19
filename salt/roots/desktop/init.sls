@@ -46,11 +46,7 @@ desktop-apps:
 browsers:
   pkg.installed:
     - pkgs:
-{%- if grains['os'] == 'Debian' %}
-      - iceweasel
-{%- else %}
       - firefox
-{%- endif %}
 {%- if salt['pillar.get']('firefox:mp3_support') %}
       - gstreamer1.0-plugins-ugly
 {%- endif %}
