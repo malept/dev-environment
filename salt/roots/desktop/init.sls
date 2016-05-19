@@ -7,10 +7,10 @@ xfce:
       - xfce4-indicator-plugin
       - xfce4-screenshooter-plugin
       - xfce4-terminal
-{%- endif %}
 
 lightdm:
   pkg.installed
+{%- endif %}
 
 {%- if grains['node_type'] == 'vagrant' %}
 virtualbox-guest-x11:
@@ -108,6 +108,7 @@ themes:
     - mode: 644
     - makedirs: True
 
+{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
 /etc/lightdm/lightdm-gtk-greeter.conf:
   file.managed:
     - source: salt://desktop/files/lightdm-gtk-greeter.conf.jinja
@@ -115,3 +116,4 @@ themes:
     - require:
       - pkg: lightdm
       - file: {{ wallpaper['filename'] }}
+{%- endif %}
