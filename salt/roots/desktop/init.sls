@@ -70,18 +70,19 @@ font-packages:
       - ttf-ancient-fonts
       - unifont
 
+{% set user_font_dir = "/home/{}/.local/share/fonts".format(grains['username']) %}
 user-font-dir:
   file.directory:
-    - name: /home/{{ grains['username'] }}/.fonts/
+    - name: {{ user_font_dir }}
     - user: {{ grains['username'] }}
 
 font-droid-sans-mono-slashed:
   archive.extracted:
-    - name: /home/{{ grains['username'] }}/.fonts/
+    - name: {{ user_font_dir }}
     - source: http://www.cosmix.org/software/files/DroidSansMonoSlashed.zip
     - source_hash: sha256=71768814dc4de0ea6248d09a2d2285bd47e9558f82945562eb78487c71348107
     - archive_format: zip
-    - if_missing: /home/{{ grains['username'] }}/.fonts/DroidSansMonoSlashed.ttf
+    - if_missing: {{ user_font_dir }}/DroidSansMonoSlashed.ttf
     - require:
       - pkg: unzip
       - file: user-font-dir
