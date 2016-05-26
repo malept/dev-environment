@@ -35,7 +35,6 @@ neovim:
 {%- elif grains['os'] == 'Ubuntu' %}
 neovim:
   pkg.installed:
-    - fromrepo: neovim
     - require:
       - pkgrepo: neovim
       - pkg: neovim-runtime-deps
