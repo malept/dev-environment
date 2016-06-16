@@ -31,14 +31,9 @@ else
     touch "salt/pillars/local/init.sls"
 fi
 
-if test "$(lsb_release -rs)" = "16.04"; then
-    # No Ubuntu 16.04 support for salt-bootstrap yet
-    # See: https://github.com/saltstack/salt-bootstrap/pull/852
-    sudo apt install --yes salt-minion
-else
-    # Yes, I know one-liners suck
-    curl -L https://bootstrap.saltstack.com | sudo sh -s -- stable
-fi
+# Yes, I know one-liners suck
+curl -L https://bootstrap.saltstack.com | sudo sh -s -- stable
+
 sudo cp "$MINION_FILE" /etc/salt/minion
 sudo ln -s $(pwd)/salt/roots /srv/salt
 sudo ln -s $(pwd)/salt/formulae /srv/salt-formulae
