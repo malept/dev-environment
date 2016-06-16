@@ -21,8 +21,8 @@ silversearcher-ag:
 {%- endif %}
 
 tmux:
-  pkg.installed{%- if salt['pillar.get']('debian:repos:personal') %}:
-    - fromrepo: debian.personal
+  pkg.installed{%- if grains['oscodename'] == 'jessie' %}:
+    - fromrepo: debian.jessie-backports
 {%- endif %}
 
 {%- if salt['pillar.get']('neovim:enabled') %}

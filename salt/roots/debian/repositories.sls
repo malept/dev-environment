@@ -1,10 +1,10 @@
-{%- if grains['oscodename'] == 'wheezy' -%}
-debian.wheezy-backports:
+{%- if grains['oscodename'] == 'jessie' -%}
+debian.{{ grains['oscodename'] }}-backports:
   pkgrepo.managed:
-    - humanname: Debian Wheezy backports repository
-    - name: deb http://mirrors.kernel.org/debian wheezy-backports main contrib
-    - dist: wheezy-backports
-    - file: /etc/apt/sources.list.d/wheezy-backports.list
+    - humanname: Debian {{ grains['oscodename'] }} backports repository
+    - name: deb http://mirrors.kernel.org/debian {{ grains['oscodename'] }}-backports main contrib
+    - dist: {{ grains['oscodename'] }}-backports
+    - file: /etc/apt/sources.list.d/{{ grains['oscodename'] }}-backports.list
 {%- endif %}
 
 {%- if grains['oscodename'] in ['wheezy', 'jessie'] %}
