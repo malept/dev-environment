@@ -75,6 +75,7 @@ python-virtualenv:
 
 grunt-cli:
   npm.installed:
+    - user: {{ grains['username'] }}
     - require:
       - {{ npm_requirement }}
 
