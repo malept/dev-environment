@@ -84,7 +84,7 @@ grunt-cli:
     - user: {{ grains['username'] }}
     - require:
       - {{ npm_requirement }}
-      - dir: npm-global-dir
+      - file: npm-global-dir
 
 {% set vagrant_version = salt['pillar.get']('vagrant:version', false) -%}
 {% if vagrant_version -%}

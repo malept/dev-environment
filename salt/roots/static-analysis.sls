@@ -53,4 +53,4 @@ node-linters:
     - require:
       - {{ npm_requirement }}
       - file: {{ npmrc }}
-      - dir: npm-global-dir
+      - file: npm-global-dir
