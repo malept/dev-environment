@@ -16,3 +16,7 @@ co = checkout
 {%- else %}
   default = current
 {%- endif %}
+{%- if salt['pillar.get']('github:enabled') %}
+[hub]
+protocol = ssh
+{%- endif %}
