@@ -9,14 +9,14 @@
 	email = {{ git_email }}
 {%- endif %}
 [alias]
-co = checkout
+    co = checkout
 [push]
 {%- if grains['osrelease']|int >= 8 %}
 	default = simple
 {%- else %}
-  default = current
+    default = current
 {%- endif %}
 {%- if salt['pillar.get']('github:enabled') %}
 [hub]
-protocol = ssh
+    protocol = ssh
 {%- endif %}
