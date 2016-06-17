@@ -73,11 +73,18 @@ python-pip:
 python-virtualenv:
   pkg.installed
 
+npm-global-dir:
+  file.directory:
+    - name: {{ salt['pillar.get']('npm:config:prefix') }}
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+
 grunt-cli:
   npm.installed:
     - user: {{ grains['username'] }}
     - require:
       - {{ npm_requirement }}
+      - dir: npm-global-dir
 
 {% set vagrant_version = salt['pillar.get']('vagrant:version', false) -%}
 {% if vagrant_version -%}
