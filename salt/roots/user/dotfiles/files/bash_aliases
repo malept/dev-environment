@@ -23,6 +23,8 @@ alias l='ls -CF'
 alias rtest='RAILS_ENV=test ruby -I test'
 alias prtest='RAILS_ENV=test pry -I test'
 alias trake="RAILS_ENV=test rake"
+alias brake="bundle exec rake"
+alias tbrake="RAILS_ENV=test brake"
 
 # vim-profile
 alias vimp='~/Code/vimfiles/vim-profile'
