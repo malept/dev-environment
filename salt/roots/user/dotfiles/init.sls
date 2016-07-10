@@ -29,7 +29,6 @@
 {%- if salt['pillar.get']('ruby:enabled') %}
 {{ config_file('gemrc') }}
 {{ config_file('global.gems', '.rvm/gemsets/global.gems') }}
-{{ config_file('irbrc') }}
 {{ config_file('pryrc') }}
 {%- endif %}
 
