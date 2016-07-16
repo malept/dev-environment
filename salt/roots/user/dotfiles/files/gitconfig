@@ -1,7 +1,5 @@
 [color]
 	ui = true
-[core]
-	excludesfile = ~/.config/git/ignore
 [user]
 	name = Mark Lee
 {%- set git_email = salt['pillar.get']('git:email', false) %}

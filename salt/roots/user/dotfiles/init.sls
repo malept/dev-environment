@@ -16,7 +16,7 @@
 
 {{ config_file('agignore') }}
 
-{{ config_file('gitconfig', templated=true) }}
+{{ config_file('gitconfig', '.config/git/config', templated=true) }}
 {{ config_file('gitignore', '.config/git/ignore') }}
 
 {{ config_file('pip.conf', '.config/pip/pip.conf', templated=true) }}
