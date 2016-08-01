@@ -131,6 +131,10 @@ PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # github's hub
 [[ -d "/opt/github/bin" ]] && PATH="$PATH:/opt/github/bin"
 
+{%- if salt['pillar.get']('aws:enabled') %}
+export AWS_CONFIG_FILE="$HOME/.config/aws/config.ini"
+export AWS_SHARED_CREDENTIALS_FILE="$HOME/.config/aws/credentials.ini"
+{%- endif %}
 export PSQLRC=$HOME/.config/psqlrc
 
 {% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).iteritems() -%}

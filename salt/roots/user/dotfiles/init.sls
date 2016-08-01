@@ -1,12 +1,5 @@
 {% from 'user/dotfiles/macros.sls' import bin_file, config_dir, config_file with context %}
 
-{%- if salt['pillar.get']('aws:enabled') %}
-{{ bin_file('awsify') }}
-{%- endif %}
-{%- if salt['pillar.get']('chef:enabled') %}
-{{ bin_file('blade') }}
-{%- endif %}
-
 {{ bin_file('db_console') }}
 {{ bin_file('download_rds_slow_query_log') }}
 
