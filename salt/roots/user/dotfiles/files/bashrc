@@ -125,8 +125,8 @@ PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # Travis CI CLI
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
-# multirust
-[[ -d "/opt/multirust/bin" ]] && PATH="$PATH:/opt/multirust/bin"
+# rustup
+[[ -d "$HOME/.cargo/bin" ]] && PATH="$PATH:$HOME/.cargo/bin"
 
 # github's hub
 [[ -d "/opt/github/bin" ]] && PATH="$PATH:/opt/github/bin"
