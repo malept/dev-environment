@@ -13,7 +13,8 @@
 
 {%- macro config_file(src, dest=false, templated=false) %}
 {%- if not dest %}
-{%- set dest = '.{}'.format(src) %}
+{%- set dest_override = salt['pillar.get']('user:dotfiles:{}'.format(src)) %}
+{%- set dest = dest_override or '.{}'.format(src) %}
 {%- endif %}
 /home/{{ grains['username'] }}/{{ dest }}:
   file.managed:
