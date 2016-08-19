@@ -32,6 +32,10 @@ alias gvimp='~/Code/vimfiles/gvim-profile'
 alias viewp='~/Code/vimfiles/view-profile'
 alias nvimp='~/Code/vimfiles/nvim-profile'
 
+# Enforce tmux using XDG config dir
+# Needed because of https://github.com/tmux/tmux/issues/142
+alias tmux='tmux -f ~/.config/tmux/tmux.conf'
+
 if [[ -d ~/.config/bash_aliases.d ]]; then
     for f in `ls ~/.config/bash_aliases.d/*`; do
         source "$f"
