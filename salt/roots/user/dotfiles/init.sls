@@ -17,8 +17,6 @@
 {{ config_file('psqlrc', '.config/psqlrc') }}
 {{ config_dir('.cache/psql') }}
 
-{{ config_file('tmux.conf', '.config/tmux/tmux.conf') }}
-
 {%- if salt['pillar.get']('ruby:enabled') %}
 {{ config_file('gemrc') }}
 {{ config_file('global.gems', '.rvm/gemsets/global.gems') }}

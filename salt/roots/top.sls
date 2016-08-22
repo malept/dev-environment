@@ -11,6 +11,7 @@ base:
     - user
     - user.dotfiles
     - user.dotfiles.node
+    - user.dotfiles.tmux
     - user.dotfiles.vim
     - system
 {%- if salt['pillar.get']('X11:enabled') %}
