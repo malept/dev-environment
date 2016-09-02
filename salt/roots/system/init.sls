@@ -90,6 +90,21 @@ vagrant:
 /usr/local/bin:
   file.directory
 
+{%- set xsv_version = salt['pillar.get']('xsv:version', false) %}
+{%- if xsv_version %}
+xsv:
+  archive.extracted:
+    - name: /usr/local/bin/
+    - source: https://github.com/BurntSushi/xsv/releases/download/{{ xsv_version }}/xsv-{{ xsv_version }}-{{ grains['cpuarch'] }}-unknown-linux-musl.tar.gz
+    - source_hash: {{ salt['pillar.get']('xsv:checksum') }}
+{%- if grains['saltversioninfo'] >= (2016, 3, 0) %}
+    - source_hash_update: true
+{%- endif %}
+    - archive_format: tar
+    - tar_options: z
+    - if_missing: /usr/local/bin/xsv
+{%- endif %}
+
 {%- if salt['pillar.get']('imagemagick:enabled', false) %}
 imagemagick:
   pkg.installed
