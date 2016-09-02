@@ -87,6 +87,20 @@ font-droid-sans-mono-slashed:
       - pkg: unzip
       - file: user-font-dir
 
+{%- if grains['saltversioninfo'] >= (2016, 3, 1) %}
+font-fira-code:
+  - archive.extracted:
+    - name: {{ user_font_dir }}
+    - source: https://github.com/tonsky/FiraCode/releases/download/1.102/FiraCode_1.201.zip
+    - source_hash: sha256=51ce18a8e845301ba76038bed56f9fc876264658ee7d4411fb9b072271bb1c86
+    - archive_format: zip
+    - zip_options: -j
+    - if_missing: {{ user_font_dir }}/FiraCode-Regular.otf
+    - require:
+      - pkg: unzip
+      - file: user-font-dir
+{%- endif %}
+
 # Theme-related
 themes:
   pkg.installed:
