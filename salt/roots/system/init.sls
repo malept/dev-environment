@@ -50,6 +50,15 @@ neovim-runtime-deps:
 {%- endif %}
 {%- endif %}
 
+{%- set fzy_version = salt['pillar.get']('fzy:version') %}
+{%- if fzy_version %}
+fzy:
+  pkg.installed:
+    - sources:
+      - fzy: https://github.com/jhawthorn/fzy/releases/download/{{ fzy_version }}/fzy_{{ fzy_version }}-1_amd64.deb
+    - version: {{ fzy_version }}
+{%- endif %}
+
 git:
   pkg.installed
 
