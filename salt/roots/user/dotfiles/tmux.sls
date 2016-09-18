@@ -2,7 +2,9 @@
 
 tmux:
   pkg.installed{%- if grains['oscodename'] == 'jessie' %}:
-    - fromrepo: debian.jessie-backports
+    - fromrepo: jessie-backports
+    - require:
+      - pkgrepo: debian.jessie-backports
 {%- elif grains['oscodename'] == 'xenial' %}:
     - sources:
       - tmux: http://mirrors.kernel.org/ubuntu/pool/main/t/tmux/tmux_2.2-3_amd64.deb

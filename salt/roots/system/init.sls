@@ -24,9 +24,9 @@ silversearcher-ag:
 {%- if salt['pillar.get']('debian:repos:personal') %}
 neovim:
   pkg.installed:
-    - fromrepo: debian.personal
     - require:
       - pkg: neovim-runtime-deps
+      - pkgrepo: debian.personal
 {%- elif grains['os'] == 'Ubuntu' %}
 neovim:
   pkg.installed:
