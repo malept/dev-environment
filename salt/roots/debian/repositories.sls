@@ -2,7 +2,7 @@
 debian.{{ grains['oscodename'] }}-backports:
   pkgrepo.managed:
     - humanname: Debian {{ grains['oscodename'] }} backports repository
-    - name: deb http://mirrors.kernel.org/debian {{ grains['oscodename'] }}-backports main contrib
+    - name: deb http://mirrors.kernel.org/debian {{ grains['oscodename'] }}-backports main contrib non-free
     - dist: {{ grains['oscodename'] }}-backports
     - file: /etc/apt/sources.list.d/{{ grains['oscodename'] }}-backports.list
 {%- endif %}
