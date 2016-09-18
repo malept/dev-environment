@@ -1,4 +1,4 @@
-{% from 'node/map.jinja' import npm_requirement with context %}
+{% from 'node/map.jinja' import npm_requirement, npmrc with context %}
 {% from 'venv_bin.sls' import venv_with_binary with context %}
 
 America/Los_Angeles:
@@ -80,11 +80,18 @@ npm-global-dir:
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
 
+npmrc-dir:
+  file.directory:
+    - name: /usr/etc
+    - require_in:
+      - file: {{ npmrc }}
+
 grunt-cli:
   npm.installed:
     - user: {{ grains['username'] }}
     - require:
       - {{ npm_requirement }}
+      - file: {{ npmrc }}
       - file: npm-global-dir
 
 {% set vagrant_version = salt['pillar.get']('vagrant:version', false) -%}
