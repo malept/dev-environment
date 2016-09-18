@@ -31,7 +31,7 @@ python-devel:
 
 {%- if salt['pillar.get']('python:pypy3:version') %}
 {%- if grains['cpuarch'] == 'x86_64' %}{% set bits = '64' %}{% else %}{% set bits = '' %}{% endif %}
-{% set pypy3_basename = 'pypy3-{}-linux{}'.format(salt['pillar.get']('python:pypy3:version'), bits) %}
+{% set pypy3_basename = 'pypy3.3-{}-linux{}'.format(salt['pillar.get']('python:pypy3:version'), bits) %}
 pypy3:
   archive.extracted:
     - name: /opt/
