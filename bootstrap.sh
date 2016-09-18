@@ -7,6 +7,10 @@ if ! which git > /dev/null; then
     sudo apt install --no-install-recommends --yes git
 fi
 
+if ! which curl > /dev/null; then
+    sudo apt install --no-install-recommends --yes curl
+fi
+
 if ! test -d ~/Code; then
     mkdir ~/Code
 fi
