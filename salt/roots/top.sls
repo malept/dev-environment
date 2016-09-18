@@ -17,7 +17,7 @@ base:
 {%- if salt['pillar.get']('X11:enabled') %}
     - desktop
 {%- endif %}
-{%- if salt['pillar.get']('github:enabled') %}
+{%- if salt['pillar.get']('github:version') %}
     - github
 {%- endif %}
 {%- if salt['pillar.get']('python:enabled', true) %}

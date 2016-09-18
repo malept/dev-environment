@@ -14,7 +14,7 @@
 {%- else %}
 	default = current
 {%- endif %}
-{%- if salt['pillar.get']('github:enabled') %}
+{%- if salt['pillar.get']('github:version') %}
 [hub]
 	protocol = ssh
 {%- endif %}

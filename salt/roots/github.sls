@@ -1,7 +1,10 @@
+{% set github_version = salt['pillar.get']('github:version') %}
+{%- if github_version %}
 github-hub:
   archive.extracted:
     - name: /opt/github/
-    - source: https://github.com/github/hub/releases/download/v2.2.2/hub-linux-amd64-2.2.2.tgz
-    - source_hash: sha256=da2d780f6bca22d35fdf71c8ba1d11cfd61078d5802ceece8d1a2c590e21548d
+    - source: https://github.com/github/hub/releases/download/v{{ github_version }}/hub-linux-amd64-{{ github_version }}.tgz
+    - source_hash: sha256={{ salt['pillar.get']('github:sha256sum') }}
     - archive_format: tar
     - tar_options: -z --strip-components=1
+{%- endif %}
