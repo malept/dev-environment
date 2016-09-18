@@ -131,6 +131,9 @@ PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # github's hub
 [[ -d "/opt/github/bin" ]] && PATH="$PATH:/opt/github/bin"
 
+# dasht
+[[ -d "/opt/dasht/bin" ]] && PATH="$PATH:/opt/dasht/bin"
+
 {%- if salt['pillar.get']('aws:enabled') %}
 export AWS_CONFIG_FILE="$HOME/.config/aws/config.ini"
 export AWS_SHARED_CREDENTIALS_FILE="$HOME/.config/aws/credentials.ini"
