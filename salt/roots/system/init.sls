@@ -74,8 +74,12 @@ dasht:
     - if_missing: /opt/dasht/bin/dasht
     - require:
       - file: dasht
+      - pkg: sqlite3
   file.directory:
     - name: /opt/dasht/
+
+sqlite3:
+  pkg.installed
 {%- endif %}
 
 git:
