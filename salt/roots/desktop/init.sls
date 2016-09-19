@@ -60,6 +60,9 @@ browsers:
 font-packages:
   pkg.installed:
     - pkgs:
+      # multipurpose
+      - fonts-noto
+      - fonts-roboto
       # console/programming
       - fonts-droid
       # emoji
