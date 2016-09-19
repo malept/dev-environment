@@ -98,8 +98,8 @@ font-fira-code:
     - source: https://github.com/tonsky/FiraCode/releases/download/1.102/FiraCode_1.201.zip
     - source_hash: sha256=51ce18a8e845301ba76038bed56f9fc876264658ee7d4411fb9b072271bb1c86
     - archive_format: zip
-    - zip_options: -j
-    - if_missing: {{ user_font_dir }}/FiraCode-Regular.otf
+    - zip_options: -j -i *.ttf
+    - if_missing: {{ user_font_dir }}/FiraCode-Regular.ttf
     - require:
       - pkg: unzip
       - file: user-font-dir
