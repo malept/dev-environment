@@ -88,7 +88,7 @@ font-droid-sans-mono-slashed:
       - file: user-font-dir
 
 {# zip_options is the blocker #}
-{%- if grains['saltversioninfo'] >= [2016, 3, 1] %}
+{%- if grains['saltversioninfo'] >= [2016, 9, 0] %}
 font-fira-code:
   archive.extracted:
     - name: {{ user_font_dir }}
