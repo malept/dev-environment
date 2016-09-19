@@ -66,7 +66,7 @@ dasht:
     - name: /opt/dasht/
     - source: https://github.com/sunaku/dasht/archive/v{{ dasht_version }}.tar.gz
     - source_hash: sha256={{ salt['pillar.get']('dasht:sha256sum') }}
-{%- if grains['saltversioninfo'] >= (2016, 3, 0) %}
+{%- if grains['saltversioninfo'] >= [2016, 3, 0] %}
     - source_hash_update: true
 {%- endif %}
     - archive_format: tar
@@ -144,7 +144,7 @@ xsv:
     - name: /usr/local/bin/
     - source: https://github.com/BurntSushi/xsv/releases/download/{{ xsv_version }}/xsv-{{ xsv_version }}-{{ grains['cpuarch'] }}-unknown-linux-musl.tar.gz
     - source_hash: {{ salt['pillar.get']('xsv:checksum') }}
-{%- if grains['saltversioninfo'] >= (2016, 3, 0) %}
+{%- if grains['saltversioninfo'] >= [2016, 3, 0] %}
     - source_hash_update: true
 {%- endif %}
     - archive_format: tar

@@ -87,7 +87,7 @@ font-droid-sans-mono-slashed:
       - pkg: unzip
       - file: user-font-dir
 
-{%- if grains['saltversioninfo'] >= (2016, 3, 1) %}
+{%- if grains['saltversioninfo'] >= [2016, 3, 1] %}
 font-fira-code:
   - archive.extracted:
     - name: {{ user_font_dir }}
