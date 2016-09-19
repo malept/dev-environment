@@ -107,7 +107,11 @@ themes:
   pkg.installed:
     - pkgs:
       - gnome-wise-icon-theme
+{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
       - shiki-colors-xfwm-theme
+{%- else %}
+      - gnome-tweak-tool
+{%- endif %}
       - shiki-wise-theme
 
 {% from 'wallpaper.sls' import wallpaper -%}
