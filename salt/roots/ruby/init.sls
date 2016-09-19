@@ -8,7 +8,7 @@ include:
   - .chruby
 {%- endif %}
 
-{%- if pillar_get('ruby:capybara-webkit:enabled') -%}
+{%- if pillar_get('ruby:capybara-webkit:enabled') %}
 capybara-webkit-deps:
   pkg.installed:
     - pkgs:
