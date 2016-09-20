@@ -10,6 +10,9 @@ mysql:
       - mysql-workbench
 {%- endif %}
       - libmysqlclient-dev
+{%- if grains['oscodename'] == 'jessie' and mysql_majmin == '5.6' %}
+    - fromrepo: jessie-backports
+{%- endif %}
 
   service:
     - running
