@@ -82,6 +82,19 @@ sqlite3:
   pkg.installed
 {%- endif %}
 
+{%- if salt['pillar.get']('profile-sync-daemon:enabled') and salt['pillar.get']('profile-sync-daemon:overlayfs') %}
+/etc/sudoers.d/profile-sync-daemon:
+  file.managed:
+    - user: root
+    - group: root
+    - mode: 440
+    - template: jinja
+    - source: salt://system/files/profile-sync-daemon.sudoers
+    - check_cmd: visudo -c -f
+    - require:
+      - pkg: browsers
+{%- endif %}
+
 git:
   pkg.installed
 

@@ -14,6 +14,10 @@
 
 {{ config_file('pip.conf', '.config/pip/pip.conf', templated=true) }}
 
+{%- if salt['pillar.get']('profile-sync-daemon:enabled') %}
+{{ config_file('psd.conf', '.config/psd/psd.conf', templated=true) }}
+{%- endif %}
+
 {{ config_file('psqlrc', '.config/psqlrc') }}
 {{ config_dir('.cache/psql') }}
 

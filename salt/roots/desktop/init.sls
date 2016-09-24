@@ -51,6 +51,9 @@ browsers:
       - gstreamer1.0-plugins-ugly
 {%- endif %}
       - chromium
+{%- if salt['pillar.get']('profile-sync-daemon:enabled') %}
+      - profile-sync-daemon
+{%- endif %}
 {%- if grains['oscodename'] in ['wheezy', 'jessie'] %}
     - fromrepo: {{ grains['oscodename'] }}-backports
 {%- endif %}
