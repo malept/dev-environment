@@ -26,6 +26,9 @@ base:
 {%- if salt['pillar.get']('ruby:enabled') %}
     - ruby
 {%- endif %}
+{%- if salt['pillar.get']('rust:enabled') %}
+    - rust
+{%- endif %}
     - databases
 {%- if salt['pillar.get']('postgres:enabled', true) %}
     - postgres.apt
