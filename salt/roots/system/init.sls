@@ -178,7 +178,7 @@ chef-client:
   service.dead:
     - enable: False
 
-{%- if salt['pillar.get']('aws:enabled', false) %}
+{%- if salt['pillar.get']('aws:enabled') %}
 ruby-dev:
   pkg.installed
 

@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+from configparser import ConfigParser
+import os
+import subprocess
+import sys
+
+
+def error(msg):
+    print(msg, file=sys.stderr)
+    sys.exit(1)
+
+if len(sys.argv) < 2:
+    error('Please specify a command')
+
+default_credentials_file = os.path.join(os.path.expanduser('~'), '.config', 'aws', 'credentials.ini')
+credentials_file = os.environ.get('AWS_SHARED_CREDENTIALS_FILE', default_credentials_file)
+if not os.path.exists(credentials_file):
+    error('Credentials file "{}" does not exist'.format(credentials_file))
+
+cfg = ConfigParser()
+cfg.read(credentials_file)
+
+profile = os.environ.get('AWS_PROFILE', os.environ.get('AWS_DEFAULT_PROFILE'))
+if profile is None:
+    error('Please set AWS_PROFILE or AWS_DEFAULT_PROFILE')
+
+env = os.environ.copy()
+for key, value in cfg[profile].items():
+    env[key.upper()] = value
+
+sys.exit(subprocess.call(sys.argv[1:], env=env))
