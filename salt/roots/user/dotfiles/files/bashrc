@@ -112,7 +112,21 @@ fi
 unset ANDROID_SDK
 
 # virtualenvwrapper
-WORKON_HOME=$HOME/.local/share/virtualenv
+VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
+if [[ -n "$VIRTUALENVWRAPPER_SCRIPT" ]]; then
+    WORKON_HOME="$HOME/.local/share/virtualenv"
+    PROJECT_HOME="$HOME/Code"
+    if [[ "$VIRTUALENVWRAPPER_SCRIPT" =~ "/.local/bin/" && -L "$VIRTUALENVWRAPPER_SCRIPT" ]]; then
+        VIRTUALENVWRAPPER_PYTHON="$(dirname "$(readlink "$VIRTUALENVWRAPPER_SCRIPT")")/python"
+    fi
+    VIRTUALENVWRAPPER_LAZY="$(dirname "$VIRTUALENVWRAPPER_SCRIPT")/virtualenvwrapper_lazy.sh"
+    if [[ -n "$VIRTUALENVWRAPPER_LAZY" ]]; then
+        source "$VIRTUALENVWRAPPER_LAZY"
+    else
+        source "$VIRTUALENVWRAPPER_SCRIPT"
+    fi
+    unset VIRTUALENVWRAPPER_LAZY
+fi
 
 # rubygems
 # See: https://github.com/rvm/rubygems-bundler/blob/ce619c06ec051a25bed6f0eb68bb6cd491054a70/README.md#note-for-rubygems--220
