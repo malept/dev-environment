@@ -1,4 +1,4 @@
-{%- macro venv_with_binary(venv_name, bin_name, req_txt_path, python=None, binary_requirements=False) %}
+{%- macro venv(venv_name, req_txt_path, python=None, binary_requirements=False) %}
 {%- set venv_dir = '/home/{}/.local/share/virtualenv/{}'.format(grains['username'], venv_name) %}
 {{ venv_dir }}:
   virtualenv.managed:
@@ -10,9 +10,16 @@
     - requirements: {{ req_txt_path }}
     - require:
       - pkg: python-virtualenv
+{%- if binary_requirements %}
+      - pkg: python-devel
+{%- endif %}
 {%- for rtype, rname in varargs %}
       - {{ rtype }}: {{ rname }}
 {%- endfor %}
+{%- endmacro %}
+
+{%- macro venv_with_binary(venv_name, bin_name, req_txt_path, python=None, binary_requirements=False) %}
+{{ venv(venv_name, req_txt_path, python, binary_requirements, **varargs) }}
 
 /home/{{ grains['username'] }}/.local/bin/{{ bin_name }}:
   file.symlink:
@@ -22,12 +29,4 @@
     - makedirs: True
     - require:
       - virtualenv: {{ venv_dir }}
-{%- if binary_requirements %}
-{%- if python and 'python3' in python %}
-      - pkg: python3-devel
-{%- else %}
-      - pkg: python2-devel
-{%- endif %}
-{%- endif %}
-
 {%- endmacro %}
