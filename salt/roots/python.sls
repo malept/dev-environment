@@ -24,9 +24,7 @@ python-devel:
       - python2.6-dev
 {%- endif %}
       - python2.7-dev
-{%- if grains['os'] != 'Debian' %}
-      - python3.3-dev
-{%- endif %}
+      - python3.4-dev
       - pypy-dev
 
 {%- if salt['pillar.get']('python:pypy3:version') %}
