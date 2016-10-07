@@ -1,6 +1,9 @@
 {% from 'node/map.jinja' import npm_requirement, npmrc with context %}
 {% from 'venv_bin.sls' import venv_with_binary with context %}
 
+include:
+  - .dasht
+
 America/Los_Angeles:
   timezone.system:
     - utc: True
@@ -57,29 +60,6 @@ fzy:
     - sources:
       - fzy: https://github.com/jhawthorn/fzy/releases/download/{{ fzy_version }}/fzy_{{ fzy_version }}-1_amd64.deb
     - version: {{ fzy_version }}
-{%- endif %}
-
-{%- set dasht_version = salt['pillar.get']('dasht:version') %}
-{%- if dasht_version %}
-dasht:
-  archive.extracted:
-    - name: /opt/dasht/
-    - source: https://github.com/sunaku/dasht/archive/v{{ dasht_version }}.tar.gz
-    - source_hash: sha256={{ salt['pillar.get']('dasht:sha256sum') }}
-{%- if grains['saltversioninfo'] >= [2016, 3, 0] %}
-    - source_hash_update: true
-{%- endif %}
-    - archive_format: tar
-    - tar_options: z --strip-components 1
-    - if_missing: /opt/dasht/bin/dasht
-    - require:
-      - file: dasht
-      - pkg: sqlite3
-  file.directory:
-    - name: /opt/dasht/
-
-sqlite3:
-  pkg.installed
 {%- endif %}
 
 {%- if salt['pillar.get']('profile-sync-daemon:enabled') and salt['pillar.get']('profile-sync-daemon:overlayfs') %}
