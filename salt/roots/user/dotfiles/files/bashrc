@@ -148,6 +148,13 @@ if [[ -f '/usr/share/chruby/chruby.sh' ]]; then
     {%- endif %}
 fi
 
+# Ruby user bindir
+RUBY_USERBINDIR="$(ruby -e 'print Gem.bindir(Gem.user_dir)')"
+if [[ -d "$RUBY_USERBINDIR" ]]; then
+    PATH="$PATH:$RUBY_USERBINDIR"
+fi
+unset RUBY_USERBINDIR
+
 # Travis CI CLI
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
