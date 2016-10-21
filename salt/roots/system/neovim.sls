@@ -25,7 +25,8 @@ neovim-runtime-deps:
       - exuberant-ctags
 {%- endif %}
 {%- if salt['pillar.get']('fzy:version') %}
-      - fzy
+    - require:
+      - pkg: fzy
 {%- endif %}
 
 
