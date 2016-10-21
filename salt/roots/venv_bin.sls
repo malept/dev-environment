@@ -11,7 +11,7 @@
     - require:
       - pkg: python-virtualenv
 {%- if binary_requirements %}
-      - pkg: python-devel
+      - pkg: python-dev
 {%- endif %}
 {%- for rtype, rname in varargs %}
       - {{ rtype }}: {{ rname }}
