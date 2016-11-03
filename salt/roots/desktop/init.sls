@@ -30,7 +30,7 @@ desktop-apps:
       - file-roller
       - gnome-keyring
       - gucharmap
-{%- if grains['oscodename'] == 'wheezy' %}
+{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
       - synapse
 {%- endif %}
       - xsel
