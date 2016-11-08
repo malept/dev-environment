@@ -22,4 +22,5 @@ dasht-deps:
     - pkgs:
       - socat
       - sqlite3
+      - w3m
 {%- endif %}
