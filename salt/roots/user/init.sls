@@ -17,6 +17,12 @@
       - users
       - vboxusers
       - video
+{%- set extra_groups = salt['pillar.get']('user.extra_groups') %}
+{%- if extra_groups %}
+{%- for group in extra_groups %}
+      - {{ group }}
+{%- endfor %}
+{%- endif %}
     - require:
       - pkg: sshfs # so the fuse group is added correctly
 
