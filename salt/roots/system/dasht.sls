@@ -5,7 +5,7 @@ dasht:
     - name: /opt/dasht/
     - source: https://github.com/sunaku/dasht/archive/v{{ dasht_version }}.tar.gz
     - source_hash: sha256={{ salt['pillar.get']('dasht:sha256sum') }}
-{%- if grains['saltversioninfo'] >= [2016, 3, 0] %}
+{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - source_hash_update: true
 {%- endif %}
     - archive_format: tar

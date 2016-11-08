@@ -5,7 +5,7 @@ github-hub:
     - name: /opt/github/
     - source: https://github.com/github/hub/releases/download/v{{ github_version }}/hub-linux-amd64-{{ github_version }}.tgz
     - source_hash: sha256={{ salt['pillar.get']('github:sha256sum') }}
-{%- if grains['saltversioninfo'] >= [2016, 3, 0] %}
+{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - source_hash_update: true
 {%- endif %}
     - archive_format: tar

@@ -107,7 +107,7 @@ xsv:
     - name: /usr/local/bin/
     - source: https://github.com/BurntSushi/xsv/releases/download/{{ xsv_version }}/xsv-{{ xsv_version }}-{{ grains['cpuarch'] }}-unknown-linux-musl.tar.gz
     - source_hash: {{ salt['pillar.get']('xsv:checksum') }}
-{%- if grains['saltversioninfo'] >= [2016, 3, 0] %}
+{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - source_hash_update: true
 {%- endif %}
     - archive_format: tar
