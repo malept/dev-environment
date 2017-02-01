@@ -21,6 +21,7 @@ alias l='ls -CF'
 
 # ruby
 alias rtest='RAILS_ENV=test ruby -I test'
+alias brtest='RAILS_ENV=test bundle exec ruby -I test'
 alias prtest='RAILS_ENV=test pry -I test'
 alias trake="RAILS_ENV=test rake"
 alias brake="bundle exec rake"
