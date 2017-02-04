@@ -31,7 +31,8 @@
 {{ config_file('pryrc') }}
 {%- endif %}
 
-{%- if salt['pillar.get']('X11:enabled') %}
+{%- if salt['pillar.get']('X11:enabled') and if salt['pillar.get']('X11:Xfce:enabled') %}
+{{ config_file('Xmodmap') }}
 {{ config_file('synapse-gtkrc', '.config/synapse/gtkrc') }}
 {{ config_file('xfce4-screenshooter', '.config/xfce4/xfce4-screenshooter', templated=true) }}
 {%- endif %}
