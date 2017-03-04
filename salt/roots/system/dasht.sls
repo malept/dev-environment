@@ -5,11 +5,13 @@ dasht:
     - name: /opt/dasht/
     - source: https://github.com/sunaku/dasht/archive/v{{ dasht_version }}.tar.gz
     - source_hash: sha256={{ salt['pillar.get']('dasht:sha256sum') }}
+    - archive_format: tar
 {%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - source_hash_update: true
+    - options: -z --strip-components=1
+{% else %}
+    - tar_options: -z --strip-components=1
 {%- endif %}
-    - archive_format: tar
-    - tar_options: z --strip-components 1
     - if_missing: /opt/dasht/bin/dasht
     - require:
       - file: dasht
