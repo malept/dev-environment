@@ -88,6 +88,9 @@ font-droid-sans-mono-slashed:
     - source: http://www.cosmix.org/software/files/DroidSansMonoSlashed.zip
     - source_hash: sha256=71768814dc4de0ea6248d09a2d2285bd47e9558f82945562eb78487c71348107
     - archive_format: zip
+{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
+    - enforce_toplevel: false
+{%- endif %}
     - if_missing: {{ user_font_dir }}/DroidSansMonoSlashed.ttf
     - require:
       - pkg: unzip
@@ -98,10 +101,17 @@ font-droid-sans-mono-slashed:
 font-fira-code:
   archive.extracted:
     - name: {{ user_font_dir }}
-    - source: https://github.com/tonsky/FiraCode/releases/download/1.102/FiraCode_1.201.zip
-    - source_hash: sha256=51ce18a8e845301ba76038bed56f9fc876264658ee7d4411fb9b072271bb1c86
+    - source: https://github.com/tonsky/FiraCode/releases/download/1.204/FiraCode_1.204.zip
+    - source_hash: sha256=28ccc003173cec9de7857f8743b805d6b51eb68fb8be5e21ce2f8e1584f0939f
     - archive_format: zip
+
+{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
+    - source_hash_update: true
+    - enforce_toplevel: false
+    - options: -j -i *.ttf
+{% else %}
     - zip_options: -j -i *.ttf
+{%- endif %}
     - if_missing: {{ user_font_dir }}/FiraCode-Regular.ttf
     - require:
       - pkg: unzip
