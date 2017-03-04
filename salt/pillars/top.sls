@@ -1,5 +1,6 @@
 base:
   '*':
+    - salt
     - nginx
     - postgres
     - interpreters
