@@ -68,4 +68,9 @@ debian.personal:
     - humanname: Personal Debian APT repository
     - name: deb [trusted=yes] https://apt.fury.io/malept/ /
     - file: /etc/apt/sources.list.d/personal.list
+    - require:
+      - pkg: apt-transport-https
+
+apt-transport-https:
+  pkg.installed
 {% endif %}
