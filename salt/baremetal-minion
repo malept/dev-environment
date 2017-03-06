@@ -9,5 +9,4 @@ file_roots:
     - /srv/salt-formulae/node-formula
     - /srv/salt-formulae/gmusicprocurator-formula
 grains:
-  node_type: baremetal
   username: mark

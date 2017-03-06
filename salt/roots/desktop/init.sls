@@ -12,14 +12,14 @@ lightdm:
   pkg.installed
 {%- endif %}
 
-{%- if grains['node_type'] == 'vagrant' %}
+{%- if grains['virtual'] == 'VirtualBox' %}
 virtualbox-guest-x11:
   pkg.installed{%- if grains['oscodename'] == 'wheezy' %}:
     - fromrepo: wheezy-backports
   {%- elif grains['oscodename'] == 'stretch' %}:
     - fromrepo: unstable
   {%- endif %}
-{%- elif grains['node_type'] == 'vmware' %}
+{%- elif grains['virtual'] == 'VMware' %}
 open-vm-tools-desktop:
   pkg.installed{%- if grains['oscodename'] in ['wheezy', 'jessie'] %}:
     - fromrepo: {{ grains['oscodename'] }}-backports
