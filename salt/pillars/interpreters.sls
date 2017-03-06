@@ -1,7 +1,9 @@
 node:
   install_from_ppa: true
+{%- if grains['oscodename'] == 'stretch' %}
   ppa:
-    repository_url: https://deb.nodesource.com/node_6.x
+    dist: jessie # stretch does not exist as a dist yet
+{%- endif %}
 npm:
   config:
     prefix: /opt/node
