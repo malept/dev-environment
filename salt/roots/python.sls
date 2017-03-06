@@ -25,7 +25,9 @@ python-devel:
 {%- endif %}
       - python2.7-dev
       - python3.4-dev
+{%- if salt['pillar.get']('python:pypy:enabled') %}
       - pypy-dev
+{%- endif %}
 
 {%- if salt['pillar.get']('python:pypy3:version') %}
 {%- if grains['cpuarch'] == 'x86_64' %}{% set bits = '64' %}{% else %}{% set bits = '' %}{% endif %}
