@@ -41,8 +41,8 @@ debian.jessie:
 debian.sid:
   pkgrepo.managed:
     - humanname: Debian Sid repository
-    - name: deb http://mirrors.kernel.org/debian sid main contrib
-    - dist: sid
+    - name: deb http://mirrors.kernel.org/debian unstable main contrib
+    - dist: unstable
     - file: /etc/apt/sources.list.d/sid.list
 
 /etc/apt/preferences.d/sid.pref:

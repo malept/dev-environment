@@ -12,6 +12,8 @@ mysql:
       - libmysqlclient-dev
 {%- if grains['oscodename'] == 'jessie' and mysql_majmin == '5.6' %}
     - fromrepo: jessie-backports
+{%- elsif grains['os'] == 'Debian' and grains['oscodename'] == 'stretch' %}
+    - fromrepo: unstable
 {%- endif %}
 
   service:
