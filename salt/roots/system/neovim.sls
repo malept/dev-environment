@@ -29,7 +29,6 @@ neovim-runtime-deps:
       - pkg: fzy
 {%- endif %}
 
-
 {{ venv('neovim', 'salt://system/files/neovim-requirements.txt', 'python2', True) }}
 {{ venv('neovim3', 'salt://system/files/neovim-requirements.txt', 'python3', True) }}
 {%- if salt['pillar.get']('neovim:remote:enabled') %}
