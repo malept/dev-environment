@@ -69,7 +69,7 @@ font-packages:
       - fonts-noto
       - fonts-roboto
       # console/programming
-{%- if grains['os'] == 'Debian' and grains['osreleaseinfo'] >= [9, 0] %}
+{%- if grains['os'] == 'Debian' and grains['osrelease_info'] >= [9, 0] %}
       - fonts-droid-fallback
 {%- else %}
       - fonts-droid
