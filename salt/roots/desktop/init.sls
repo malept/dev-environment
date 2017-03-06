@@ -69,7 +69,11 @@ font-packages:
       - fonts-noto
       - fonts-roboto
       # console/programming
+{%- if grains['os'] == 'Debian' and grains['osreleaseinfo'] >= [9, 0] %}
+      - fonts-droid-fallback
+{%- else %}
       - fonts-droid
+{%- endif %}
       # emoji
       - fonts-knda
       - fonts-lklug-sinhala
