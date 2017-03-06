@@ -16,7 +16,7 @@ lightdm:
 virtualbox-guest-x11:
   pkg.installed{%- if grains['oscodename'] == 'wheezy' %}:
     - fromrepo: wheezy-backports
-  {%- elsif grains['oscodename'] == 'stretch' %}:
+  {%- elif grains['oscodename'] == 'stretch' %}:
     - fromrepo: unstable
   {%- endif %}
 {%- elif grains['node_type'] == 'vmware' %}
