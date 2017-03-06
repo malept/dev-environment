@@ -4,7 +4,7 @@ base:
 {%- if grains['os'] == 'Debian' %}
     - debian
 {%- endif %}
-{%- if not (grains['os'] == 'Ubuntu' and grains['oscodename'] == 'xenial') %}
+{%- if not (grains['os'] == 'Debian' and grains['oscodename'] == 'stretch') %}
     - salt.pkgrepo
 {%- endif %}
     - salt.standalone
