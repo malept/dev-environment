@@ -23,8 +23,8 @@ python-devel:
 {%- if not (grains['os'] == 'Debian' and grains['osrelease'] >= 8.0) %}
       - python2.6-dev
 {%- endif %}
-      - python2.7-dev
-      - python3.4-dev
+      - python-dev
+      - python3-dev
 {%- if salt['pillar.get']('python:pypy:enabled') %}
       - pypy-dev
 {%- endif %}
