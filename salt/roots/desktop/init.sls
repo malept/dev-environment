@@ -102,8 +102,20 @@ font-droid-sans-mono-slashed:
       - pkg: unzip
       - file: user-font-dir
 
-{# zip_options is the blocker #}
 {%- if grains['saltversioninfo'] >= [2016, 9, 0] %}
+font-fira:
+  archive.extracted:
+    - name: {{ user_font_dir }}
+    - source: https://github.com/mozilla/Fira/archive/4.202.tar.gz
+    - source_hash: sha256=d86269657387f144d77ba12011124f30f423f70672e1576dc16f918bb16ddfe4
+    - archive_format: tar
+{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
+    - source_hash_update: true
+    - options: --wildcards *.ttf --strip-components 2
+{%- else %}
+    - tar_options: --wildcards *.ttf --strip-components 2
+{%- endif %}
+
 font-fira-code:
   archive.extracted:
     - name: {{ user_font_dir }}
