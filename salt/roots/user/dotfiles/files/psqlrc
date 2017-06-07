@@ -20,6 +20,7 @@
 -- Aliases
 
 \set active_queries 'SELECT pid, usename, application_name, client_addr, client_hostname, query_start, (NOW() - query_start) AS query_elapsed, state, waiting, query FROM pg_stat_activity WHERE state <> \'idle\';'
+\set active_queries96 'SELECT pid, usename, application_name, client_addr, client_hostname, query_start, (NOW() - query_start) AS query_elapsed, state, state_change, wait_event_type, wait_event, query FROM pg_stat_activity WHERE state <> \'idle\';'
 -- From: https://wiki.postgresql.org/wiki/Disk_Usage
 \set biggest_tables 'SELECT nspname || \'.\' || relname AS "relation",  pg_size_pretty(pg_total_relation_size(C.oid)) AS "total_size" FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN (\'pg_catalog\', \'information_schema\') AND C.relkind <> \'i\' AND nspname !~ \'^pg_toast\' ORDER BY pg_total_relation_size(C.oid) DESC LIMIT 20;'
 -- From: https://wiki.postgresql.org/wiki/Lock_Monitoring
