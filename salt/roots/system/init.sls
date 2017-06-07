@@ -109,6 +109,7 @@ xsv:
     - source_hash: {{ salt['pillar.get']('xsv:checksum') }}
     - archive_format: tar
 {%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
+    - enforce_toplevel: false
     - source_hash_update: true
     - options: z
 {%- else %}
