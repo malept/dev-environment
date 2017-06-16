@@ -9,6 +9,9 @@
       - cdrom
       - dip
       - docker
+{%- if salt['pillar.get']('elasticsearch:version', false) %}
+      - elasticsearch
+{%- endif %}
       - floppy
       - fuse
       - netdev
