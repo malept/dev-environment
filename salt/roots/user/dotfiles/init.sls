@@ -10,6 +10,7 @@
 {{ config_file('bash_aliases') }}
 {{ config_file('bashrc', templated=true) }}
 {{ config_file('profile') }}
+{{ config_file('sshrc', '.ssh/rc') }}
 
 {{ config_file('agignore') }}
 
