@@ -7,20 +7,6 @@ debian.{{ grains['oscodename'] }}-backports:
     - file: /etc/apt/sources.list.d/backports.list
 {%- endif %}
 
-{%- if grains['oscodename'] in ['wheezy', 'jessie'] %}
-pkg-mozilla-archive-keyring:
-  pkg.installed
-
-debian.{{ grains['oscodename'] }}-mozilla:
-  pkgrepo.managed:
-    - humanname: Debian {{ grains['oscodename'] }} Mozilla repository
-    - name: deb http://mozilla.debian.net/ {{ grains['oscodename'] }}-backports firefox-release
-    - dist: {{ grains['oscodename'] }}-backports
-    - file: /etc/apt/sources.list.d/{{ grains['oscodename'] }}-mozilla.list
-    - require:
-      - pkg: pkg-mozilla-archive-keyring
-{%- endif %}
-
 {% if grains['os'] == 'Debian' and salt['pillar.get']('debian:repos:jessie', false) -%}
 debian.jessie:
   pkgrepo.managed:
