@@ -1,10 +1,10 @@
 {% from 'user/dotfiles/macros.sls' import bin_file, config_dir, config_file with context %}
 
 tmux:
-  pkg.installed{%- if grains['oscodename'] == 'jessie' %}:
-    - fromrepo: jessie-backports
+  pkg.installed{%- if grains['oscodename'] in ['jessie', 'stretch'] %}:
+    - fromrepo: {{ grains['oscodename'] }}-backports
     - require:
-      - pkgrepo: debian.jessie-backports
+      - pkgrepo: debian.{{ grains['oscodename'] }}-backports
 {%- elif grains['oscodename'] == 'xenial' %}:
     - sources:
       - tmux: http://mirrors.kernel.org/ubuntu/pool/main/t/tmux/tmux_2.2-3_amd64.deb
