@@ -56,8 +56,8 @@ browsers:
 {%- if salt['pillar.get']('profile-sync-daemon:enabled') %}
       - profile-sync-daemon
 {%- endif %}
-{%- if grains['oscodename'] in ['wheezy', 'jessie'] %}
-    - fromrepo: {{ grains['oscodename'] }}-backports
+{%- if grains['oscodename'] in ['jessie', 'stretch'] %}
+    - fromrepo: unstable
 {%- endif %}
 
 # Fonts
