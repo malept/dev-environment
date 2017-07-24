@@ -10,7 +10,7 @@ tmux:
       - tmux: http://mirrors.kernel.org/ubuntu/pool/main/t/tmux/tmux_2.2-3_amd64.deb
 {%- endif %}
 
-{{ config_file('tmux.conf', '.config/tmux/tmux.conf') }}
+{{ config_file('tmux.conf', '.config/tmux/tmux.conf', templated=true) }}
 
 tmux-plugins:
   file.directory:
