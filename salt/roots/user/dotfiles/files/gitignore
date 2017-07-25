@@ -8,6 +8,7 @@
 dev.db
 .sass-cache
 Session.vim
+.byebug_history
 .vagrant
 /.ruby-gemset
 /.ruby-version
