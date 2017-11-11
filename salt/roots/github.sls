@@ -7,6 +7,7 @@ github-hub:
     - source_hash: sha256={{ salt['pillar.get']('github:sha256sum') }}
     - archive_format: tar
 {%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
+    - enforce_toplevel: false
     - source_hash_update: true
     - options: -z --strip-components=1
 {% else %}
