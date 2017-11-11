@@ -1,9 +1,5 @@
 node:
   install_from_ppa: true
-{%- if grains['oscodename'] == 'stretch' %}
-  ppa:
-    dist: jessie # stretch does not exist as a dist yet
-{%- endif %}
 npm:
   config:
     prefix: /opt/node
