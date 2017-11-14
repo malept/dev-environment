@@ -1,5 +1,8 @@
 {% set elasticsearch_version = salt['pillar.get']('elasticsearch:version', false) -%}
 {%- if elasticsearch_version %}
+java-runtime:
+  pkg.installed:
+    - name: default-jre-headless
 elasticsearch:
   pkg.installed:
     - sources:
@@ -10,6 +13,8 @@ elasticsearch:
       {%- else %}
       - elasticsearch: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ elasticsearch_version }}.deb
       {%- endif %}
+    - require:
+      - pkg: java-runtime
   service.running:
     - enable: True
     - require:
