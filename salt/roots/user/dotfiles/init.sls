@@ -28,7 +28,9 @@
 
 {%- if salt['pillar.get']('ruby:enabled') %}
 {{ config_file('gemrc') }}
+{%- if salt['pillar.get']('ruby:manager', 'rvm') == 'rvm' %}
 {{ config_file('global.gems', '.rvm/gemsets/global.gems') }}
+{%- endif %}
 {{ config_file('pryrc') }}
 {%- endif %}
 
