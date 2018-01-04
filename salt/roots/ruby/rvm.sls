@@ -8,7 +8,7 @@ rvm-deps:
       - gawk
       - sed
       - curl
-      - git-core
+      - git
       - gnupg
   cmd.run:
     - user: {{ grains['username'] }}
@@ -23,7 +23,7 @@ mri-deps:
       - libreadline6
       - libreadline6-dev
       - curl
-      - git-core
+      - git
       - zlib1g
       - zlib1g-dev
       - libssl-dev
