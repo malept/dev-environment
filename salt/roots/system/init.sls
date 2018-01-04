@@ -2,6 +2,7 @@
 
 include:
   - .dasht
+  - .git
   - .neovim
 
 America/Los_Angeles:
@@ -44,9 +45,6 @@ fzy:
     - require:
       - pkg: browsers
 {%- endif %}
-
-git:
-  pkg.installed
 
 sshfs:
   pkg.installed
