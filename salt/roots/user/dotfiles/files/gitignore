@@ -1,5 +1,6 @@
 .*.sw?
 .sw?
+.*@neomake*
 *.gem
 *.egg-info
 *.pyc
