@@ -7,7 +7,7 @@ tmux:
       - pkgrepo: debian.{{ grains['oscodename'] }}-backports
 {%- elif grains['oscodename'] == 'xenial' %}:
     - sources:
-      - tmux: http://mirrors.kernel.org/ubuntu/pool/main/t/tmux/tmux_2.2-3_amd64.deb
+      - tmux: http://ftp.us.debian.org/debian/pool/main/t/tmux/tmux_2.3-4~bpo8+1_amd64.deb
 {%- endif %}
 
 {{ config_file('tmux.conf', '.config/tmux/tmux.conf', templated=true) }}
