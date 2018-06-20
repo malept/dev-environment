@@ -11,7 +11,7 @@ include:
 
 {% macro vhost_config(app_name, template_path, config, enabled) -%}
 {% set dest_filename = '{0}.conf'.format(app_name) -%}
-{% set hostname = '{0}.dev'.format(app_name.replace('_', '-')) -%}
+{% set hostname = config.pop('hostname', '{0}.test'.format(app_name.replace('_', '-'))) -%}
 nginx-vhost-{{ app_name }}:
   file.managed:
     - name: /etc/nginx/sites-available/{{ dest_filename }}
