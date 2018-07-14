@@ -93,20 +93,28 @@ if ! shopt -oq posix; then
   fi
 fi
 
+_update_path() {
+    local bin="$1"
+    local mode="$2"
+
+    if [[ -d "$bin" && "$PATH" != *"$bin"* ]]; then
+        if [[ "$mode" = "prepend" ]]; then
+            PATH="$bin:$PATH"
+        else
+            PATH="$PATH:$bin"
+        fi
+    fi
+}
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+_update_path "$HOME/.local/bin" prepend
 
 # globally installed node packages
-if [ -d "/opt/node/bin" ] ; then
-    PATH="$PATH:/opt/node/bin"
-fi
+_update_path "/opt/node/bin" append
 
 # Android
 ANDROID_SDK="/opt/android-sdk-linux"
-if [ -d "$ANDROID_SDK" ] ; then
+if [[ -d "$ANDROID_SDK" && "$PATH" != *"$ANDROID_SDK"* ]] ; then
     PATH="$PATH:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools"
 fi
 unset ANDROID_SDK
@@ -135,7 +143,7 @@ RUBYGEMS_GEMDEPS="-"
 # RVM
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
     . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
-    PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+    _update_path "$PATH:$HOME/.rvm/bin" append
 fi
 
 # chruby
@@ -150,24 +158,22 @@ fi
 
 # Ruby user bindir
 if which ruby > /dev/null; then
-    RUBY_USERBINDIR="$(ruby -e 'print Gem.bindir(Gem.user_dir)')"
-    if [[ -d "$RUBY_USERBINDIR" ]]; then
-        PATH="$PATH:$RUBY_USERBINDIR"
-    fi
-    unset RUBY_USERBINDIR
+    _update_path "$(ruby -e 'print Gem.bindir(Gem.user_dir)')" append
 fi
 
 # Travis CI CLI
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
 # rustup
-[[ -d "$HOME/.cargo/bin" ]] && PATH="$PATH:$HOME/.cargo/bin"
+_update_path "$HOME/.cargo/bin" append
 
 # github's hub
-[[ -d "/opt/github/bin" ]] && PATH="$PATH:/opt/github/bin"
+_update_path "/opt/github/bin" append
 
 # dasht
-[[ -d "/opt/dasht/bin" ]] && PATH="$PATH:/opt/dasht/bin"
+_update_path "/opt/dasht/bin" append
+
+unset _update_path
 
 {%- if salt['pillar.get']('aws:enabled') %}
 export AWS_CONFIG_FILE="$HOME/.config/aws/config.ini"
