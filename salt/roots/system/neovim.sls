@@ -1,13 +1,7 @@
 {% from 'venv_bin.sls' import venv, venv_with_binary with context %}
 
 {%- if salt['pillar.get']('neovim:enabled') %}
-{%- if salt['pillar.get']('debian:repos:personal') %}
-neovim:
-  pkg.installed:
-    - require:
-      - pkg: neovim-runtime-deps
-      - pkgrepo: debian.personal
-{%- elif grains['os'] == 'Ubuntu' %}
+{%- if grains['os'] == 'Ubuntu' %}
 neovim:
   pkg.installed:
     - require:
@@ -15,6 +9,12 @@ neovim:
       - pkg: neovim-runtime-deps
   pkgrepo.managed:
     - ppa: neovim-ppa/unstable
+{%- elif salt['pillar.get']('debian:repos:personal') %}
+neovim:
+  pkg.installed:
+    - require:
+      - pkg: neovim-runtime-deps
+      - pkgrepo: debian.personal
 {%- endif %}
 
 neovim-runtime-deps:
