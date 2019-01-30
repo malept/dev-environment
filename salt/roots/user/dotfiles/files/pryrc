@@ -43,13 +43,13 @@ lambda do
       when 2
         require 'console_app'
         require 'console_with_helpers'
-      when 3..4
+      when 3..6
         require 'rails/console/app'
         require 'rails/console/helpers'
 
         __log_rails_sql.call unless ENV['PRY_DISABLE_SQL_LOG']
       else
-        warn "#{ansi[:BOLD]}[WARN]#{ansi[:RESET]} #{ansi[:YELLOW]}cannot load Rails console commands (Not on Rails2 or Rails3?)#{ansi[:RESET]}"
+        warn "#{ansi[:BOLD]}[WARN]#{ansi[:RESET]} #{ansi[:YELLOW]}cannot load Rails console commands (Not on Rails2 or Rails3+?)#{ansi[:RESET]}"
       end
     rescue
       warn "#{ansi[:BOLD]}[WARN]#{ansi[:RESET]} #{ansi[:YELLOW]}cannot load Rails console commands (in an engine?)#{ansi[:RESET]}"
