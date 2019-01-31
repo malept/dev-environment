@@ -4,6 +4,7 @@ include:
   - .dasht
   - .git
   - .neovim
+  - .vagrant
 
 America/Los_Angeles:
   timezone.system:
@@ -77,23 +78,6 @@ grunt-cli:
       - {{ npm_requirement }}
       - file: {{ npmrc }}
       - file: npm-global-dir
-
-{% set vagrant_version = salt['pillar.get']('vagrant:version', false) -%}
-{% if vagrant_version -%}
-{% set vagrant_deb = '/var/cache/apt/archives/vagrant_{}_x86_64.deb'.format(vagrant_version) %}
-{{ vagrant_deb }}:
-  file.managed:
-    - source: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb
-    - source_hash: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_SHA256SUMS
-    - if_missing: /opt/vagrant/embedded/gems/cache/vagrant-{{ vagrant_version }}.gem
-vagrant:
-  pkg.installed:
-    - sources:
-      - vagrant: {{ vagrant_deb }}
-    - version: {{ vagrant_version }}
-    - require:
-      - file: {{ vagrant_deb }}
-{%- endif %}
 
 /usr/local/bin:
   file.directory
