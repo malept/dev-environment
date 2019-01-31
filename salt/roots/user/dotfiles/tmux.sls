@@ -12,6 +12,15 @@ tmux:
 
 {{ config_file('tmux.conf', '.config/tmux/tmux.conf', templated=true) }}
 
+/home/{{ grains['username'] }}/.tmux.conf:
+  file.symlink:
+    - target: /home/{{ grains['username'] }}/.config/tmux/tmux.conf
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - require:
+      - file: /home/{{ grains['username'] }}/.config/tmux/tmux.conf
+
+
 tmux-plugins:
   file.directory:
     - name: /home/{{ grains['username'] }}/.config/tmux/plugins
