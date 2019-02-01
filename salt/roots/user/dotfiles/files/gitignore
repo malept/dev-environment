@@ -7,6 +7,7 @@
 *.sqlite
 *.sqlite3
 dev.db
+.netrwhist
 .sass-cache
 Session.vim
 .byebug_history
