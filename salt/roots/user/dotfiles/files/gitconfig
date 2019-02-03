@@ -7,7 +7,9 @@
 	email = {{ git_email }}
 {%- endif %}
 [alias]
+	ci = commit
 	co = checkout
+	st = status
 [push]
 	default = simple
 {%- if salt['pillar.get']('github:version') %}
