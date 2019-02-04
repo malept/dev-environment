@@ -3,6 +3,7 @@
 include:
   - .dasht
   - .git
+  - .grep
   - .neovim
   - .vagrant
 
@@ -15,15 +16,6 @@ tops:
     - pkgs:
       - htop
       - iftop
-
-silversearcher-ag:
-{%- if grains['oscodename'] == 'wheezy' %}
-  pkg.installed:
-    - sources:
-      - the-silver-searcher: http://swiftsignal.com/packages/ubuntu/quantal/the-silver-searcher_0.14-1_amd64.deb
-{%- else %}
-  pkg.installed
-{%- endif %}
 
 {%- set fzy_version = salt['pillar.get']('fzy:version') %}
 {%- if fzy_version %}
