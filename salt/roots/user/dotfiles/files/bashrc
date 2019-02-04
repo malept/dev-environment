@@ -36,11 +36,11 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-# Only set PS1 if it's not already set
-if [[ -z "$PS1" ]]; then
+# Only try to set PS1 if it's not already set with color
+if ! echo "$PS1" | grep -qF '033['; then
     # set a fancy prompt (non-color, unless we know we "want" color)
     case "$TERM" in
-        xterm-color) color_prompt=yes;;
+        xterm-*color|tmux-*color) color_prompt=yes;;
     esac
 
     # uncomment for a colored prompt, if the terminal has the capability; turned
