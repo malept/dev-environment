@@ -12,6 +12,7 @@ include:
 capybara-webkit-deps:
   pkg.installed:
     - pkgs:
-      - qt4-qmake
-      - libqt4-dev
+      - libqt5webkit5-dev
+      - qt5-default
+      - qt5-qmake
 {%- endif %}
