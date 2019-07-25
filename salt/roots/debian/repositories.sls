@@ -64,3 +64,11 @@ apt-transport-https:
   pkg.installed
 {%- endif %}
 {% endif %}
+{% if salt['pillar.get']('node:install_from_ppa') and 'deb.nodesource.com' in salt['pillar.get']('node:ppa:repository_url', '') -%}
+/etc/apt/preferences.d/nodesource.pref:
+  file.managed:
+    - source: salt://debian/files/apt_preferences.nodesource.conf
+    - user: root
+    - group: root
+    - mode: 644
+{%- endif %}
