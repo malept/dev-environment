@@ -54,9 +54,13 @@ debian.personal:
     - humanname: Personal Debian APT repository
     - name: deb [trusted=yes] https://apt.fury.io/malept/ /
     - file: /etc/apt/sources.list.d/personal.list
+{%- if grains['os'] == 'Debian' and grains['osrelease']|float < 10 %}
     - require:
       - pkg: apt-transport-https
+{%- endif %}
 
+{% if grains['os'] == 'Debian' and grains['osrelease']|float < 10 -%}
 apt-transport-https:
   pkg.installed
+{%- endif %}
 {% endif %}
