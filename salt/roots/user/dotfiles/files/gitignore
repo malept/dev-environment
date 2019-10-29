@@ -18,3 +18,5 @@ Session.vim
 /tags
 doc/tags
 pycomplexity.vim/doc/tags
+npm-debug.log
+yarn-debug.log
