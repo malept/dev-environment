@@ -20,7 +20,7 @@ pypy.ppa:
 python-devel:
   pkg.installed:
     - names:
-{%- if not (grains['os'] == 'Debian' and grains['osrelease'] >= 8.0) %}
+{%- if not (grains['os'] == 'Debian' and grains['osrelease']|float >= 8.0) %}
       - python2.6-dev
 {%- endif %}
       - python-dev
