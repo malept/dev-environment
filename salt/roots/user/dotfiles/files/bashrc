@@ -182,6 +182,11 @@ if which starship > /dev/null; then
     eval "$(starship init bash)"
 fi
 
+if [[ -d "$HOME/.asdf" ]]; then
+    source $HOME/.asdf/asdf.sh
+    source $HOME/.asdf/completions/asdf.bash
+fi
+
 {%- if salt['pillar.get']('aws:enabled') %}
 export AWS_CONFIG_FILE="$HOME/.config/aws/config.ini"
 export AWS_SHARED_CREDENTIALS_FILE="$HOME/.config/aws/credentials.ini"
