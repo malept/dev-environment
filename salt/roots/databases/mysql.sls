@@ -1,24 +1,42 @@
-{% set mysql_version = salt['pillar.get']('mysql:version', false) -%}
-{%- if mysql_version %}
-{%- set mysql_majmin = '{0}.{1}'.format(mysql_version['major'], mysql_version['minor']) %}
+#
+# Pillars:
+# mysql:
+#   enabled: true
+#   server: false
+# X11:
+#   enabled: true # for mysql-workbench
+#
+
+{% set mysql_server = salt['pillar.get']('mysql:server') -%}
+{%- if salt['pillar.get']('mysql:enabled', false) %}
 mysql:
   pkg.installed:
     - pkgs:
-      - mysql-client-{{ mysql_majmin }}
-      - mysql-server-{{ mysql_majmin }}
+      - mysql-community-client
+      - libmysqlclient-dev
+{%- if mysql_server %}
+      - mysql-community-server
+{%- endif %}
 {%- if salt['pillar.get']('X11:enabled') %}
       - mysql-workbench
 {%- endif %}
-      - libmysqlclient-dev
-{%- if grains['oscodename'] == 'jessie' and mysql_majmin == '5.6' %}
-    - fromrepo: jessie-backports
-{%- elif grains['os'] == 'Debian' and grains['oscodename'] == 'stretch' %}
-    - fromrepo: unstable
-{%- endif %}
+{%- if grains['os'] == 'Debian' %}
+    - require:
+      - pkg: mysql-apt-config
 
+{%- if mysql_server %}
   service:
     - running
     - enable: True
     - require:
       - pkg: mysql
+{%- endif %}
+{%- endif %}
+
+{%- if grains['os'] == 'Debian' %}
+mysql-apt-config:
+  pkg.installed:
+    - sources:
+      - mysql-apt-config: https://dev.mysql.com/get/mysql-apt-config_0.8.15-1_all.deb
+{%- endif %}
 {%- endif %}
