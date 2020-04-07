@@ -1,3 +1,11 @@
+#
+# Pillars:
+# ruby:
+#   manager: 'chruby' # or 'rvm'
+#   capybara-webkit:
+#     enabled: true
+#
+
 {%- set pillar_get = salt['pillar.get'] %}
 {%- set ruby_manager = pillar_get('ruby:manager', 'rvm') %}
 
