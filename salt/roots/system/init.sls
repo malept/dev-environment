@@ -7,9 +7,11 @@ include:
   - .neovim
   - .vagrant
 
+{%- if not grains['kernelrelease'].endswith('-Microsoft') %}
 America/Los_Angeles:
   timezone.system:
     - utc: True
+{%- endif %}
 
 tops:
   pkg.installed:
