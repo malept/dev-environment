@@ -1,7 +1,7 @@
 node:
   install_from_ppa: true
   ppa:
-    repository_url: 'https://deb.nodesource.com/node_8.x'
+    repository_url: 'https://deb.nodesource.com/node_10.x'
 npm:
   config:
     prefix: /opt/node
