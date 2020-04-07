@@ -42,6 +42,6 @@ nginx-vhost-{{ app_name }}:
 {% endif -%}
 {% endmacro -%}
 
-{% for vhost, vhost_cfg in salt['pillar.get']('nginx:vhosts', {}).iteritems() -%}
+{% for vhost, vhost_cfg in salt['pillar.get']('nginx:vhosts', {}).items() -%}
 {{ vhost_config(vhost, 'webserver/files/nginx_vhost.conf', vhost_cfg, true) }}
 {% endfor -%}

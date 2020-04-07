@@ -50,7 +50,7 @@ def _do(name, xfce_kwargs, preferences):
     messages = []
     create_if_not_exists = xfce_kwargs['create_if_not_exists']
 
-    for key, value in preferences.iteritems():
+    for key, value in preferences.items():
         xfce_kwargs.pop('array_type', None)
         if isinstance(value, list):
             xfce_kwargs['array_type'] = 'v'
@@ -86,7 +86,7 @@ def wm_preferences(name, user=None, create_if_not_exists=False, **kwargs):
         'create_if_not_exists': create_if_not_exists,
     }
 
-    prefs = {'/general/{0}'.format(k): v for k, v in kwargs.iteritems()}
+    prefs = {'/general/{0}'.format(k): v for k, v in kwargs.items()}
 
     return _do(name, xfce_kwargs, prefs)
 

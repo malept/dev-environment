@@ -188,6 +188,6 @@ export AWS_SHARED_CREDENTIALS_FILE="$HOME/.config/aws/credentials.ini"
 {%- endif %}
 export PSQLRC=$HOME/.config/psqlrc
 
-{% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).iteritems() -%}
+{% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).items() -%}
 export {{ env_var }}={{ env_value }}
 {% endfor -%}
