@@ -28,4 +28,5 @@ rust-nightly:
     - name: {{ cargo_bin('rustup') }} toolchain install nightly
     - runas: {{ grains['username'] }}
     - creates: /home/{{ grains['username'] }}/.rustup/update-hashes/nightly-{{ rust_target_triple() }}
-
+    - require:
+      - cmd: rustup
