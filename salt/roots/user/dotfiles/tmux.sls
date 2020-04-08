@@ -1,14 +1,13 @@
 {% from 'user/dotfiles/macros.sls' import bin_file, config_dir, config_file with context %}
 
 tmux:
-  pkg.installed{%- if grains['oscodename'] in ['jessie', 'stretch'] %}:
-    - fromrepo: {{ grains['oscodename'] }}-backports
+  pkg.installed:
     - require:
-      - pkgrepo: debian.{{ grains['oscodename'] }}-backports
-{%- elif grains['oscodename'] == 'xenial' %}:
-    - sources:
-      - tmux: http://ftp.us.debian.org/debian/pool/main/t/tmux/tmux_2.3-4~bpo8+1_amd64.deb
-{%- endif %}
+      - pkg: ncurses-term
+
+{# For the tmux-256color terminfo #}
+ncurses-term:
+  pkg.installed
 
 {{ config_file('tmux.conf', '.config/tmux/tmux.conf', templated=true) }}
 
