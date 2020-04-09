@@ -16,3 +16,10 @@
 [hub]
 	protocol = ssh
 {%- endif %}
+{%- set url_replacements = salt['pillar.get']('git:replace_url') %}
+{%- if url_replacements %}
+{%- for search, replace in url_replacements.items() %}
+[url "{{ replace }}"]
+	insteadOf = {{ search }}
+{%- endfor %}
+{%- endif %}
