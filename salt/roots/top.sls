@@ -43,6 +43,9 @@ base:
 {%- if salt['pillar.get']('aws:enabled') and salt['pillar.get']('aws:cli:enabled') %}
     - aws
 {%- endif %}
+{%- if salt['pillar.get']('gcloud:enabled') %}
+    - gcloud-sdk
+{%- endif %}
 {%- if grains['os'] in ['Debian', 'Ubuntu'] and salt['pillar.get']('heroku:enabled') %}
     - heroku
 {%- endif %}
