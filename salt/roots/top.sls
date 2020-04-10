@@ -30,7 +30,7 @@ base:
     - rust
 {%- endif %}
     - databases
-{%- if salt['pillar.get']('postgres:enabled', true) %}
+{%- if salt['pillar.get']('postgres:enabled', false) %}
     - postgres.apt
     - postgres
 {%- if salt['pillar.get']('postgres:config:managed', true) %}
