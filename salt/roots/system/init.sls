@@ -76,6 +76,9 @@ grunt-cli:
 /usr/local/bin:
   file.directory
 
+jq:
+  pkg.installed
+
 {%- set xsv_version = salt['pillar.get']('xsv:version', false) %}
 {%- if xsv_version %}
 xsv:
