@@ -40,6 +40,9 @@ base:
     - postgres.pgadmin3
 {%- endif %}
 {%- endif %}
+{%- if salt['pillar.get']('docker:enabled') %}
+    - docker
+{%- endif %}
 {%- if salt['pillar.get']('aws:enabled') and salt['pillar.get']('aws:cli:enabled') %}
     - aws
 {%- endif %}
