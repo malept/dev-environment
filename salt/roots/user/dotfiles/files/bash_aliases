@@ -1,5 +1,5 @@
 # vim: set ft=sh :
-alias PYSHS='python -m SimpleHTTPServer'
+alias http='python3 -m http.server'
 alias manify='groff -T utf8 -man'
 
 # enable color support of ls and also add handy aliases
