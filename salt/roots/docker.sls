@@ -27,7 +27,7 @@ k3d:
     - mode: 0755
     - skip_verify: True
     - require:
-      file: /usr/local/bin
+      - file: /usr/local/bin
 {%- endif %}
 
 kubectx:
