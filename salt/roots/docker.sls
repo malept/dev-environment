@@ -30,6 +30,9 @@ k3d:
       file: /usr/local/bin
 {%- endif %}
 
+kubectx:
+  pkg.installed
+
 telepresence:
   pkgrepo.managed:
     - name: "deb https://packagecloud.io/datawireio/telepresence/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} main"
