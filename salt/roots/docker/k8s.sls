@@ -30,6 +30,21 @@ k3d:
 kubectx:
   pkg.installed
 
+{%- set kubeval_version = pillar_get('docker:k8s:kubeval:version') %}
+{%- if kubeval_version %}
+kubeval:
+  archive.extracted:
+    - name: /usr/local/bin/
+    - source: https://github.com/instrumenta/kubeval/releases/download/{{ kubeval_version }}/kubeval-{{ grains['kernel'].lower() }}-{{ grains['osarch'] }}.tar.gz
+    - source_hash: https://github.com/instrumenta/kubeval/releases/download/{{ kubeval_version }}/checksums.txt
+    - source_hash_update: true
+    - enforce_toplevel: false
+    - options: --wildcards kubeval
+    - if_missing: /usr/local/bin/kubeval
+    {# - require: #}
+    {#   - file: /usr/local/bin #}
+{%- endif %}
+
 {%- if pillar_get('docker:k8s:telepresence:enabled') %}
 telepresence:
   pkgrepo.managed:
