@@ -17,6 +17,21 @@ docker:
 ctop:
   pkg.installed
 
+{%- set helm_version = salt['pillar.get']('helm:version') %}
+{%- if helm_version %}
+{%- set helm_tarball = 'helm-v{}-{}-{}.tar.gz'.format(helm_version, grains['kernel'].lower(), grains['osarch']) %}
+helm:
+  archive.extracted:
+    - name: /usr/local/bin/
+    - source: https://get.helm.sh/{{ helm_tarball }}
+    - source_hash: https://get.helm.sh/{{ helm_tarball }}.sha256
+    - archive_format: tar
+    - source_hash_update: true
+    - options: z
+    - require:
+      - file: /usr/local/bin
+{%- endif %}
+
 {%- set k3d_version = salt['pillar.get']('k3d:version') %}
 {%- if k3d_version %}
 k3d:
