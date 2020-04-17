@@ -41,8 +41,8 @@ kubeval:
     - enforce_toplevel: false
     - options: --wildcards kubeval
     - if_missing: /usr/local/bin/kubeval
-    {# - require: #}
-    {#   - file: /usr/local/bin #}
+    - require:
+      - file: /usr/local/bin
 {%- endif %}
 
 {%- if pillar_get('docker:k8s:telepresence:enabled') %}
