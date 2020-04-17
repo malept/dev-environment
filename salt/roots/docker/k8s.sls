@@ -1,5 +1,5 @@
 {%- set pillar_get = salt['pillar.get'] %}
-{%- set helm_version = pillar_get('dockerhelm:version') %}
+{%- set helm_version = pillar_get('docker:k8s:helm:version') %}
 {%- if helm_version %}
 {%- set helm_tarball = 'helm-v{}-{}-{}.tar.gz'.format(helm_version, grains['kernel'].lower(), grains['osarch']) %}
 helm:
