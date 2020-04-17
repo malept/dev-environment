@@ -19,8 +19,7 @@ helm:
 k3d:
   file.managed:
     - name: /usr/local/bin/k3d
-    - source:
-      - https://github.com/rancher/k3d/releases/download/v{{ k3d_version }}/k3d-{{ grains['kernel'].lower() }}-{{ grains['osarch'] }}
+    - source: https://github.com/rancher/k3d/releases/download/v{{ k3d_version }}/k3d-{{ grains['kernel'].lower() }}-{{ grains['osarch'] }}
     - mode: 0755
     - skip_verify: True
     - require:
