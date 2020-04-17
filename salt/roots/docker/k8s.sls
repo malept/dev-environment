@@ -1,23 +1,5 @@
-{%- if not grains['kernelrelease'].endswith('-Microsoft') %}
-docker:
-  pkgrepo.managed:
-    - name: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ grains['oscodename'] }} stable'
-    - humanname: Docker
-    - file: /etc/apt/sources.list.d/docker.list
-    - key_url: https://download.docker.com/linux/debian/gpg
-    - require_in:
-      - pkg: docker
-  pkg.installed:
-    - pkgs:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-{%- endif %}
-
-ctop:
-  pkg.installed
-
-{%- set helm_version = salt['pillar.get']('helm:version') %}
+{%- set pillar_get = salt['pillar.get'] %}
+{%- set helm_version = pillar_get('dockerhelm:version') %}
 {%- if helm_version %}
 {%- set helm_tarball = 'helm-v{}-{}-{}.tar.gz'.format(helm_version, grains['kernel'].lower(), grains['osarch']) %}
 helm:
@@ -32,7 +14,7 @@ helm:
       - file: /usr/local/bin
 {%- endif %}
 
-{%- set k3d_version = salt['pillar.get']('k3d:version') %}
+{%- set k3d_version = pillar_get('docker:k8s:k3d:version') %}
 {%- if k3d_version %}
 k3d:
   file.managed:
@@ -48,6 +30,7 @@ k3d:
 kubectx:
   pkg.installed
 
+{%- if pillar_get('docker:k8s:telepresence:enabled') %}
 telepresence:
   pkgrepo.managed:
     - name: "deb https://packagecloud.io/datawireio/telepresence/{{ grains['os'].lower() }}/ {{ grains['oscodename'] }} main"
@@ -56,3 +39,4 @@ telepresence:
   pkg.installed:
     - require:
       - pkgrepo: telepresence
+{%- endif %}
