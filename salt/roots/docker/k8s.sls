@@ -7,9 +7,10 @@ helm:
     - name: /usr/local/bin/
     - source: https://get.helm.sh/{{ helm_tarball }}
     - source_hash: https://get.helm.sh/{{ helm_tarball }}.sha256
-    - archive_format: tar
     - source_hash_update: true
-    - options: z
+    - enforce_toplevel: false
+    - options: --wildcards *-*/helm --strip-components=1
+    - if_missing: /usr/local/bin/helm
     - require:
       - file: /usr/local/bin
 {%- endif %}
