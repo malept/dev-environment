@@ -23,7 +23,10 @@ class DBConsole(object):
 
 class MySQLConsole(DBConsole):
     def run(self):
-        self.run_console('mysql -u {user} -p{password} -h {host} {database}')
+        if self.url.password:
+            self.run_console('mysql -u {user} -p{password} -h {host} {database}')
+        else:
+            self.run_console('mysql -u {user} -h {host} {database}')
 
 
 class PostgresConsole(DBConsole):
