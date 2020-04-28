@@ -6,6 +6,7 @@
 
 {{ bin_file('db_console') }}
 {{ bin_file('download_rds_slow_query_log') }}
+{{ bin_file('setup-ssh-agent') }}
 
 {{ config_file('bash_aliases') }}
 {{ config_file('bashrc', templated=true) }}
