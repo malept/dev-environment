@@ -182,6 +182,10 @@ if which starship > /dev/null; then
     eval "$(starship init bash)"
 fi
 
+if which kubectl > /dev/null; then
+    eval "$(kubectl completion bash)"
+fi
+
 if [[ -d "$HOME/.asdf" ]]; then
     source $HOME/.asdf/asdf.sh
     source $HOME/.asdf/completions/asdf.bash
