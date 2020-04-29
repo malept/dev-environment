@@ -41,6 +41,7 @@ checkers:
 {%- endfor %}
 {%- endif %}
 
+{%- if salt['pillar.get']('node:linters:global') %}
 {% from 'node/map.jinja' import npm_requirement, npmrc with context %}
 node-linters:
   npm.installed:
@@ -54,3 +55,4 @@ node-linters:
       - {{ npm_requirement }}
       - file: {{ npmrc }}
       - file: npm-global-dir
+{%- endif %}
