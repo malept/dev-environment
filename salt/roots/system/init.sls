@@ -4,8 +4,8 @@ include:
   - .dasht
   - .git
   - .grep
-  - .neovim
   - .vagrant
+  - .vim
 
 {%- if not grains['kernelrelease'].endswith('-Microsoft') %}
 America/Los_Angeles:

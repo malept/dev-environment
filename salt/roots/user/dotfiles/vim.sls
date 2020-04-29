@@ -1,19 +1,5 @@
 {% set vim_enabled = salt['pillar.get']('vim:enabled', true) %}
 {% set neovim_enabled = salt['pillar.get']('neovim:enabled') %}
-{%- if vim_enabled %}
-vim:
-  pkg.installed:
-    - pkgs:
-{%- if salt['pillar.get']('vim:gtk') %}
-      - vim-gtk
-{%- else %}
-      - vim-nox
-{%- endif %}
-{%- if salt['pillar.get']('vim:ctags') %}
-      - exuberant-ctags
-{%- endif %}
-      - editorconfig
-{%- endif %}
 
 {%- if vim_enabled or neovim_enabled %}
 vimfiles:
