@@ -32,6 +32,20 @@ vimfiles:
 {%- endif %}
       - pkg: git
 
+/home/{{ grains['username'] }}/.config/nvim:
+  file.directory:
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - file_mode: 644
+    - dir_mode: 755
+    - makedirs: True
+    - recurse:
+      - user
+      - group
+      - mode
+    - require:
+      - git: vimfiles
+
 {%- macro user_vim_dir(name) %}
 /home/{{ grains['username'] }}/.local/share/vim/{{ name }}:
   file.directory:
