@@ -123,3 +123,17 @@ knife-ec2:
       - pkg: ruby-dev
 {%- endif %}
 {%- endif %}
+
+{%- set shellcheck_version = salt['pillar.get']('shellcheck:version') %}
+{%- if shellcheck_version %}
+shellcheck:
+  archive.extracted:
+    - name: /usr/local/bin/
+    - source: https://github.com/koalaman/shellcheck/releases/download/v{{ shellcheck_version }}/shellcheck-v{{ shellcheck_version }}.{{ grains['kernel'].lower() }}.{{ grains['cpuarch'] }}.tar.xz
+    - enforce_toplevel: False
+    - skip_verify: True
+    - options: --wildcards */shellcheck --strip-components 1
+    - if_missing: /usr/local/bin/shellcheck
+    - require:
+      - file: /usr/local/bin
+{%- endif %}
