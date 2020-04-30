@@ -65,6 +65,7 @@ npmrc-dir:
     - require_in:
       - file: {{ npmrc }}
 
+{%- if salt['pillar.get']('grunt:enabled') %}
 grunt-cli:
   npm.installed:
     - user: {{ grains['username'] }}
@@ -72,6 +73,7 @@ grunt-cli:
       - {{ npm_requirement }}
       - file: {{ npmrc }}
       - file: npm-global-dir
+{%- endif %}
 
 /usr/local/bin:
   file.directory
