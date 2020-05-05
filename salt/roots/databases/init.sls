@@ -5,9 +5,10 @@ Pillars:
 * redis:enabled
 #}
 include:
-  - .mysql
-  - .elasticsearch
   - .cassandra
+  - .couchdb
+  - .elasticsearch
+  - .mysql
 
 {% if salt['pillar.get']('memcached:enabled') -%}
 memcached:
