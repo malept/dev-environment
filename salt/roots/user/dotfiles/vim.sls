@@ -18,6 +18,7 @@ vimfiles:
 {%- endif %}
       - pkg: git
 
+{%- if neovim_enabled %}
 /home/{{ grains['username'] }}/.config/nvim:
   file.directory:
     - user: {{ grains['username'] }}
@@ -31,6 +32,17 @@ vimfiles:
       - mode
     - require:
       - git: vimfiles
+
+/home/{{ grains['username'] }}/.config/nvim/init.vim:
+  file.symlink:
+    - target: /home/{{ grains['username'] }}/Code/vimfiles/vimrc
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - mode: 644
+    - require:
+      - file: /home/{{ grains['username'] }}/.config/nvim
+      - git: vimfiles
+{%- endif %}
 
 {%- macro user_vim_dir(name) %}
 /home/{{ grains['username'] }}/.local/share/vim/{{ name }}:
