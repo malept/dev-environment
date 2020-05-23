@@ -32,12 +32,6 @@ alias tbrails="RAILS_ENV=test brails"
 alias bexec="bundle exec"
 alias dbundle="BUNDLE_GEMFILE=Gemfile.dev bundle"
 
-# vim-profile
-alias vimp='~/Code/vimfiles/vim-profile'
-alias gvimp='~/Code/vimfiles/gvim-profile'
-alias viewp='~/Code/vimfiles/view-profile'
-alias nvimp='~/Code/vimfiles/nvim-profile'
-
 if [[ -d ~/.config/bash_aliases.d ]]; then
     for f in `ls ~/.config/bash_aliases.d/*`; do
         source "$f"
