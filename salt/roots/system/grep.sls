@@ -3,8 +3,7 @@
 {%- if grep_alternative == 'ripgrep' %}
 ripgrep:
   cmd.run:
-    # --features 'simd-accel' blocked on https://github.com/hsivonen/encoding_rs/issues/23
-    - name: {{ cargo_bin('cargo') }} +nightly install ripgrep
+    - name: {{ cargo_bin('cargo') }} +nightly install ripgrep --features simd-accel
     - env:
       - RUSTFLAGS: -C target-cpu=native
     - runas: {{ grains['username'] }}
