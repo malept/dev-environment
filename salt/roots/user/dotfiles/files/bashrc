@@ -176,6 +176,11 @@ _update_path "/opt/github/bin" append
 # dasht
 _update_path "/opt/dasht/bin" append
 
+# Custom bin dirs
+{%- for bin_dir, mode in salt['pillar.get']('bashrc:PATH', {}).items() %}
+_update_path "{{ bin_dir }}" {{ mode }}
+{%- endfor %}
+
 unset _update_path
 
 if which starship > /dev/null; then
