@@ -11,6 +11,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias vdir='vdir --color=auto'
 
     alias grep='grep --color=auto'
+
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
@@ -31,6 +32,9 @@ alias brails="bundle exec rails"
 alias tbrails="RAILS_ENV=test brails"
 alias bexec="bundle exec"
 alias dbundle="BUNDLE_GEMFILE=Gemfile.dev bundle"
+
+# Neovim nightly
+alias nnvim="/opt/neovim-nightly/bin/nvim"
 
 if [[ -d ~/.config/bash_aliases.d ]]; then
     for f in `ls ~/.config/bash_aliases.d/*`; do
