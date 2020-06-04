@@ -35,6 +35,8 @@
 {{ config_file('pryrc') }}
 {%- endif %}
 
+{{ config_file('starship.toml', '.config/starship.toml', templated=true) }}
+
 {%- if salt['pillar.get']('X11:enabled') and salt['pillar.get']('X11:Xfce:enabled') %}
 {{ config_file('Xmodmap') }}
 {{ config_file('synapse-gtkrc', '.config/synapse/gtkrc') }}
