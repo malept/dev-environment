@@ -1,0 +1,3 @@
+{% set is_wsl1 = grains['kernelrelease'].endswith('-Microsoft') %}
+{% set is_wsl2 = grains['kernelrelease'].endswith('-microsoft-standard') %}
+{% set is_wsl = is_wsl1 or is_wsl2 %}

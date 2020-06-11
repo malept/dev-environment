@@ -1,4 +1,5 @@
-{% from 'node/map.jinja' import npm_requirement, npmrc with context %}
+{% from 'node/map.jinja' import npm_requirement, npmrc with context -%}
+{% from 'wsl.jinja' import is_wsl -%}
 
 include:
   - .dasht
@@ -7,7 +8,7 @@ include:
   - .vagrant
   - .vim
 
-{%- if not grains['kernelrelease'].endswith('-Microsoft') %}
+{%- if not is_wsl %}
 America/Los_Angeles:
   timezone.system:
     - utc: True
