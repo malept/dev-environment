@@ -137,3 +137,12 @@ shellcheck:
     - require:
       - file: /usr/local/bin
 {%- endif %}
+
+{%- set shfmt_version = salt['pillar.get']('shfmt:version') %}
+{%- if shfmt_version %}
+/usr/local/bin/shfmt:
+  file.managed:
+    - source: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_{{ grains['kernel'].lower() }}_{{ grains['osarch'] }}
+    - source_hash: {{ salt['pillar.get']('shfmt:source_hash') }}
+    - mode: 0755
+{%- endif %}
