@@ -1,5 +1,7 @@
 git:
-  pkg.installed
+  pkg.installed{% if grains['oscodename'] == 'buster' %}:
+    - fromrepo: {{ grains['oscodename'] }}-backports
+{%- endif %}
 
 {%- if grains['os'] == 'Ubuntu' %}
 git-ppa:
