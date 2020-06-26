@@ -139,10 +139,6 @@ if [[ -n "$VIRTUALENVWRAPPER_SCRIPT" ]]; then
     unset VIRTUALENVWRAPPER_LAZY
 fi
 
-# rubygems
-# See: https://github.com/rvm/rubygems-bundler/blob/ce619c06ec051a25bed6f0eb68bb6cd491054a70/README.md#note-for-rubygems--220
-export RUBYGEMS_GEMDEPS="-"
-
 # RVM
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
     . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
