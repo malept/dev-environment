@@ -48,12 +48,6 @@ sshfs:
 unzip:
   pkg.installed
 
-python-pip:
-  pkg.installed
-
-python-virtualenv:
-  pkg.installed
-
 npm-global-dir:
   file.directory:
     - name: {{ salt['pillar.get']('npm:config:prefix') }}

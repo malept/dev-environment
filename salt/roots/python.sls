@@ -40,3 +40,11 @@ python-devel:
 {%- if pypy3_enabled %}
       - pypy3-dev
 {%- endif %}
+
+{%- if salt['pillar.get']('python:python2') %}
+python-pip:
+  pkg.installed
+
+python-virtualenv:
+  pkg.installed
+{%- endif %}
