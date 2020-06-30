@@ -1,4 +1,4 @@
-{% set vim_enabled = salt['pillar.get']('vim:enabled', true) %}
+{% set vim_enabled = salt['pillar.get']('vim:enabled') %}
 {% set neovim_enabled = salt['pillar.get']('neovim:enabled') %}
 
 {%- if vim_enabled or neovim_enabled %}

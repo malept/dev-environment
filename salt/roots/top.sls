@@ -20,7 +20,7 @@ base:
 {%- if salt['pillar.get']('github:version') %}
     - github
 {%- endif %}
-{%- if salt['pillar.get']('python:enabled', true) %}
+{%- if salt['pillar.get']('python:enabled', True) %}
     - python
 {%- endif %}
 {%- if salt['pillar.get']('ruby:enabled') %}
@@ -58,7 +58,7 @@ base:
     - node
     - static-analysis
     - phantomjs
-{%- if salt['pillar.get']('webserver:enabled', true) %}
+{%- if salt['pillar.get']('webserver:enabled') %}
     - webserver
 {%- endif %}
 {%- if salt['pillar.get']('gmusicprocurator:enabled') %}
