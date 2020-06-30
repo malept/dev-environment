@@ -2,6 +2,9 @@
 {% from 'wsl.jinja' import is_wsl -%}
 
 include:
+{%- if salt['pillar.get']('chef:enabled', false) %}
+  - .chef
+{%- endif %}
   - .dasht
   - .git
   - .grep
@@ -97,26 +100,6 @@ xsv:
 {%- if salt['pillar.get']('imagemagick:enabled', false) %}
 imagemagick:
   pkg.installed
-{%- endif %}
-
-{%- if salt['pillar.get']('chef:enabled', false) %}
-chef:
-  pkg.installed
-
-chef-client:
-  service.dead:
-    - enable: False
-
-{%- if salt['pillar.get']('aws:enabled') %}
-ruby-dev:
-  pkg.installed
-
-knife-ec2:
-  gem.installed:
-    - require:
-      - pkg: chef
-      - pkg: ruby-dev
-{%- endif %}
 {%- endif %}
 
 {%- set shellcheck_version = salt['pillar.get']('shellcheck:version') %}
