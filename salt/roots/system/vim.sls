@@ -1,7 +1,7 @@
-{% from 'venv_bin.sls' import venv, venv_with_binary with context %}
+{% from 'venv_bin.sls' import venv2, venv3, venv3_with_binary with context %}
 {%- set pillar_get = salt['pillar.get'] %}
 
-{%- if pillar_get('vim:enabled', true) %}
+{%- if pillar_get('vim:enabled') %}
 vim:
   pkg.installed:
     - pkgs:
@@ -37,17 +37,19 @@ neovim-runtime-deps:
   pkg.installed:
     - pkgs:
       - editorconfig
-{%- if salt['pillar.get']('vim:ctags') %}
+{%- if pillar_Get('vim:ctags') %}
       - exuberant-ctags
 {%- endif %}
-{%- if salt['pillar.get']('fzy:version') %}
+{%- if pillar_get('fzy:version') %}
     - require:
       - pkg: fzy
 {%- endif %}
 
-{{ venv('neovim', 'salt://system/files/neovim-requirements.txt', 'python2', True) }}
-{{ venv('neovim3', 'salt://system/files/neovim-requirements.txt', 'python3', True) }}
+{%- if pillar_get('python:python2') %}
+{{ venv2('neovim', 'salt://system/files/neovim-requirements.txt', True) }}
+{%- endif %}
+{{ venv3('neovim3', 'salt://system/files/neovim-requirements.txt', True) }}
 {%- if salt['pillar.get']('neovim:remote:enabled') %}
-{{ venv_with_binary('neovim-remote', 'nvr', 'salt://system/files/neovim-remote-requirements.txt', python='/usr/bin/python3') }}
+{{ venv3_with_binary('neovim-remote', 'nvr', 'salt://system/files/neovim-remote-requirements.txt') }}
 {%- endif %}
 {%- endif %}
