@@ -19,14 +19,47 @@ rustup-bash-completion:
     - creates: /etc/bash_completion.d/rustup.bash-completion
     - require:
       - cmd: rustup
-rust-nightly:
+
+{%- macro rust_toolchain(toolchain) %}
+rust-{{ toolchain }}:
   file.managed:
-    - name: /home/{{ grains['username'] }}/.rustup/update-hashes/nightly-{{ rust_target_triple() }}
+    - name: /home/{{ grains['username'] }}/.rustup/update-hashes/{{ toolchain }}-{{ rust_target_triple() }}
     - require:
-      - cmd: rust-nightly
+      - cmd: rust-{{ toolchain }}
   cmd.run:
-    - name: {{ cargo_bin('rustup') }} toolchain install nightly
+    - name: {{ cargo_bin('rustup') }} toolchain install {{ toolchain }}
     - runas: {{ grains['username'] }}
-    - creates: /home/{{ grains['username'] }}/.rustup/update-hashes/nightly-{{ rust_target_triple() }}
+    - creates: /home/{{ grains['username'] }}/.rustup/update-hashes/{{ toolchain }}-{{ rust_target_triple() }}
     - require:
       - cmd: rustup
+{%- endmacro %}
+
+{{ rust_toolchain('stable') }}
+{{ rust_toolchain('nightly') }}
+
+{%- macro cargo_install(package, binary=None, toolchain='stable', env=None, features=None, requires=None) %}
+{%- if binary == None %}
+{%- set binary = package %}
+{%- endif %}
+{{ package }}:
+  cmd.run:
+    - creates: /home/{{ grains['username'] }}/.cargo/bin/{{ binary }}
+    - name: {{ cargo_bin('cargo') }} +{{ toolchain }} install {{ package }}{% if features %} --features {{ features }}{% endif %}
+{%- if env %}
+    - env:
+{%- for key, value in env.items() %}
+      - {{ key }}: {{ value }}
+{%- endfor %}
+{%- endif %}
+    - runas: {{ grains['username'] }}
+    - onlyif: {{ cargo_bin('rustup') }} toolchain list | grep -q {{ toolchain }}
+    - onchanges:
+      - cmd: rust-{{ toolchain }}
+    - require:
+      - cmd: rust-{{ toolchain }}
+{%- if requires %}
+{%- for rtype, rname in requires %}
+      - {{ rtype }}: {{ rname }}
+{%- endfor %}
+{%- endif %}
+{%- endmacro %}

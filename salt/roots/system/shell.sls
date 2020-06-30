@@ -1,3 +1,5 @@
+{% from 'rust.sls' import cargo_install with context %}
+
 {%- set shellcheck_version = salt['pillar.get']('shellcheck:version') %}
 {%- if shellcheck_version %}
 shellcheck:
@@ -19,4 +21,14 @@ shellcheck:
     - source: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_{{ grains['kernel'].lower() }}_{{ grains['osarch'] }}
     - source_hash: {{ salt['pillar.get']('shfmt:source_hash') }}
     - mode: 0755
+{%- endif %}
+
+{%- if salt['pillar.get']('starship:enabled') and salt['pillar.get']('rust:enabled') %}
+{{ cargo_install('starship', requires=[['pkg', 'libssl-dev'], ['pkg', 'pkg-config']]) }}
+
+libssl-dev:
+  pkg.installed
+
+pkg-config:
+  pkg.installed
 {%- endif %}
