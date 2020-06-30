@@ -1,14 +1,14 @@
-git:
-  pkg.installed{% if grains['oscodename'] == 'buster' %}:
-    - fromrepo: {{ grains['oscodename'] }}-backports
-{%- endif %}
-
 {%- if grains['os'] == 'Ubuntu' %}
 git-ppa:
   pkgrepo.managed:
     - ppa: git-core/ppa
     - require_in:
       - pkg: git
+{%- endif %}
+
+git:
+  pkg.installed{% if grains['oscodename'] == 'buster' %}:
+    - fromrepo: {{ grains['oscodename'] }}-backports
 {%- endif %}
 
 {%- if salt['pillar.get']('git-lfs:enabled') %}
