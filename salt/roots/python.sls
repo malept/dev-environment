@@ -1,46 +1,42 @@
 {%- if grains['os'] == 'Ubuntu' %}
+{%- set deadsnakes = salt['pillar.get']('python:deadsnakes') %}
+{%- if deadsnakes %}
 deadsnakes.ppa:
   pkgrepo.managed:
     - ppa: deadsnakes/ppa
     - require_in:
       pkg:
-        - python2.6-dev
-        - python3.3-dev
-        - python3.4-dev
+{%- for python_version in deadsnakes %}
+        - python{{ python_version }}-dev
+{%- endfor %}
+{%- endif %}
 
-{%- if salt['pillar.get']('python:pypy:enabled') %}
+{%- set pypy_enabled = salt['pillar.get']('python:pypy:enabled') %}
+{%- set pypy3_enabled = salt['pillar.get']('python:pypy3:enabled') %}
+{%- if pypy_enabled or pypy3_enabled %}
 pypy.ppa:
   pkgrepo.managed:
     - ppa: pypy/ppa
     - require_in:
-      pkg: pypy-dev
+{%- if pypy_enabled %}
+      - pkg: pypy-dev
+{%- endif %}
+{%- if pypy3_enabled %}
+      - pkg: pypy3-dev
+{%- endif %}
 {%- endif %}
 {%- endif %}
 
 python-devel:
   pkg.installed:
     - names:
-{%- if not (grains['os'] == 'Debian' and grains['osrelease']|float >= 8.0) %}
-      - python2.6-dev
-{%- endif %}
+{%- if salt['pillar.get']('python2') %}
       - python-dev
+{%- endif %}
       - python3-dev
-{%- if salt['pillar.get']('python:pypy:enabled') %}
+{%- if pypy_enabled %}
       - pypy-dev
 {%- endif %}
-
-{%- if salt['pillar.get']('python:pypy3:version') %}
-{%- if grains['cpuarch'] == 'x86_64' %}{% set bits = '64' %}{% else %}{% set bits = '' %}{% endif %}
-{% set pypy3_basename = 'pypy3.3-{}-linux{}'.format(salt['pillar.get']('python:pypy3:version'), bits) %}
-pypy3:
-  archive.extracted:
-    - name: /opt/
-    - source: https://bitbucket.org/pypy/pypy/downloads/{{ pypy3_basename }}.tar.bz2
-    - source_hash: sha256={{ salt['pillar.get']('python:pypy3:binary_sha256') }}
-    - archive_format: tar
-    - if_missing: /opt/{{ pypy3_basename }}/
-
-/usr/local/bin/pypy3:
-  file.symlink:
-    - target: /opt/{{ pypy3_basename }}/bin/pypy3
+{%- if pypy3_enabled %}
+      - pypy3-dev
 {%- endif %}
