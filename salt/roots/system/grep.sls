@@ -3,15 +3,16 @@
 {%- if grep_alternative == 'ripgrep' and salt['pillar.get']('rust:enabled') %}
 ripgrep:
   cmd.run:
+    - creates: /home/{{ grains['username'] }}/.cargo/bin/rg
     - name: {{ cargo_bin('cargo') }} +nightly install ripgrep --features simd-accel
     - env:
       - RUSTFLAGS: -C target-cpu=native
     - runas: {{ grains['username'] }}
     - onlyif: {{ cargo_bin('rustup') }} toolchain list | grep -q nightly
     - onchanges:
-      - file: rust-nightly
+      - cmd: rust-nightly
     - require:
-      - file: rust-nightly
+      - cmd: rust-nightly
 {%- elif grep_alternative == 'silversearcher' %}
 silversearcher-ag:
   pkg.installed
