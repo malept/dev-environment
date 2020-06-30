@@ -30,7 +30,7 @@ pypy.ppa:
 python-devel:
   pkg.installed:
     - names:
-{%- if salt['pillar.get']('python2') %}
+{%- if salt['pillar.get']('python:python2') %}
       - python-dev
 {%- endif %}
       - python3-dev
