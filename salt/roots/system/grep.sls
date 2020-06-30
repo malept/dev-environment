@@ -1,6 +1,6 @@
 {% from 'rust.sls' import cargo_bin with context %}
 {%- set grep_alternative = salt['pillar.get']('grep-alternative', 'ripgrep') %}
-{%- if grep_alternative == 'ripgrep' %}
+{%- if grep_alternative == 'ripgrep' and salt['pillar.get']('rust:enabled') %}
 ripgrep:
   cmd.run:
     - name: {{ cargo_bin('cargo') }} +nightly install ripgrep --features simd-accel
