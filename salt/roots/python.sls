@@ -1,7 +1,7 @@
 {%- if grains['os'] == 'Ubuntu' %}
 deadsnakes.ppa:
   pkgrepo.managed:
-    - ppa: fkrull/deadsnakes
+    - ppa: deadsnakes/ppa
     - require_in:
       pkg:
         - python2.6-dev
