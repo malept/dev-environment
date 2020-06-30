@@ -2,10 +2,10 @@
 
 {%- if salt['pillar.get']('aws:enabled') %}
 {{ bin_file('awsify') }}
+{{ bin_file('download_rds_slow_query_log') }}
 {%- endif %}
 
 {{ bin_file('db_console') }}
-{{ bin_file('download_rds_slow_query_log') }}
 {{ bin_file('setup-ssh-agent') }}
 
 {{ config_file('bash_aliases') }}
