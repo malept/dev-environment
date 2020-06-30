@@ -1,0 +1,2 @@
+rust:
+  enabled: True

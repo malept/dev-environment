@@ -4,4 +4,5 @@ base:
     - nginx
     - postgres
     - interpreters
+    - rust
     - local
