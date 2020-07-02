@@ -52,7 +52,11 @@ browsers:
 {%- if salt['pillar.get']('firefox:mp3_support') %}
       - gstreamer1.0-plugins-ugly
 {%- endif %}
+{%- if grains['os'] == 'Ubuntu' %}
+      - chromium-browser
+{%- else %}
       - chromium
+{%- endif %}
 {%- if salt['pillar.get']('profile-sync-daemon:enabled') %}
       - profile-sync-daemon
 {%- endif %}
