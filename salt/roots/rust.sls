@@ -34,9 +34,6 @@ rust-{{ toolchain }}:
       - cmd: rustup
 {%- endmacro %}
 
-{{ rust_toolchain('stable') }}
-{{ rust_toolchain('nightly') }}
-
 {%- macro cargo_install(package, binary=None, toolchain='stable', env=None, features=None, requires=None) %}
 {%- if binary == None %}
 {%- set binary = package %}
@@ -63,3 +60,8 @@ rust-{{ toolchain }}:
 {%- endfor %}
 {%- endif %}
 {%- endmacro %}
+
+{{ rust_toolchain('stable') }}
+{{ rust_toolchain('nightly') }}
+
+{{ cargo_install('cargo-update', 'cargo-install-update') }}
