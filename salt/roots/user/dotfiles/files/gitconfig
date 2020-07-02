@@ -1,10 +1,16 @@
+{# vim: set ft=jinja noet: #}
+{% set pillar_get = salt['pillar.get'] -%}
 [color]
 	ui = true
 [user]
 	name = Mark Lee
-{%- set git_email = salt['pillar.get']('git:email', false) %}
+{%- set git_email = pillar_get('git:email') %}
 {%- if git_email %}
 	email = {{ git_email }}
+{%- endif %}
+{%- set git_gpg_key = pillar_get('git:gpg_key') %}
+{%- if git_gpg_key %}
+	signingkey = {{ git_gpg_key }}
 {%- endif %}
 [alias]
 	ci = commit
@@ -12,11 +18,11 @@
 	st = status
 [push]
 	default = simple
-{%- if salt['pillar.get']('github:version') %}
+{%- if pillar_get('github:version') %}
 [hub]
 	protocol = ssh
 {%- endif %}
-{%- set url_replacements = salt['pillar.get']('git:replace_url') %}
+{%- set url_replacements = pillar_get('git:replace_url') %}
 {%- if url_replacements %}
 {%- for search, replace in url_replacements.items() %}
 [url "{{ replace }}"]
