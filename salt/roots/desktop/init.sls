@@ -73,14 +73,11 @@ font-packages:
       - fonts-noto
       - fonts-roboto
       # console/programming
-{%- if grains['os'] == 'Debian' and grains['osrelease_info'] >= [9, 0] %}
       - fonts-droid-fallback
-{%- else %}
-      - fonts-droid
-{%- endif %}
       # emoji
       - fonts-knda
       - fonts-lklug-sinhala
+      - fonts-noto-color-emoji
       - fonts-tibetan-machine
       - fonts-vlgothic
       - ttf-ancient-fonts
@@ -98,47 +95,38 @@ font-droid-sans-mono-slashed:
     - source: http://www.cosmix.org/software/files/DroidSansMonoSlashed.zip
     - source_hash: sha256=71768814dc4de0ea6248d09a2d2285bd47e9558f82945562eb78487c71348107
     - archive_format: zip
-{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
     - enforce_toplevel: false
-{%- endif %}
     - if_missing: {{ user_font_dir }}/DroidSansMonoSlashed.ttf
     - require:
       - pkg: unzip
       - file: user-font-dir
 
-{%- if grains['saltversioninfo'] >= [2016, 9, 0] %}
 font-fira:
   archive.extracted:
     - name: {{ user_font_dir }}
     - source: https://github.com/mozilla/Fira/archive/4.202.tar.gz
     - source_hash: sha256=d86269657387f144d77ba12011124f30f423f70672e1576dc16f918bb16ddfe4
     - archive_format: tar
-{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
+    - enforce_toplevel: false
     - source_hash_update: true
     - options: --wildcards *.ttf --strip-components 2
-{%- else %}
-    - tar_options: --wildcards *.ttf --strip-components 2
-{%- endif %}
 
-font-fira-code:
-  archive.extracted:
-    - name: {{ user_font_dir }}
-    - source: https://github.com/tonsky/FiraCode/releases/download/1.204/FiraCode_1.204.zip
-    - source_hash: sha256=28ccc003173cec9de7857f8743b805d6b51eb68fb8be5e21ce2f8e1584f0939f
-    - archive_format: zip
+# Disabled until https://github.com/saltstack/salt/issues/57461 is fixed
+#
+# font-fira-code:
+#   archive.extracted:
+#     - name: {{ user_font_dir }}
+#     - source: https://github.com/tonsky/FiraCode/releases/download/5.2/Fira_Code_v5.2.zip
+#     - source_hash: sha256=521a72be00dd22678d248e63f817c0c79c1b6f23a4fbd377eba73d30cdca5efd
+#     - archive_format: zip
 
-{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
-    - source_hash_update: true
-    - enforce_toplevel: false
-    - options: -j -i *.ttf
-{% else %}
-    - zip_options: -j -i *.ttf
-{%- endif %}
-    - if_missing: {{ user_font_dir }}/FiraCode-Regular.ttf
-    - require:
-      - pkg: unzip
-      - file: user-font-dir
-{%- endif %}
+#     - source_hash_update: true
+#     - enforce_toplevel: false
+#     - options: -j */*.ttf
+#     - if_missing: {{ user_font_dir }}/FiraCode-Regular.ttf
+#     - require:
+#       - pkg: unzip
+#       - file: user-font-dir
 
 # Theme-related
 themes:
