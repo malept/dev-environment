@@ -65,3 +65,4 @@ rust-{{ toolchain }}:
 {{ rust_toolchain('nightly') }}
 
 {{ cargo_install('cargo-update', 'cargo-install-update') }}
+{{ cargo_install('cargo-outdated') }}
