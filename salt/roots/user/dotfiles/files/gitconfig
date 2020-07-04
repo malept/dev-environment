@@ -16,6 +16,8 @@
 	ci = commit
 	co = checkout
 	st = status
+[pull]
+	rebase = true
 [push]
 	default = simple
 {%- if pillar_get('github:version') %}
