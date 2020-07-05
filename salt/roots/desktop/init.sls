@@ -110,6 +110,7 @@ font-fira:
     - enforce_toplevel: false
     - source_hash_update: true
     - options: --wildcards *.ttf --strip-components 2
+    - if_missing: {{ user_font_dir }}/FiraMono-Regular.ttf
 
 # Disabled until https://github.com/saltstack/salt/issues/57461 is fixed
 #
