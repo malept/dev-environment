@@ -1,6 +1,7 @@
 {% from 'rust.sls' import cargo_install with context %}
+{%- set pillar_get = salt['pillar.get'] -%}
 
-{%- set shellcheck_version = salt['pillar.get']('shellcheck:version') %}
+{%- set shellcheck_version = pillar_get('shellcheck:version') %}
 {%- if shellcheck_version %}
 shellcheck:
   archive.extracted:
@@ -14,21 +15,34 @@ shellcheck:
       - file: /usr/local/bin
 {%- endif %}
 
-{%- set shfmt_version = salt['pillar.get']('shfmt:version') %}
+{%- set shfmt_version = pillar_get('shfmt:version') %}
 {%- if shfmt_version %}
 /usr/local/bin/shfmt:
   file.managed:
     - source: https://github.com/mvdan/sh/releases/download/v{{ shfmt_version }}/shfmt_v{{ shfmt_version }}_{{ grains['kernel'].lower() }}_{{ grains['osarch'] }}
-    - source_hash: {{ salt['pillar.get']('shfmt:source_hash') }}
+    - source_hash: {{ pillar_get('shfmt:source_hash') }}
     - mode: 0755
 {%- endif %}
 
-{%- if salt['pillar.get']('starship:enabled') and salt['pillar.get']('rust:enabled') %}
-{{ cargo_install('starship', requires=[['pkg', 'libssl-dev'], ['pkg', 'pkg-config']]) }}
+{%- if pillar_get('rust:enabled') %}
+rust-openssl-dependencies:
+  pkg.installed:
+    - pkgs:
+      - libssl-dev
+      - pkg-config
 
-libssl-dev:
-  pkg.installed
+{%- if pillar_get('nushell:enabled') %}
+nushell-stable-dependencies:
+  pkg.installed:
+    - pkgs:
+      - libx11-dev
+      - libxcb-composite0-dev
 
-pkg-config:
-  pkg.installed
+{{ cargo_install('nu', features='stable', requires=[['pkg', 'rust-openssl-dependencies'], ['pkg', 'nushell-stable-dependencies']]) }}
+# TODO: figure out how to automatically add to /etc/shells
+{%- endif %}
+
+{%- if pillar_get('starship:enabled') %}
+{{ cargo_install('starship', requires=[['pkg', 'rust-openssl-dependencies']]) }}
+{%- endif %}
 {%- endif %}
