@@ -1,3 +1,6 @@
+{%- set pypy_enabled = salt['pillar.get']('python:pypy:enabled') %}
+{%- set pypy3_enabled = salt['pillar.get']('python:pypy3:enabled') %}
+
 {%- if grains['os'] == 'Ubuntu' %}
 {%- set deadsnakes = salt['pillar.get']('python:deadsnakes') %}
 {%- if deadsnakes %}
@@ -11,8 +14,6 @@ deadsnakes.ppa:
 {%- endfor %}
 {%- endif %}
 
-{%- set pypy_enabled = salt['pillar.get']('python:pypy:enabled') %}
-{%- set pypy3_enabled = salt['pillar.get']('python:pypy3:enabled') %}
 {%- if pypy_enabled or pypy3_enabled %}
 pypy.ppa:
   pkgrepo.managed:
@@ -48,3 +49,6 @@ python-pip:
 python-virtualenv:
   pkg.installed
 {%- endif %}
+
+python3-virtualenv:
+  pkg.installed
