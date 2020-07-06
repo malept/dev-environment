@@ -5,7 +5,11 @@ alias reload='source ~/.bashrc'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    if [[ -r ~/.dircolors ]]; then
+        eval "$(dircolors -b ~/.dircolors)"
+    else
+        eval "$(dircolors -b)"
+    fi
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
@@ -37,8 +41,11 @@ alias dbundle="BUNDLE_GEMFILE=Gemfile.dev bundle"
 alias nnvim="/opt/neovim-nightly/bin/nvim"
 
 if [[ -d ~/.config/bash_aliases.d ]]; then
-    for f in `ls ~/.config/bash_aliases.d/*`; do
-        source "$f"
+    for f in ~/.config/bash_aliases.d/*; do
+        if [[ -f "$f" ]]; then
+          # shellcheck source=/dev/null
+          source "$f"
+        fi
     done
     unset f
 fi
