@@ -37,7 +37,7 @@ neovim-runtime-deps:
   pkg.installed:
     - pkgs:
       - editorconfig
-{%- if pillar_Get('vim:ctags') %}
+{%- if pillar_get('vim:ctags') %}
       - exuberant-ctags
 {%- endif %}
 {%- if pillar_get('fzy:version') %}
