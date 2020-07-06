@@ -35,6 +35,8 @@ alias tbrake="RAILS_ENV=test brake"
 alias brails="bundle exec rails"
 alias tbrails="RAILS_ENV=test brails"
 alias bexec="bundle exec"
+alias brc="bundle exec rails console"
+alias brspec="bundle exec rspec"
 alias dbundle="BUNDLE_GEMFILE=Gemfile.dev bundle"
 
 # Neovim nightly
