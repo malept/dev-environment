@@ -1,4 +1,5 @@
 {% from 'node/map.jinja' import npm_requirement, npmrc with context -%}
+{% from 'rust.sls' import cargo_install with context %}
 {% from 'wsl.jinja' import is_wsl -%}
 
 include:
@@ -80,22 +81,8 @@ grunt-cli:
 jq:
   pkg.installed
 
-{%- set xsv_version = salt['pillar.get']('xsv:version', false) %}
-{%- if xsv_version %}
-xsv:
-  archive.extracted:
-    - name: /usr/local/bin/
-    - source: https://github.com/BurntSushi/xsv/releases/download/{{ xsv_version }}/xsv-{{ xsv_version }}-{{ grains['cpuarch'] }}-unknown-linux-musl.tar.gz
-    - source_hash: {{ salt['pillar.get']('xsv:checksum') }}
-    - archive_format: tar
-{%- if grains['saltversioninfo'] >= [2016, 11, 0] %}
-    - enforce_toplevel: false
-    - source_hash_update: true
-    - options: z
-{%- else %}
-    - tar_options: z
-{%- endif %}
-    - if_missing: /usr/local/bin/xsv
+{%- if salt['pillar.get']('xsv_enabled') %}
+{{ cargo_install('xsv') }}
 {%- endif %}
 
 {%- if salt['pillar.get']('imagemagick:enabled', false) %}
