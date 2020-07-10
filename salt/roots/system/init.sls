@@ -78,14 +78,31 @@ grunt-cli:
 /usr/local/bin:
   file.directory
 
+{%- if salt['pillar.get']('imagemagick:enabled', false) %}
+imagemagick:
+  pkg.installed
+{%- endif %}
+
+{%- set grpcurl_version = salt['pillar.get']('grpcurl:version') %}
+{%- if grpcurl_version %}
+{%- set grpcurl_base_url = 'https://github.com/fullstorydev/grpcurl/releases/download/v{}'.format(grpcurl_version) %}
+grpcurl:
+  archive.extracted:
+    - name: /usr/local/bin/
+    # Both platform and arch are non-standard (linux|osx|windows, x86_32|x86_64)
+    - source: {{ grpcurl_base_url }}/grpcurl_{{ grpcurl_version }}_{{ grains['kernel'].lower() }}_x86_64.tar.gz
+    - source_hash: {{ grpcurl_base_url }}/grpcurl_{{ grpcurl_version }}_checksums.txt
+    - source_hash_update: true
+    - enforce_toplevel: false
+    - options: --wildcards grpcurl
+    - if_missing: /usr/local/bin/grpcurl
+    - require:
+      - file: /usr/local/bin
+{%- endif %}
+
 jq:
   pkg.installed
 
 {%- if salt['pillar.get']('xsv_enabled') %}
 {{ cargo_install('xsv') }}
-{%- endif %}
-
-{%- if salt['pillar.get']('imagemagick:enabled', false) %}
-imagemagick:
-  pkg.installed
 {%- endif %}
