@@ -14,7 +14,7 @@
 {%- endif %}
 [alias]
 	ci = commit
-	co = checkout
+	co = !echo "use switch for changing branches or restore for restoring working tree files" && exit 1
 	st = status
 	sw = switch
 [pull]
