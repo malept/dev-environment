@@ -50,5 +50,8 @@ python-virtualenv:
   pkg.installed
 {%- endif %}
 
+python3-pip:
+  pkg.installed
+
 python3-virtualenv:
   pkg.installed
