@@ -1,8 +1,12 @@
 #!/bin/bash
 
-eval "$(ssh-agent)"
+if which ssh-agent-relay > /dev/null; then
+    eval "$(ssh-agent-relay)"
+else
+    eval "$(ssh-agent)"
+fi
 
-ln --symbolic --force "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock.$(hostname --fqdn)
+ln --symbolic --force "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock."$(hostname --fqdn)"
 
 for pub in ~/.ssh/*.pub; do
     ssh-add "$(dirname "$pub")"/"$(basename "$pub" .pub)"
