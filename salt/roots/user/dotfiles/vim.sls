@@ -23,7 +23,6 @@ vimfiles:
   file.directory:
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
-    - file_mode: 644
     - dir_mode: 755
     - makedirs: True
     - recurse:
@@ -49,7 +48,6 @@ vimfiles:
   file.directory:
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
-    - file_mode: 644
     - dir_mode: 755
     - makedirs: True
     - recurse:
