@@ -28,7 +28,6 @@ vimfiles:
     - recurse:
       - user
       - group
-      - mode
     - require:
       - git: vimfiles
 
@@ -53,7 +52,6 @@ vimfiles:
     - recurse:
       - user
       - group
-      - mode
     - require:
       - git: vimfiles
 {%- endmacro %}
