@@ -10,7 +10,7 @@
 {%- endif %}
 {%- set git_gpg_key = pillar_get('git:gpg_key') %}
 {%- if git_gpg_key %}
-	signingkey = {{ git_gpg_key }}
+	signingKey = {{ git_gpg_key }}
 {%- endif %}
 [alias]
 	ci = commit
@@ -21,6 +21,8 @@
 	rebase = true
 [push]
 	default = simple
+[rebase]
+	autoStash = true
 {%- if pillar_get('github:version') %}
 [hub]
 	protocol = ssh
