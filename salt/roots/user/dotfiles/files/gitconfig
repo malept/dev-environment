@@ -2,6 +2,12 @@
 {% set pillar_get = salt['pillar.get'] -%}
 [color]
 	ui = true
+{%- if pillar_get('git:delta:enabled') and pillar_get('rust:enabled') %}
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+{%- endif %}
 [user]
 	name = Mark Lee
 {%- set git_email = pillar_get('git:email') %}

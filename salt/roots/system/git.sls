@@ -1,3 +1,4 @@
+{% from 'rust.sls' import cargo_install with context %}
 {%- set pillar_get = salt['pillar.get'] %}
 {%- if grains['os'] == 'Ubuntu' %}
 git-ppa:
@@ -24,4 +25,8 @@ git-lfs:
       - pkg: git-lfs
   pkg.installed:
     - refresh: True
+{%- endif %}
+
+{%- if pillar_get('git:delta:enabled') and pillar_get('rust:enabled') %}
+{{ cargo_install('git-delta', binary='delta') }}
 {%- endif %}
