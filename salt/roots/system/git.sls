@@ -1,3 +1,4 @@
+{%- set pillar_get = salt['pillar.get'] %}
 {%- if grains['os'] == 'Ubuntu' %}
 git-ppa:
   pkgrepo.managed:
@@ -11,7 +12,7 @@ git:
     - fromrepo: {{ grains['oscodename'] }}-backports
 {%- endif %}
 
-{%- if salt['pillar.get']('git-lfs:enabled') %}
+{%- if pillar_get('git:lfs:enabled') %}
 git-lfs:
   pkgrepo.managed:
     - humanname: Git-LFS
