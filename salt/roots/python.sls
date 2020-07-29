@@ -43,15 +43,16 @@ python-devel:
 {%- endif %}
 
 {%- if salt['pillar.get']('python:python2') %}
-python-pip:
-  pkg.installed
-
-python-virtualenv:
-  pkg.installed
+python2-packages:
+  pkg.installed:
+    - names:
+      - python-pip
+      - python-virtualenv
 {%- endif %}
 
-python3-pip:
-  pkg.installed
-
-python3-virtualenv:
-  pkg.installed
+python3-packages:
+  pkg.installed:
+    - names:
+      - python3-pip
+      - python3-venv
+      - python3-virtualenv

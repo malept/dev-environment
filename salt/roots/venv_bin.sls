@@ -9,7 +9,7 @@
     - system_site_packages: True
     - requirements: {{ req_txt_path }}
     - require:
-      - pkg: python{% if python == 'python3' %}3{% endif %}-virtualenv
+      - pkg: python{% if python == 'python3' %}3{% endif %}-packages
 {%- if binary_requirements %}
       - pkg: python{% if python == 'python3' %}3{% endif %}-dev
 {%- endif %}
