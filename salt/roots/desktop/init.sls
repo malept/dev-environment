@@ -1,4 +1,9 @@
-{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
+include:
+  - .sound
+
+{%- set pillar_get = salt['pillar.get'] -%}
+{%- set xfce_enabled = pillar_get('X11:Xfce:enabled') -%}
+{%- if xfce_enabled -%}
 xfce:
   pkg.installed:
     - pkgs:
@@ -32,14 +37,14 @@ desktop-apps:
       - file-roller
       - gnome-keyring
       - gucharmap
-{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
+{%- if xfce_enabled -%}
       - synapse
 {%- endif %}
       - xsel
-{%- if salt['pillar.get']('libreoffice:enabled') %}
+{%- if pillar_get('libreoffice:enabled') %}
       - libreoffice
 {%- endif %}
-{%- if salt['pillar.get']('pidgin:enabled') %}
+{%- if pillar_get('pidgin:enabled') %}
       - pidgin
 {%- endif %}
 
@@ -49,7 +54,7 @@ browsers:
   pkg.installed:
     - pkgs:
       - firefox
-{%- if salt['pillar.get']('firefox:mp3_support') %}
+{%- if pillar_get('firefox:mp3_support') %}
       - gstreamer1.0-plugins-ugly
 {%- endif %}
 {%- if grains['os'] == 'Ubuntu' %}
@@ -57,7 +62,7 @@ browsers:
 {%- else %}
       - chromium
 {%- endif %}
-{%- if salt['pillar.get']('profile-sync-daemon:enabled') %}
+{%- if pillar_get('profile-sync-daemon:enabled') %}
       - profile-sync-daemon
 {%- endif %}
 {%- if grains['oscodename'] in ['jessie', 'stretch'] %}
@@ -134,7 +139,7 @@ themes:
   pkg.installed:
     - pkgs:
       - gnome-wise-icon-theme
-{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
+{%- if xfce_enabled -%}
       - shiki-colors-xfwm-theme
 {%- else %}
       - gnome-tweak-tool
@@ -151,7 +156,7 @@ themes:
     - mode: 644
     - makedirs: True
 
-{%- if salt['pillar.get']('X11:Xfce:enabled') -%}
+{%- if xfce_enabled -%}
 /etc/lightdm/lightdm-gtk-greeter.conf:
   file.managed:
     - source: salt://desktop/files/lightdm-gtk-greeter.conf.jinja

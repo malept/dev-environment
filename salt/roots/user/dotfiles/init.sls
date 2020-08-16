@@ -1,6 +1,7 @@
 {% from 'user/dotfiles/macros.sls' import bin_file, config_dir, config_file with context %}
+{%- set pillar_get = salt['pillar.get'] -%}
 
-{%- if salt['pillar.get']('aws:enabled') %}
+{%- if pillar_get('aws:enabled') %}
 {{ bin_file('awsify') }}
 {{ bin_file('download_rds_slow_query_log') }}
 {%- endif %}
@@ -20,28 +21,32 @@
 
 {{ config_file('pip.conf', '.config/pip/pip.conf', templated=true) }}
 
-{%- if salt['pillar.get']('profile-sync-daemon:enabled') %}
+{%- if pillar_get('profile-sync-daemon:enabled') %}
 {{ config_file('psd.conf', '.config/psd/psd.conf', templated=true) }}
+{%- endif %}
+
+{%- if pillar_get('nsfv:version') and pillar_get('nsfv:microphone-source') %}
+{{ config_file('pulse.conf', '.config/pulse/default.pa', templated=true)
 {%- endif %}
 
 {{ config_file('psqlrc', '.config/psqlrc') }}
 {{ config_dir('.cache/psql') }}
 
-{%- if salt['pillar.get']('ruby:enabled') %}
+{%- if pillar_get('ruby:enabled') %}
 {{ config_file('gemrc') }}
-{%- if salt['pillar.get']('ruby:manager', 'rvm') == 'rvm' %}
+{%- if pillar_get('ruby:manager', 'rvm') == 'rvm' %}
 {{ config_file('global.gems', '.rvm/gemsets/global.gems') }}
 {%- endif %}
 {{ config_file('pryrc') }}
 {%- endif %}
 
-{%- if salt['pillar.get']('rust:enabled') %}
+{%- if pillar_get('rust:enabled') %}
 {{ config_file('cargo_install_config.toml', '.cargo/.install_config.toml', templated=true) }}
 {%- endif %}
 
 {{ config_file('starship.toml', '.config/starship.toml', templated=true) }}
 
-{%- if salt['pillar.get']('X11:enabled') and salt['pillar.get']('X11:Xfce:enabled') %}
+{%- if pillar_get('X11:enabled') and pillar_get('X11:Xfce:enabled') %}
 {{ config_file('Xmodmap') }}
 {{ config_file('synapse-gtkrc', '.config/synapse/gtkrc') }}
 {{ config_file('xfce4-screenshooter', '.config/xfce4/xfce4-screenshooter', templated=true) }}
