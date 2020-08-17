@@ -40,7 +40,9 @@ alias brspec="bundle exec rspec"
 alias dbundle="BUNDLE_GEMFILE=Gemfile.dev bundle"
 
 # Neovim nightly
-alias nnvim="/opt/neovim-nightly/bin/nvim"
+if [[ -d /opt/neovim-nightly ]]; then
+  alias nnvim="/opt/neovim-nightly/bin/nvim"
+fi
 
 if [[ -d ~/.config/bash_aliases.d ]]; then
     for f in ~/.config/bash_aliases.d/*; do
