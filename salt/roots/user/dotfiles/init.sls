@@ -9,7 +9,7 @@
 {{ bin_file('db_console') }}
 {{ bin_file('setup-ssh-agent') }}
 
-{{ config_file('bash_aliases') }}
+{{ config_file('bash_aliases', templated=true) }}
 {{ config_file('bashrc', templated=true) }}
 {{ config_file('profile') }}
 {{ config_file('sshrc', '.ssh/rc') }}

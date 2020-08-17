@@ -44,6 +44,10 @@ if [[ -d /opt/neovim-nightly ]]; then
   alias nnvim="/opt/neovim-nightly/bin/nvim"
 fi
 
+{%- for alias_name, command_value in salt['pillar.get']('bashrc:aliases', {}).items() %}
+alias {{ alias_name }}='{{ command_value }}'
+{%- endfor %}
+
 if [[ -d ~/.config/bash_aliases.d ]]; then
     for f in ~/.config/bash_aliases.d/*; do
         if [[ -f "$f" ]]; then
