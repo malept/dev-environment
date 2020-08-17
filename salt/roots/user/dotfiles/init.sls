@@ -26,7 +26,7 @@
 {%- endif %}
 
 {%- if pillar_get('nsfv:version') and pillar_get('nsfv:microphone-source') %}
-{{ config_file('pulse.conf', '.config/pulse/default.pa', templated=true)
+{{ config_file('pulseaudio.conf', '.config/pulse/default.pa', templated=true) }}
 {%- endif %}
 
 {{ config_file('psqlrc', '.config/psqlrc') }}
