@@ -14,6 +14,43 @@ noise-suppression-for-voice:
       - file: noise-suppression-for-voice
   file.directory:
     - name: /opt/nsfv
-    - file_mode: 644
     - dir_mode: 755
+{%- endif %}
+
+{%- set noisetorch_version = pillar_get('noisetorch:version') %}
+{%- if noisetorch_version %}
+noisetorch:
+  archive.extracted:
+    - name: /opt/noisetorch
+    - source: https://github.com/lawl/NoiseTorch/releases/download/{{ noisetorch_version }}-beta/NoiseTorch_x64.tgz
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - enforce_toplevel: false
+    - skip_verify: true
+    - options: --strip-components 2
+    - require:
+      - file: noisetorch
+  file.directory:
+    - name: /opt/noisetorch
+    - dir_mode: 755
+
+noisetorch.desktop:
+  file.symlink:
+    - name: /home/{{ grains['username'] }}/.local/share/applications/noisetorch.desktop
+    - target: /opt/noisetorch/share/applications/noisetorch.desktop
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - makedirs: true
+    - require:
+      - archive: noisetorch
+
+noisetorch.png:
+  file.symlink:
+    - name: /home/{{ grains['username'] }}/.local/share/icons/hicolor/256x256/apps/noisetorch.png
+    - target: /opt/noisetorch/share/icons/hicolor/256x256/apps/noisetorch.png
+    - user: {{ grains['username'] }}
+    - group: {{ grains.get('usergroup', grains['username']) }}
+    - makedirs: true
+    - require:
+      - archive: noisetorch
 {%- endif %}

@@ -172,6 +172,9 @@ _update_path "/opt/github/bin" append
 # dasht
 _update_path "/opt/dasht/bin" append
 
+# noisetorch
+_update_path "/opt/noisetorch/bin" append
+
 # Custom bin dirs
 {%- for bin_dir, mode in salt['pillar.get']('bashrc:PATH', {}).items() %}
 _update_path "{{ bin_dir }}" {{ mode }}
