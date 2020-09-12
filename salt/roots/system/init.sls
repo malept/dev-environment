@@ -106,3 +106,18 @@ jq:
 {%- if salt['pillar.get']('xsv_enabled') %}
 {{ cargo_install('xsv') }}
 {%- endif %}
+
+{%- if is_wsl and grains['os'] == 'Debian' %}
+wslu:
+  pkg.installed:
+    - require:
+      - pkgrepo: wslu
+  pkgrepo.managed:
+    - name: "deb https://access.patrickwu.space/wslu/debian {{ grains['oscodename'] }} main"
+    - file: /etc/apt/sources.list.d/wslu.list
+    - key_url: https://access.patrickwu.space/wslu/public.asc
+
+/usr/local/bin/xdg-open:
+  file.symlink:
+    - target: /usr/bin/wslview
+{%- endif %}
