@@ -103,8 +103,13 @@ grpcurl:
 jq:
   pkg.installed
 
-{%- if salt['pillar.get']('xsv_enabled') %}
+{%- if salt['pillar.get']('rust:enabled') %}
+{%- if salt['pillar.get']('watchexec:enabled') %}
+{{ cargo_install('watchexec') }}
+{%- endif %}
+{%- if salt['pillar.get']('xsv:enabled') %}
 {{ cargo_install('xsv') }}
+{%- endif %}
 {%- endif %}
 
 {%- if is_wsl and grains['os'] == 'Debian' %}
