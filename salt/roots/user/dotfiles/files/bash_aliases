@@ -44,6 +44,9 @@ if [[ -d /opt/neovim-nightly ]]; then
   alias nnvim="/opt/neovim-nightly/bin/nvim"
 fi
 
+# tmate
+alias rtmate="tmate -F"
+
 {%- for alias_name, command_value in salt['pillar.get']('bashrc:aliases', {}).items() %}
 alias {{ alias_name }}='{{ command_value }}'
 {%- endfor %}
