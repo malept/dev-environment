@@ -137,7 +137,7 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
 fi
 
 # chruby
-if [[ -f '/usr/share/chruby/chruby.sh' ]]; then
+if [[ -f /usr/share/chruby/chruby.sh ]]; then
     source /usr/share/chruby/chruby.sh
     source /usr/share/chruby/auto.sh
     {%- set default_ruby_version = salt['pillar.get']('ruby:default_version', false) %}
