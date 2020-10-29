@@ -190,6 +190,10 @@ if which kubectl > /dev/null; then
     eval "$(kubectl completion bash)"
 fi
 
+if command -v stern /dev/null; then
+  source <(stern --completion bash)
+fi
+
 if [[ -d "$HOME/.asdf" ]]; then
     source $HOME/.asdf/asdf.sh
     source $HOME/.asdf/completions/asdf.bash
