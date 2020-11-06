@@ -173,6 +173,10 @@ _update_path "{{ bin_dir }}" {{ mode }}
 
 unset _update_path
 
+{% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).items() -%}
+export {{ env_var }}={{ env_value }}
+{% endfor -%}
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -204,7 +208,3 @@ export AWS_CONFIG_FILE="$HOME/.config/aws/config.ini"
 export AWS_SHARED_CREDENTIALS_FILE="$HOME/.config/aws/credentials.ini"
 {%- endif %}
 export PSQLRC=$HOME/.config/psqlrc
-
-{% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).items() -%}
-export {{ env_var }}={{ env_value }}
-{% endfor -%}
