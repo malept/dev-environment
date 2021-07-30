@@ -166,6 +166,13 @@ _update_path "/opt/dasht/bin" append
 # noisetorch
 _update_path "/opt/noisetorch/bin" append
 
+# volta
+export VOLTA_HOME="$HOME/.local/volta"
+if [[ -d "$VOLTA_HOME" ]]; then
+    _update_path "$VOLTA_HOME/bin" prepend
+    eval "$(volta completions bash)"
+fi
+
 # Custom bin dirs
 {%- for bin_dir, mode in salt['pillar.get']('bashrc:PATH', {}).items() %}
 _update_path "{{ bin_dir }}" {{ mode }}
