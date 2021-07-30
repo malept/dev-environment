@@ -180,6 +180,10 @@ _update_path "{{ bin_dir }}" {{ mode }}
 
 unset _update_path
 
+if which zoxide > /dev/null; then
+    eval "$(zoxide init bash)"
+fi
+
 {% for env_var, env_value in salt['pillar.get']('bashrc:environment', {}).items() -%}
 export {{ env_var }}={{ env_value }}
 {% endfor -%}
