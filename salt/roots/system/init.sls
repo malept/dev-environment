@@ -118,9 +118,9 @@ wslu:
     - require:
       - pkgrepo: wslu
   pkgrepo.managed:
-    - name: "deb https://access.patrickwu.space/wslu/debian {{ grains['oscodename'] }} main"
+    - name: "deb https://pkg.wslutiliti.es/debian {{ grains['oscodename'] }} main"
     - file: /etc/apt/sources.list.d/wslu.list
-    - key_url: https://access.patrickwu.space/wslu/public.asc
+    - key_url: https://pkg.wslutiliti.es/public.key
 
 /usr/local/bin/xdg-open:
   file.symlink:
