@@ -38,6 +38,7 @@ alias bexec="bundle exec"
 alias brc="bundle exec rails console"
 alias brspec="bundle exec rspec"
 alias dbundle="BUNDLE_GEMFILE=Gemfile.dev bundle"
+alias brcop="bundle exec rubocop"
 
 # Neovim nightly
 if [[ -d /opt/neovim-nightly ]]; then
