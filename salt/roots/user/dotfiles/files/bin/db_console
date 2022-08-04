@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from subprocess import check_call
 import sys
-from urlparse import urlparse
+from urllib.parse import unquote, urlparse
 
 
 class DBConsole(object):
@@ -11,12 +11,12 @@ class DBConsole(object):
         self.url = url
 
     @classmethod
-    def from_url(self, url):
+    def from_url(cls, url):
         parsed = urlparse(url)
         return BINARIES[parsed.scheme](parsed)
 
     def run_console(self, cmd):
-        cmd = cmd.format(user=self.url.username, password=self.url.password,
+        cmd = cmd.format(user=self.url.username, password=unquote(self.url.password),
                          host=self.url.hostname, database=self.url.path[1:])
         check_call(cmd, shell=True)
 
@@ -49,6 +49,6 @@ BINARIES = {
 if len(sys.argv) > 1:
     db_url = sys.argv[1]
 else:
-    db_url = raw_input('Enter URL: ')
+    db_url = input('Enter URL: ')
 
 DBConsole.from_url(db_url).run()
