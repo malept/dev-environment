@@ -50,8 +50,9 @@ BINARIES = {
 }
 
 parser = ArgumentParser(description='DB console wrapper')
-parser.add_argument('--env', metavar='FILE', type=str, help='Path to a dotenv file containing DATABASE_URL')
-parser.add_argument('db_url', metavar='URL', type=str, nargs='?', help='the database URL')
+parser.add_argument('--env', metavar='FILE', type=str, help='Path to a dotenv file containing the variable for the database URL')
+parser.add_argument('--env-var', metavar='VARNAME', type=str, default='DATABASE_URL', help='Name of the environment variable containing the database URL')
+parser.add_argument('db_url', metavar='URL', type=str, nargs='?', help='The database URL')
 autocomplete(parser)
 args = parser.parse_args()
 
@@ -61,11 +62,11 @@ if args.db_url:
     db_url = args.db_url
 elif args.env:
     if pathlib.Path(args.env).exists():
-        database_url_lines = [l for l in open(args.env).readlines() if l.startswith('DATABASE_URL=')]
+        database_url_lines = [l for l in open(args.env).readlines() if l.startswith('{}='.format(args.env_var))]
         if len(database_url_lines) > 0:
             db_url = database_url_lines[0].split('=', 1)[1]
         else:
-            print('No DATABASE_URL definition found, skipping')
+            print('No {} definition found, skipping'.format(args.env_var))
     else:
         print('No dotenv file found, skipping')
 
