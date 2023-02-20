@@ -1,0 +1,117 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from argcomplete import autocomplete
+from argparse import ArgumentParser
+import pathlib
+from subprocess import check_call
+import sys
+from urllib.parse import unquote, urlparse
+
+
+class DB(object):
+    def __init__(self, url, args):
+        self.url = url
+        self.args = args
+
+    @classmethod
+    def from_url(cls, url, args):
+        parsed = urlparse(url)
+        binary = BINARIES[parsed.scheme].get(args.cmd)
+        if binary is None:
+            raise Exception(f'No command found for {parsed.scheme}: {args.cmd}')
+        return binary(parsed, args)
+
+    @property
+    def database(self):
+        return self.url.path[1:]
+
+    def run_console(self, cmd):
+        password = None
+        if self.url.password:
+            password = unquote(self.url.password)
+        cmd = cmd.format(user=self.url.username, password=password,
+                         host=self.url.hostname, database=self.database)
+        check_call(cmd, shell=True)
+
+
+class MySQL(DB):
+    @property
+    def auth_args(self):
+        if self.url.password:
+            return '-u {user} -p{password} -h {host}'
+        else:
+            return '-u {user} -h {host}'
+
+
+class MySQLConsole(MySQL):
+    def run(self):
+        self.run_console(f'mysql {self.auth_args} {{database}}')
+
+
+class MySQLDump(MySQL):
+    def run(self):
+        databases = [self.database]
+        if self.args.databases:
+            databases += self.args.databases
+        self.run_console(f'mysqldump {self.auth_args} --databases {databases.join(" ")}')
+
+
+class PostgresConsole(DB):
+    def run(self):
+        self.run_console('psql {}'.format(self.url.geturl()))
+
+
+class Pgtop(DB):
+    def run(self):
+        cmd = 'PGPASSWORD={password} pg_top -U {user} -h {host} -d {database}'
+        self.run_console(cmd)
+
+
+BINARIES = {
+    'mysql2': {
+        'console': MySQLConsole,
+        'dump': MySQLDump,
+
+    },
+    'postgres': {
+        'console': PostgresConsole,
+        'top': Pgtop,
+    },
+}
+
+def subcommand_parser(subparsers, name):
+    subparser = subparsers.add_parser(name)
+    subparser.add_argument('db_url', metavar='URL', type=str, nargs='?', help='The database URL')
+    return subparser
+
+parser = ArgumentParser(description='DB CLI wrapper')
+parser.add_argument('--env', metavar='FILE', type=str, help='Path to a dotenv file containing the variable for the database URL')
+parser.add_argument('--env-var', metavar='VARNAME', type=str, default='DATABASE_URL', help='Name of the environment variable containing the database URL')
+subparsers = parser.add_subparsers(title="Sub-commands", dest='cmd')
+subcommand_parser(subparsers, 'console')
+subcommand_parser(subparsers, 'top')
+dump = subcommand_parser(subparsers, 'dump')
+dump.add_argument('database', nargs='*', help='Database(s) to dump, in addition to the one specified in the URL.')
+subcommand_parser(subparsers, 'restore')
+autocomplete(parser)
+args = parser.parse_args()
+
+db_url = None
+
+if args.db_url:
+    db_url = args.db_url
+elif args.env:
+    if pathlib.Path(args.env).exists():
+        database_url_lines = [l for l in open(args.env).readlines() if l.startswith('{}='.format(args.env_var))]
+        if len(database_url_lines) > 0:
+            db_url = database_url_lines[0].split('=', 1)[1]
+        else:
+            print('No {} definition found, skipping'.format(args.env_var))
+    else:
+        print('No dotenv file found, skipping')
+
+if db_url is None:
+    db_url = input('Enter URL: ')
+
+DB.from_url(db_url, args).run()
