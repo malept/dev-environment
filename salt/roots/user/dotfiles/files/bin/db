@@ -26,13 +26,13 @@ class DB(object):
     def database(self):
         return self.url.path[1:]
 
-    def run_console(self, cmd):
+    def run_console(self, cmd, **kwargs):
         password = None
         if self.url.password:
             password = unquote(self.url.password)
         cmd = cmd.format(user=self.url.username, password=password,
                          host=self.url.hostname, database=self.database)
-        check_call(cmd, shell=True)
+        check_call(cmd, shell=True, **kwargs)
 
 
 class MySQL(DB):
@@ -46,7 +46,7 @@ class MySQL(DB):
 
 class MySQLConsole(MySQL):
     def run(self):
-        self.run_console(f'mysql {self.auth_args} {{database}}')
+        self.run_console(f'mysql {self.auth_args} {{database}}', stdin=sys.stdin)
 
 
 class MySQLDump(MySQL):
@@ -59,7 +59,7 @@ class MySQLDump(MySQL):
 
 class PostgresConsole(DB):
     def run(self):
-        self.run_console('psql {}'.format(self.url.geturl()))
+        self.run_console('psql {}'.format(self.url.geturl()), stdin=sys.stdin)
 
 
 class Pgtop(DB):
