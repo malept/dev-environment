@@ -80,26 +80,26 @@ BINARIES = {
     },
 }
 
-def subcommand_parser(subparsers, name):
-    subparser = subparsers.add_parser(name)
+def subcommand_parser(subparsers, name, **kwargs):
+    subparser = subparsers.add_parser(name, **kwargs)
     subparser.add_argument('db_url', metavar='URL', type=str, nargs='?', help='The database URL')
     return subparser
 
 parser = ArgumentParser(description='DB CLI wrapper')
 parser.add_argument('--env', metavar='FILE', type=str, help='Path to a dotenv file containing the variable for the database URL')
 parser.add_argument('--env-var', metavar='VARNAME', type=str, default='DATABASE_URL', help='Name of the environment variable containing the database URL')
-subparsers = parser.add_subparsers(title="Sub-commands", dest='cmd')
-subcommand_parser(subparsers, 'console')
-subcommand_parser(subparsers, 'top')
-dump = subcommand_parser(subparsers, 'dump')
+subparsers = parser.add_subparsers(title="Subcommands", dest='cmd', required=True)
+subcommand_parser(subparsers, 'console', help='Console access to the database')
+subcommand_parser(subparsers, 'top', help='Database monitor')
+dump = subcommand_parser(subparsers, 'dump', help='Backup database')
 dump.add_argument('database', nargs='*', help='Database(s) to dump, in addition to the one specified in the URL.')
-subcommand_parser(subparsers, 'restore')
+subcommand_parser(subparsers, 'restore', help='Restore database')
 autocomplete(parser)
 args = parser.parse_args()
 
 db_url = None
 
-if args.db_url:
+if hasattr(args, 'db_url') and args.db_url:
     db_url = args.db_url
 elif args.env:
     if pathlib.Path(args.env).exists():
