@@ -16,6 +16,8 @@ base:
     - system
 {%- if salt['pillar.get']('X11:enabled') %}
     - desktop
+{%- elif salt['pillar.get']('fonts:enabled') %}
+    - desktop.fonts
 {%- endif %}
 {%- if salt['pillar.get']('github:version') %}
     - github
