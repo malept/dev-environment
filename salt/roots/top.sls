@@ -12,7 +12,7 @@ base:
     - user.dotfiles
     - user.dotfiles.node
     - user.dotfiles.tmux
-    - user.dotfiles.vim
+    - user.dotfiles.neovim
     - system
 {%- if salt['pillar.get']('X11:enabled') %}
     - desktop

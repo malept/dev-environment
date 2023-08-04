@@ -9,9 +9,9 @@ include:
   - .dasht
   - .git
   - .grep
+  - .neovim
   - .shell
   - .vagrant
-  - .vim
 
 {%- if not is_wsl %}
 America/Los_Angeles:

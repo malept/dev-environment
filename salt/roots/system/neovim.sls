@@ -1,21 +1,6 @@
 {% from 'venv_bin.sls' import venv2, venv3, venv3_with_binary with context %}
 {%- set pillar_get = salt['pillar.get'] %}
 
-{%- if pillar_get('vim:enabled') %}
-vim:
-  pkg.installed:
-    - pkgs:
-{%- if salt['pillar.get']('vim:gtk') %}
-      - vim-gtk
-{%- else %}
-      - vim-nox
-{%- endif %}
-{%- if salt['pillar.get']('vim:ctags') %}
-      - exuberant-ctags
-{%- endif %}
-      - editorconfig
-{%- endif %}
-
 {%- if pillar_get('neovim:enabled') %}
 {%- if grains['os'] == 'Ubuntu' %}
 neovim:
@@ -37,9 +22,6 @@ neovim-runtime-deps:
   pkg.installed:
     - pkgs:
       - editorconfig
-{%- if pillar_get('vim:ctags') %}
-      - exuberant-ctags
-{%- endif %}
 {%- if pillar_get('fzy:version') %}
     - require:
       - pkg: fzy
