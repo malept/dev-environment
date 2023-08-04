@@ -28,7 +28,7 @@ base:
 {%- if salt['pillar.get']('ruby:enabled') %}
     - ruby
 {%- endif %}
-{%- if salt['pillar.get']('rust:enabled') %}
+{%- if salt['pillar.get']('rust:enabled', true) %}
     - rust
 {%- endif %}
     - databases
