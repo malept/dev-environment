@@ -116,6 +116,20 @@ font-fira:
     - source_hash_update: true
     - options: --wildcards *.ttf --strip-components 2
     - if_missing: {{ user_font_dir }}/FiraMono-Regular.ttf
+    - require:
+      - file: user-font-dir
+
+font-fira-code-nerdfont:
+  archive.extracted:
+    - name: {{ user_font_dir }}
+    - source: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FiraCode.tar.xz
+    - source_hash: sha256=76c1d691cea44b0cae4d6add56bb3ef52b83cedebb1c5f519b62d068f8586b93
+    - archive_format: tar
+    - enforce_toplevel: false
+    - source_hash_update: true
+    - options: --wildcards *.ttf
+    - require:
+      - file: user-font-dir
 
 # Disabled until https://github.com/saltstack/salt/issues/57461 is fixed
 #
