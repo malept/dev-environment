@@ -5,7 +5,7 @@
 vimfiles:
   git.latest:
     - name: https://github.com/malept/vimfiles.git
-    - rev: master
+    - rev: main
     - submodules: True
     - target: /home/{{ grains['username'] }}/Code/vimfiles
     - user: {{ grains['username'] }}
