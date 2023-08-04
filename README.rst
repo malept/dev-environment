@@ -11,7 +11,7 @@ Bootstrap
 
 .. code:: shell
 
-   wget -O - https://raw.githubusercontent.com/malept/dev-environment/master/bootstrap.sh | \
+   wget -O - https://raw.githubusercontent.com/malept/dev-environment/main/bootstrap.sh | \
      bash -s -- $MINION_FILE # $LOCAL_PILLAR (optional)
 
 License
