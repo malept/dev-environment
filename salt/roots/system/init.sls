@@ -105,7 +105,7 @@ jq:
 
 {%- if salt['pillar.get']('rust:enabled') %}
 {%- if salt['pillar.get']('watchexec:enabled') %}
-{{ cargo_install('watchexec') }}
+{{ cargo_install('watchexec-cli', 'watchexec') }}
 {%- endif %}
 {%- if salt['pillar.get']('xsv:enabled') %}
 {{ cargo_install('xsv') }}
