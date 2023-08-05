@@ -11,10 +11,10 @@ if ! which curl > /dev/null; then
     sudo apt install --no-install-recommends --yes curl
 fi
 
-if ! test -d ~/Code; then
-    mkdir ~/Code
+if ! test -d ~/Code/@malept; then
+    mkdir -p ~/Code/@malept
 fi
-cd ~/Code
+cd ~/Code/@malept
 if ! test -d dev-environment; then
     git clone --recursive https://github.com/malept/dev-environment
 fi
