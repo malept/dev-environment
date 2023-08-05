@@ -7,7 +7,9 @@ neovim:
   pkg.installed:
     - require:
       - pkgrepo: neovim
-      - pkg: neovim-runtime-deps
+{%- if pillar_get('fzy:version') %}
+      - pkg: fzy
+{%- endif %}
   pkgrepo.managed:
     - ppa: neovim-ppa/unstable
 {%- elif pillar_get('debian:repos:personal') %}
@@ -16,12 +18,6 @@ neovim:
     - require:
       - pkg: neovim-runtime-deps
       - pkgrepo: debian.personal
-{%- endif %}
-
-neovim-runtime-deps:
-  pkg.installed{%- if pillar_get('fzy:version') -%}:
-    - require:
-      - pkg: fzy
 {%- endif %}
 
 {%- if pillar_get('python:python2') %}
