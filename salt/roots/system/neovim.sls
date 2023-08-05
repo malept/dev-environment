@@ -19,10 +19,7 @@ neovim:
 {%- endif %}
 
 neovim-runtime-deps:
-  pkg.installed:
-    - pkgs:
-      - editorconfig
-{%- if pillar_get('fzy:version') %}
+  pkg.installed{%- if pillar_get('fzy:version') -%}:
     - require:
       - pkg: fzy
 {%- endif %}
