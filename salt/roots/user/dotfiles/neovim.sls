@@ -52,3 +52,4 @@ vimfiles:
 {{ user_vim_dir('session') }}
 {{ user_vim_dir('swap') }}
 {{ user_vim_dir('undo') }}
+{%- endif %}
