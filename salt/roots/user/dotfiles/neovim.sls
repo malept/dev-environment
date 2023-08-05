@@ -6,7 +6,7 @@ vimfiles:
     - name: https://github.com/malept/vimfiles.git
     - rev: main
     - submodules: True
-    - target: /home/{{ grains['username'] }}/Code/vimfiles
+    - target: /home/{{ grains['username'] }}/Code/@malept/vimfiles
     - user: {{ grains['username'] }}
     - require:
       - pkg: neovim
@@ -26,7 +26,7 @@ vimfiles:
 
 /home/{{ grains['username'] }}/.config/nvim/init.lua:
   file.symlink:
-    - target: /home/{{ grains['username'] }}/Code/vimfiles/init.lua
+    - target: /home/{{ grains['username'] }}/Code/@malept/vimfiles/init.lua
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
     - mode: 644
