@@ -43,6 +43,11 @@ nushell-stable-dependencies:
 {%- endif %}
 
 {%- if pillar_get('starship:enabled') %}
-{{ cargo_install('starship', requires=[['pkg', 'rust-openssl-dependencies']]) }}
+{{ cargo_install('starship', requires=[['pkg', 'rust-openssl-dependencies'], ['pkg', 'starship-dependencies']]) }}
+
+starship-dependencies:
+  pkg.installed:
+    - pkgs:
+        - cmake
 {%- endif %}
 {%- endif %}
