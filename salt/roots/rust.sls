@@ -50,8 +50,6 @@ rust-{{ toolchain }}:
 {%- endif %}
     - runas: {{ grains['username'] }}
     - onlyif: {{ cargo_bin('rustup') }} toolchain list | grep -q {{ toolchain }}
-    - onchanges:
-      - cmd: rust-{{ toolchain }}
     - require:
       - cmd: rust-{{ toolchain }}
 {%- if requires %}
