@@ -50,4 +50,5 @@ starship-dependencies:
     - pkgs:
         - cmake
 {%- endif %}
+{{ cargo_install('zoxide') }}
 {%- endif %}
