@@ -55,6 +55,7 @@ font-fira-code-nerdfont:
     - enforce_toplevel: false
     - source_hash_update: true
     - options: --wildcards *.ttf
+    - if_missing: {{ user_font_dir }}/FiraCodeNerdFont-Regular.ttf
     - require:
       - file: user-font-dir
 
