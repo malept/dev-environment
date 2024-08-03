@@ -51,4 +51,7 @@ starship-dependencies:
         - cmake
 {%- endif %}
 {{ cargo_install('zoxide') }}
+{%- if pillar_get('zellij:enabled') %}
+{{ cargo_install('zellij') }}
+{%- endif %}
 {%- endif %}
