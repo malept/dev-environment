@@ -41,7 +41,12 @@ desktop-apps:
 {%- if xfce_enabled -%}
       - synapse
 {%- endif %}
+{%- if pillar.get('X11:enabled') %}
       - xsel
+{%- endif %}
+{%- if pillar.get('wayland:enabled') %}
+      - wl-clipboard
+{%- endif %}
 {%- if pillar_get('libreoffice:enabled') %}
       - libreoffice
 {%- endif %}
