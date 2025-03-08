@@ -56,7 +56,7 @@ desktop-apps:
 
 wezterm:
   pkgrepo.managed:
-    - name: 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *'
+    - name: 'deb https://apt.fury.io/wez/ * *'
     - humanname: Wezterm
     - file: /etc/apt/sources.list.d/wezterm.list
     - key_url: https://apt.fury.io/wez/gpg.key
