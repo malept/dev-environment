@@ -2,7 +2,7 @@
 {% set pillar_get = salt['pillar.get'] -%}
 [color]
 	ui = true
-{%- if pillar_get('git:delta:enabled') and pillar_get('rust:enabled') %}
+{%- if pillar_get('git:delta:enabled') %}
 [core]
 	pager = delta
 [interactive]
@@ -31,10 +31,6 @@
 	default = simple
 [rebase]
 	autoStash = true
-{%- if pillar_get('github:version') %}
-[hub]
-	protocol = ssh
-{%- endif %}
 {%- set url_replacements = pillar_get('git:replace_url') %}
 {%- if url_replacements %}
 {%- for search, replace in url_replacements.items() %}
