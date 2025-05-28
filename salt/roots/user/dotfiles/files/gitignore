@@ -18,6 +18,7 @@ Session.vim
 /tags
 doc/tags
 pycomplexity.vim/doc/tags
+mise.local.toml
 npm-debug.log
 telepresence.log
 yarn-debug.log

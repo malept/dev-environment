@@ -103,9 +103,6 @@ _update_path() {
 # set PATH so it includes user's private bin if it exists
 _update_path "$HOME/.local/bin" prepend
 
-# globally installed node packages
-_update_path "/opt/node/bin" append
-
 # Android
 ANDROID_SDK="/opt/android-sdk-linux"
 if [[ -d "$ANDROID_SDK" && "$PATH" != *"$ANDROID_SDK"* ]] ; then
@@ -113,65 +110,14 @@ if [[ -d "$ANDROID_SDK" && "$PATH" != *"$ANDROID_SDK"* ]] ; then
 fi
 unset ANDROID_SDK
 
-# virtualenvwrapper
-VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
-if [[ -n "$VIRTUALENVWRAPPER_SCRIPT" ]]; then
-    WORKON_HOME="$HOME/.local/share/virtualenv"
-    PROJECT_HOME="$HOME/Code"
-    if [[ "$VIRTUALENVWRAPPER_SCRIPT" =~ "/.local/bin/" && -L "$VIRTUALENVWRAPPER_SCRIPT" ]]; then
-        VIRTUALENVWRAPPER_PYTHON="$(dirname "$(readlink "$VIRTUALENVWRAPPER_SCRIPT")")/python"
-    fi
-    VIRTUALENVWRAPPER_LAZY="$(dirname "$VIRTUALENVWRAPPER_SCRIPT")/virtualenvwrapper_lazy.sh"
-    if [[ -n "$VIRTUALENVWRAPPER_LAZY" ]]; then
-        source "$VIRTUALENVWRAPPER_LAZY"
-    else
-        source "$VIRTUALENVWRAPPER_SCRIPT"
-    fi
-    unset VIRTUALENVWRAPPER_LAZY
-fi
-
-# RVM
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-    . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
-    _update_path "$PATH:$HOME/.rvm/bin" append
-fi
-
-# chruby
-if [[ -f /usr/share/chruby/chruby.sh ]]; then
-    source /usr/share/chruby/chruby.sh
-    source /usr/share/chruby/auto.sh
-    {%- set default_ruby_version = salt['pillar.get']('ruby:default_version', false) %}
-    {%- if default_ruby_version %}
-    chruby "{{ default_ruby_version }}"
-    {%- endif %}
-fi
-
-# Ruby user bindir
-if which ruby > /dev/null; then
-    _update_path "$(ruby -e 'print Gem.bindir(Gem.user_dir)')" append
-fi
-
-# Travis CI CLI
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
-
 # rustup
 _update_path "$HOME/.cargo/bin" append
-
-# github's hub
-_update_path "/opt/github/bin" append
 
 # dasht
 _update_path "/opt/dasht/bin" append
 
 # noisetorch
 _update_path "/opt/noisetorch/bin" append
-
-# volta
-export VOLTA_HOME="$HOME/.local/volta"
-if [[ -d "$VOLTA_HOME" ]]; then
-    _update_path "$VOLTA_HOME/bin" prepend
-    eval "$(volta completions bash)"
-fi
 
 # Custom bin dirs
 {%- for bin_dir, mode in salt['pillar.get']('bashrc:PATH', {}).items() %}

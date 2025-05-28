@@ -1,0 +1,56 @@
+{%- set pillar_get = salt['pillar.get'] %}
+{%- macro conditional_mise_tool(tool, description, pillar_name=None) %}
+{%- if pillar_name is None %}{% set pillar_name = tool %}{% endif %}
+{%- if pillar_get('%s:enabled' % pillar_name) %}
+# {{ description }}
+{{ tool }} = {{ pillar_get('%s:version' % pillar_name, 'latest') }}
+{%- endif %}
+{%- endmacro -%}
+[tools]
+{%- if pillar_get('aws:enabled') and pillar_get('aws:cli:enabled') %}
+# aws-cli AKA awscli AKA aws
+aws-cli = "latest"
+{%- endif %}
+{%- if pillar_get('rust:enabled') %}
+# cargo-binstall installs binaries from cargo when available (used by mise)
+"cargo:cargo-binstall" = "latest"
+# flamegraph generates flamegraphs for Rust projects
+"cargo:flamegraph" = "latest"
+# cargo-outdated shows Rust library dependencies which have updates
+"cargo:cargo-outdated" = "latest"
+# cargo-update updates binaries installed directly via cargo
+"cargo:cargo-update" = "latest"
+{%- endif %}
+{{ conditional_mise_tool('delta', 'delta generates fancy diff output', 'git:delta') }}
+{%- if pillar_get('github:enabled')} %}
+# github-cli is gh
+github-cli = "{{ pillar_get('github:gh', 'latest') }}"
+{%- endif %}
+jq = "latest"
+{{ conditional_mise_tool('grpcurl', 'grpcurl is curl but for gRPC') }}
+{{ conditional_mise_tool('heroku', 'heroku is the CLI for the Heroku PaaS') }}
+# hyperfine is a CLI benchmarker
+hyperfine = "latest"
+{%- if pillar_get('neovim:enabled') %}
+{%- set neovim_version = pillar_get('neovim:version', 'latest') %}
+{%- if not (grains['os'] == 'Ubuntu' and neovim_version == 'unstable') %}
+neovim = {{ neovim_version }}
+{%- endif %}
+{%- if pillar_get('neovim:remote:enabled') %}
+"pipx:neovim-remote" = "latest"
+{%- endif %}
+{%- endif %}
+{{ conditional_mise_tool('qsv', 'qsv is an active fork of xsv (CSV query CLI)') }}
+# ripgrep (rg) is a better grep
+ripgrep = "latest"
+# ruff is a Python linter/formatter
+ruff = "latest"
+{{ conditional_mise_tool('shellcheck', 'shell script linter') }}
+{{ conditional_mise_tool('shfmt', 'shell script formatter') }}
+{{ conditional_mise_tool('starship', 'starship is a fancy command line prompt') }}
+# uv is a Python project manager (used for pipx: in mise as well)
+uv = "latest"
+{{ conditional_mise_tool('watchexec', 'watchexec is a file/directory watcher') }}
+{{ conditional_mise_tool('zellij', 'zellij is a terminal multiplexer') }}
+# zoxide is a fancy version of cd
+zoxide = "latest"

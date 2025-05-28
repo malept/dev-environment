@@ -9,7 +9,10 @@ vimfiles:
     - target: /home/{{ grains['username'] }}/Code/@malept/vimfiles
     - user: {{ grains['username'] }}
     - require:
+{%- set neovim_version = salt['pillar.get']('neovim:version', 'latest') %}
+{%- if grains['os'] == 'Ubuntu' and neovim_version == 'unstable' %}
       - pkg: neovim
+{%- endif %}
       - pkg: git
 
 /home/{{ grains['username'] }}/.config/nvim:

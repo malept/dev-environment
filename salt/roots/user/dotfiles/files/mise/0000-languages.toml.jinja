@@ -1,0 +1,15 @@
+{%- set pillar_get = salt['pillar.get'] %}
+[tools]
+{%- if pillar_get('rust:enabled') %}
+# rust is a systems programming language (used for cargo: in mise as well)
+rust = "latest"
+{%- endif %}
+
+[hooks]
+postinstall = [
+{%- if pillar_get('rust:enabled') %}
+  'mkdir -p ~/.config/bash_completions/',
+  'rustup completions bash > ~/.config/bash_completions/rustup.completion',
+  'rustup completions bash cargo > ~/.config/bash_completions/cargo.completion',
+{%- endif %}
+]

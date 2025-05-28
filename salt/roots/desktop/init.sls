@@ -41,13 +41,28 @@ desktop-apps:
 {%- if xfce_enabled -%}
       - synapse
 {%- endif %}
+{%- if pillar.get('X11:enabled') %}
       - xsel
+{%- endif %}
+{%- if pillar.get('wayland:enabled') %}
+      - wl-clipboard
+{%- endif %}
 {%- if pillar_get('libreoffice:enabled') %}
       - libreoffice
 {%- endif %}
 {%- if pillar_get('pidgin:enabled') %}
       - pidgin
 {%- endif %}
+
+wezterm:
+  pkgrepo.managed:
+    - name: 'deb https://apt.fury.io/wez/ * *'
+    - humanname: Wezterm
+    - file: /etc/apt/sources.list.d/wezterm.list
+    - key_url: https://apt.fury.io/wez/gpg.key
+    - require_in:
+        pkg: wezterm
+  pkg.installed
 
 # Browsers
 

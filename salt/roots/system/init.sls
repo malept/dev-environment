@@ -1,5 +1,3 @@
-{% from 'node/map.jinja' import npm_requirement, npmrc with context -%}
-{% from 'rust.sls' import cargo_install with context %}
 {% from 'wsl.jinja' import is_wsl -%}
 
 include:
@@ -8,7 +6,6 @@ include:
 {%- endif %}
   - .dasht
   - .git
-  - .grep
   - .neovim
   - .shell
   - .vagrant
@@ -53,63 +50,12 @@ sshfs:
 unzip:
   pkg.installed
 
-npm-global-dir:
-  file.directory:
-    - name: {{ salt['pillar.get']('npm:config:prefix') }}
-    - user: {{ grains['username'] }}
-    - group: {{ grains.get('usergroup', grains['username']) }}
-
-npmrc-dir:
-  file.directory:
-    - name: /usr/etc
-    - require_in:
-      - file: {{ npmrc }}
-
-{%- if salt['pillar.get']('grunt:enabled') %}
-grunt-cli:
-  npm.installed:
-    - user: {{ grains['username'] }}
-    - require:
-      - {{ npm_requirement }}
-      - file: {{ npmrc }}
-      - file: npm-global-dir
-{%- endif %}
-
 /usr/local/bin:
   file.directory
 
 {%- if salt['pillar.get']('imagemagick:enabled', false) %}
 imagemagick:
   pkg.installed
-{%- endif %}
-
-{%- set grpcurl_version = salt['pillar.get']('grpcurl:version') %}
-{%- if grpcurl_version %}
-{%- set grpcurl_base_url = 'https://github.com/fullstorydev/grpcurl/releases/download/v{}'.format(grpcurl_version) %}
-grpcurl:
-  archive.extracted:
-    - name: /usr/local/bin/
-    # Both platform and arch are non-standard (linux|osx|windows, x86_32|x86_64)
-    - source: {{ grpcurl_base_url }}/grpcurl_{{ grpcurl_version }}_{{ grains['kernel'].lower() }}_x86_64.tar.gz
-    - source_hash: {{ grpcurl_base_url }}/grpcurl_{{ grpcurl_version }}_checksums.txt
-    - source_hash_update: true
-    - enforce_toplevel: false
-    - options: --wildcards grpcurl
-    - if_missing: /usr/local/bin/grpcurl
-    - require:
-      - file: /usr/local/bin
-{%- endif %}
-
-jq:
-  pkg.installed
-
-{%- if salt['pillar.get']('rust:enabled') %}
-{%- if salt['pillar.get']('watchexec:enabled') %}
-{{ cargo_install('watchexec-cli', 'watchexec') }}
-{%- endif %}
-{%- if salt['pillar.get']('xsv:enabled') %}
-{{ cargo_install('xsv') }}
-{%- endif %}
 {%- endif %}
 
 {%- if is_wsl and grains['os'] == 'Debian' %}
