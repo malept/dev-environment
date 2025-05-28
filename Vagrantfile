@@ -8,10 +8,12 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.require_version '>= 1.5.0'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/jammy64"
+  config.vm.provider "virtualbox" do |p|
+    p.box = "ubuntu/jammy64"
+  end
 
   config.vm.provider "docker" do |d|
-    d.image = "ubuntu:24.04"
+    d.build_dir = "."
   end
 
   ## For masterless, mount your salt file root

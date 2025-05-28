@@ -1,0 +1,6 @@
+[tasks."build:docker"]
+description = "Run salt in a Docker container"
+run = [
+  "docker build . -t docker.malept.com/dev-environment",
+  "docker run --interactive --tty --rm docker.malept.com/dev-environment sudo salt-call --log-level info state.highstate",
+]
