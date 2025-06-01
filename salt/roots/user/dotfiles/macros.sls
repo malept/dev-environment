@@ -11,7 +11,7 @@
     - makedirs: True
 {%- endmacro %}
 
-{%- macro config_file(src, dest=false, templated=false) %}
+{%- macro config_file(src, dest=false, templated=false, req_in=[]) %}
 {%- if not dest %}
 {%- set dest_override = salt['pillar.get']('user:dotfiles:{}'.format(src)) %}
 {%- set dest = dest_override or '.{}'.format(src) %}
@@ -26,6 +26,12 @@
     - group: {{ grains.get('usergroup', grains['username']) }}
     - mode: 644
     - makedirs: True
+{%- if req_in %}
+    - require_in:
+{%- for req in req_in %}
+      - {{ req[0] }}: {{ req[1] }}
+{%- endfor %}
+{%- endif %}
 {%- endmacro %}
 
 {%- macro config_dir(name) %}

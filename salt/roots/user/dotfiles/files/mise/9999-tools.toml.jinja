@@ -1,9 +1,9 @@
 {%- set pillar_get = salt['pillar.get'] %}
 {%- macro conditional_mise_tool(tool, description, pillar_name=None) %}
-{%- if pillar_name is None %}{% set pillar_name = tool %}{% endif %}
+{%- if not pillar_name %}{% set pillar_name = tool %}{% endif %}
 {%- if pillar_get('%s:enabled' % pillar_name) %}
 # {{ description }}
-{{ tool }} = {{ pillar_get('%s:version' % pillar_name, 'latest') }}
+{{ tool }} = "{{ pillar_get('%s:version' % pillar_name, 'latest') }}"
 {%- endif %}
 {%- endmacro -%}
 [tools]
@@ -13,7 +13,7 @@ aws-cli = "latest"
 {%- endif %}
 {%- if pillar_get('rust:enabled') %}
 # cargo-binstall installs binaries from cargo when available (used by mise)
-"cargo:cargo-binstall" = "latest"
+cargo-binstall = "latest"
 # flamegraph generates flamegraphs for Rust projects
 "cargo:flamegraph" = "latest"
 # cargo-outdated shows Rust library dependencies which have updates
@@ -22,7 +22,7 @@ aws-cli = "latest"
 "cargo:cargo-update" = "latest"
 {%- endif %}
 {{ conditional_mise_tool('delta', 'delta generates fancy diff output', 'git:delta') }}
-{%- if pillar_get('github:enabled')} %}
+{%- if pillar_get('github:enabled') %}
 # github-cli is gh
 github-cli = "{{ pillar_get('github:gh', 'latest') }}"
 {%- endif %}
@@ -34,7 +34,7 @@ hyperfine = "latest"
 {%- if pillar_get('neovim:enabled') %}
 {%- set neovim_version = pillar_get('neovim:version', 'latest') %}
 {%- if not (grains['os'] == 'Ubuntu' and neovim_version == 'unstable') %}
-neovim = {{ neovim_version }}
+neovim = "{{ neovim_version }}"
 {%- endif %}
 {%- if pillar_get('neovim:remote:enabled') %}
 "pipx:neovim-remote" = "latest"

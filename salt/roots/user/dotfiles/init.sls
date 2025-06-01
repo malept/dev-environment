@@ -21,9 +21,9 @@
 
 {{ config_file('pip.conf', '.config/pip/pip.conf', templated=true) }}
 
-{{ config_file('mise.toml.jinja', '.config/mise/config.toml') }}
-{{ config_file('mise/0000-languages.toml.jinja', '.config/mise/conf.d/0000-languages.toml') }}
-{{ config_file('mise/9999-tools.toml.jinja', '.config/mise/conf.d/9999-tools.toml') }}
+{{ config_file('mise.toml.jinja', '.config/mise/config.toml', req_in=[['cmd', 'mise']]) }}
+{{ config_file('mise/0000-languages.toml.jinja', '.config/mise/conf.d/0000-languages.toml', templated=true, req_in=[['cmd', 'mise']]) }}
+{{ config_file('mise/9999-tools.toml.jinja', '.config/mise/conf.d/9999-tools.toml', templated=true, req_in=[['cmd', 'mise']]) }}
 
 {%- if pillar_get('profile-sync-daemon:enabled') %}
 {{ config_file('psd.conf', '.config/psd/psd.conf', templated=true) }}

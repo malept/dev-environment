@@ -6,6 +6,7 @@ include:
 {%- endif %}
   - .dasht
   - .git
+  - .mise
   - .neovim
   - .shell
   - .vagrant
@@ -72,3 +73,6 @@ wslu:
   file.symlink:
     - target: /usr/bin/wslview
 {%- endif %}
+
+build-essential:
+  pkg.installed
