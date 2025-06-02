@@ -43,10 +43,6 @@
 {{ config_file('pryrc') }}
 {%- endif %}
 
-{%- if pillar_get('rust:enabled') %}
-{{ config_file('cargo_install_config.toml', '.cargo/.install_config.toml', templated=true) }}
-{%- endif %}
-
 {{ config_file('starship.toml', '.config/starship.toml', templated=true) }}
 
 {%- if pillar_get('X11:enabled') or pillar_get('wayland:enabled') %}
