@@ -21,6 +21,3 @@ docker:
       - containerd.io
 {%- endif %}
 {%- endif %}
-
-ctop:
-  pkg.installed
