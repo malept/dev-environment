@@ -22,7 +22,9 @@ noise-suppression-for-voice:
 noisetorch:
   archive.extracted:
     - name: /opt/noisetorch
-    - source: https://github.com/lawl/NoiseTorch/releases/download/{{ noisetorch_version }}-beta/NoiseTorch_x64.tgz
+    - source: https://github.com/noisetorch/NoiseTorch/releases/download/{{ noisetorch_version }}/NoiseTorch_x64_{{ noisetorch_version }}.tgz
+    - source_hash: https://github.com/noisetorch/NoiseTorch/releases/download/{{ noisetorch_version }}/NoiseTorch_x64_{{ noisetorch_version }}.tgz.sha512sum
+    - source_hash_name: bin/NoiseTorch_x64_{{ noisetorch_version }}.tgz
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
     - enforce_toplevel: false
