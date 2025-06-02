@@ -1,9 +1,6 @@
 {% from 'wsl.jinja' import is_wsl -%}
 
 include:
-{%- if salt['pillar.get']('chef:enabled', false) %}
-  - .chef
-{%- endif %}
   - .dasht
   - .git
   - .mise
