@@ -20,6 +20,7 @@ user-font-dir:
   file.directory:
     - name: {{ user_font_dir }}
     - user: {{ grains['username'] }}
+    - makedirs: true
 
 font-droid-sans-mono-slashed:
   archive.extracted:
