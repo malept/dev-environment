@@ -1,4 +1,5 @@
 include:
+  - .browsers
   - .fonts
   - .sound
 
@@ -63,27 +64,6 @@ wezterm:
     - require_in:
         pkg: wezterm
   pkg.installed
-
-# Browsers
-
-browsers:
-  pkg.installed:
-    - pkgs:
-      - firefox
-{%- if pillar_get('firefox:mp3_support') %}
-      - gstreamer1.0-plugins-ugly
-{%- endif %}
-{%- if grains['os'] == 'Ubuntu' %}
-      - chromium-browser
-{%- else %}
-      - chromium
-{%- endif %}
-{%- if pillar_get('profile-sync-daemon:enabled') %}
-      - profile-sync-daemon
-{%- endif %}
-{%- if grains['oscodename'] in ['jessie', 'stretch'] %}
-    - fromrepo: unstable
-{%- endif %}
 
 # Theme-related
 themes:
