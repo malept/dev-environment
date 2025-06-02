@@ -1,4 +1,3 @@
-{% from 'venv_bin.sls' import venv2, venv3, venv3_with_binary with context %}
 {%- set pillar_get = salt['pillar.get'] %}
 
 {%- if pillar_get('neovim:enabled') %}
@@ -14,9 +13,4 @@ neovim:
   pkgrepo.managed:
     - ppa: neovim-ppa/unstable
 {%- endif %}
-
-{%- if pillar_get('python:python2') %}
-{{ venv2('neovim', 'salt://system/files/neovim-requirements.txt', True) }}
-{%- endif %}
-{{ venv3('neovim3', 'salt://system/files/neovim-requirements.txt', True) }}
 {%- endif %}
