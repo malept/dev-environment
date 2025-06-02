@@ -4,9 +4,7 @@ base:
 {%- if grains['os'] == 'Debian' or salt['pillar.get']('debian:enabled') %}
     - debian
 {%- endif %}
-{%- if not (grains['os'] == 'Debian' and grains['oscodename'] == 'stretch') %}
     - salt.pkgrepo
-{%- endif %}
     - salt.standalone
     - user
     - user.dotfiles
