@@ -36,7 +36,6 @@ base:
 {%- if salt['pillar.get']('dropbox:enabled') %}
     - dropbox
 {%- endif %}
-    - phantomjs
 {%- if salt['pillar.get']('webserver:enabled') %}
     - webserver
 {%- endif %}
