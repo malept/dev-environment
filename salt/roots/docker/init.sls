@@ -1,9 +1,4 @@
 {% from 'wsl.jinja' import is_wsl1, is_wsl2 -%}
-{%- if salt['pillar.get']('docker:k8s:enabled') %}
-include:
-  - .k8s
-{%- endif %}
-
 {%- if not is_wsl1 %}
 docker:
   pkgrepo.managed:
