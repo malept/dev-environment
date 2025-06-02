@@ -113,9 +113,6 @@ unset ANDROID_SDK
 # rustup
 _update_path "$HOME/.cargo/bin" append
 
-# dasht
-_update_path "/opt/dasht/bin" append
-
 # noisetorch
 _update_path "/opt/noisetorch/bin" append
 

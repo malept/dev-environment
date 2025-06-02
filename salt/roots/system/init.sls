@@ -1,7 +1,6 @@
 {% from 'wsl.jinja' import is_wsl -%}
 
 include:
-  - .dasht
   - .git
   - .mise
   - .neovim
