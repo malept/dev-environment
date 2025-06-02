@@ -1,11 +1,11 @@
 FROM ubuntu:24.04
 
-RUN apt-get update && apt-get install -y sudo && usermod -aG sudo ubuntu && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN apt-get update && apt-get install --yes sudo && usermod --append --groups sudo ubuntu && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN mkdir -p /home/ubuntu/Code/@malept/dev-environment
 WORKDIR /home/ubuntu/Code/@malept/dev-environment
 COPY . .
-RUN chown -R ubuntu:ubuntu ..
+RUN chown -R ubuntu:ubuntu ../..
 
 USER ubuntu
 ENV BOOTSTRAP_SALT_DISABLE_SERVICE_CHECK=1
