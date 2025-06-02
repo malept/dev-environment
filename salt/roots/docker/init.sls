@@ -7,10 +7,11 @@ include:
 {%- if not is_wsl1 %}
 docker:
   pkgrepo.managed:
-    - name: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ grains['oscodename'] }} stable'
+    - name: 'deb [signed-by=/etc/apt/trusted.gpg.d/docker-keyring.gpg arch={{ salt['grains.get']('osarch') | lower }}] https://download.docker.com/linux/debian {{ grains['oscodename'] }} stable'
     - humanname: Docker
     - file: /etc/apt/sources.list.d/docker.list
     - key_url: https://download.docker.com/linux/debian/gpg
+    - aptkey: False
     - require_in:
       - pkg: docker
   pkg.installed:
