@@ -33,8 +33,10 @@
 {{ config_file('pulseaudio.conf', '.config/pulse/default.pa', templated=true) }}
 {%- endif %}
 
+{%- if pillar_get('postgres:enabled') %}
 {{ config_file('psqlrc', '.config/psqlrc') }}
 {{ config_dir('.cache/psql') }}
+{%- endif %}
 
 {%- if pillar_get('ruby:enabled') %}
 {{ config_file('gemrc') }}
