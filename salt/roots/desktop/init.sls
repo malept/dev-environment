@@ -4,20 +4,6 @@ include:
   - .sound
 
 {%- set pillar_get = salt['pillar.get'] -%}
-{%- set xfce_enabled = pillar_get('X11:Xfce:enabled') -%}
-{%- if xfce_enabled -%}
-xfce:
-  pkg.installed:
-    - pkgs:
-      - python-dbus
-      - xfce4
-      - xfce4-indicator-plugin
-      - xfce4-screenshooter-plugin
-      - xfce4-terminal
-
-lightdm:
-  pkg.installed
-{%- endif %}
 
 {%- if grains['virtual'] == 'VirtualBox' %}
 virtualbox-guest-x11:
@@ -39,9 +25,6 @@ desktop-apps:
       - file-roller
       - gnome-keyring
       - gucharmap
-{%- if xfce_enabled -%}
-      - synapse
-{%- endif %}
 {%- if pillar.get('X11:enabled') %}
       - xsel
 {%- endif %}
@@ -73,11 +56,7 @@ themes:
   pkg.installed:
     - pkgs:
       - gnome-wise-icon-theme
-{%- if xfce_enabled -%}
-      - shiki-colors-xfwm-theme
-{%- else %}
       - gnome-tweaks
-{%- endif %}
       - shiki-wise-theme
 
 {% from 'wallpaper.sls' import wallpaper -%}
@@ -89,13 +68,3 @@ themes:
     - group: {{ grains.get('usergroup', grains['username']) }}
     - mode: 644
     - makedirs: True
-
-{%- if xfce_enabled -%}
-/etc/lightdm/lightdm-gtk-greeter.conf:
-  file.managed:
-    - source: salt://desktop/files/lightdm-gtk-greeter.conf.jinja
-    - template: jinja
-    - require:
-      - pkg: lightdm
-      - file: {{ wallpaper['filename'] }}
-{%- endif %}

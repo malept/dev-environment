@@ -11,7 +11,7 @@ include:
   - .shell
   - .vagrant
 
-{%- if not is_wsl and not (salt['file.file_exists']('/.dockerenv') or salt['file.contains']('/proc/1/cgroup', '/docker/')) %}
+{%- if not is_wsl and grains['virtual'] != 'container' %}
 America/Los_Angeles:
   timezone.system:
     - utc: True

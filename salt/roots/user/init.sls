@@ -31,8 +31,3 @@
 {%- endif %}
     - require:
       - pkg: sshfs # so the fuse group is added correctly
-
-{%- if salt['pillar.get']('X11:enabled') and salt['pillar.get']('X11:Xfce:enabled') %}
-include:
-  .xfce
-{%- endif %}

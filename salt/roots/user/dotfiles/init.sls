@@ -53,9 +53,3 @@
 {%- if pillar_get('X11:enabled') or pillar_get('wayland:enabled') %}
 {{ config_file('wezterm.lua', '.config/wezterm/wezterm.lua') }}
 {%- endif %}
-
-{%- if pillar_get('X11:enabled') and pillar_get('X11:Xfce:enabled') %}
-{{ config_file('Xmodmap') }}
-{{ config_file('synapse-gtkrc', '.config/synapse/gtkrc') }}
-{{ config_file('xfce4-screenshooter', '.config/xfce4/xfce4-screenshooter', templated=true) }}
-{%- endif %}
