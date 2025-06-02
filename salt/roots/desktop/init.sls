@@ -34,9 +34,6 @@ desktop-apps:
 {%- if pillar_get('libreoffice:enabled') %}
       - libreoffice
 {%- endif %}
-{%- if pillar_get('pidgin:enabled') %}
-      - pidgin
-{%- endif %}
 
 wezterm:
   pkgrepo.managed:
