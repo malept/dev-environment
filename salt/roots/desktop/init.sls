@@ -93,7 +93,7 @@ themes:
 {%- if xfce_enabled -%}
       - shiki-colors-xfwm-theme
 {%- else %}
-      - gnome-tweak-tool
+      - gnome-tweaks
 {%- endif %}
       - shiki-wise-theme
 
