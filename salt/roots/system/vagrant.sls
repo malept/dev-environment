@@ -1,17 +1,12 @@
-{% set vagrant_version = salt['pillar.get']('vagrant:version', false) -%}
-{% if vagrant_version -%}
-{% set vagrant_deb_filename = 'vagrant_{}_{}.deb'.format(vagrant_version, grains['cpuarch']) -%}
-{% set vagrant_deb = '/var/cache/apt/archives/{}'.format(vagrant_deb_filename) -%}
-{{ vagrant_deb }}:
-  file.managed:
-    - source: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_deb_filename }}
-    - source_hash: https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_SHA256SUMS
-    - if_missing: /opt/vagrant/embedded/gems/cache/vagrant-{{ vagrant_version }}.gem
+{% if salt['pillar.get']('vagrant:enabled') -%}
 vagrant:
+  pkgrepo.managed:
+    - name: 'deb [signed-by=/etc/apt/trusted.gpg.d/hashicorp-archive-keyring.gpg arch={{ grains['osarch'] | lower }}] https://apt.releases.hashicorp.com {{ grains['oscodename'] }} main'
+    - file: /etc/apt/sources.list.d/hashicorp.list
+    - key_url: https://apt.releases.hashicorp.com/gpg
+    - aptkey: False
+    - require_in:
+      - pkg: vagrant
   pkg.installed:
-    - sources:
-      - vagrant: {{ vagrant_deb }}
-    - version: {{ vagrant_version }}
-    - require:
-      - file: {{ vagrant_deb }}
+    - refresh: true
 {%- endif %}
