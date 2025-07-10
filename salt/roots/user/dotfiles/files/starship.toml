@@ -11,6 +11,13 @@ when = 'test -n "$SHELL"'
 disabled = false
 style = "dimmed blue"
 
-[kubernetes.context_aliases]
-"dev-environment" = "dev"
+[[kubernetes.contexts]]
+context_pattern = "dev-environment"
+context_alias = "dev"
+
+[[kubernetes.contexts]]
+context_pattern = ".*"
+user_pattern = "cluster-user"
+style = "red bold"
+symbol = "🚨 "
 {%- endif %}
