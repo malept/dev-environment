@@ -19,15 +19,6 @@ tops:
       - htop
       - iftop
 
-{%- set fzy_version = salt['pillar.get']('fzy:version') %}
-{%- if fzy_version %}
-fzy:
-  pkg.installed:
-    - sources:
-      - fzy: https://github.com/jhawthorn/fzy/releases/download/{{ fzy_version }}/fzy_{{ fzy_version }}-1_amd64.deb
-    - version: {{ fzy_version }}
-{%- endif %}
-
 {%- if salt['pillar.get']('profile-sync-daemon:enabled') and salt['pillar.get']('profile-sync-daemon:overlayfs') %}
 /etc/sudoers.d/profile-sync-daemon:
   file.managed:

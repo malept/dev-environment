@@ -7,9 +7,6 @@ neovim:
   pkg.installed:
     - require:
       - pkgrepo: neovim
-{%- if pillar_get('fzy:version') %}
-      - pkg: fzy
-{%- endif %}
   pkgrepo.managed:
     - ppa: neovim-ppa/unstable
 {%- endif %}
