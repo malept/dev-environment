@@ -9,6 +9,11 @@
 {{ bin_file('db') }}
 {{ bin_file('setup-ssh-agent') }}
 
+{% set gh_clone_dir = '.local/share/gh/extensions/gh-clone' %}
+{{ config_dir(gh_clone_dir) }}
+{{ config_file('gh/clone/manifest.yml.jinja', [gh_clone_dir, 'manifest.yml'] | join('/'), templated=true) }}
+{{ bin_file('gh-clone', srcdir="gh/clone", destdir=gh_clone_dir) }}
+
 {{ config_file('bash_aliases', templated=true) }}
 {{ config_file('bashrc', templated=true) }}
 {{ config_file('profile') }}

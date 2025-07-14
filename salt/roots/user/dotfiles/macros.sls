@@ -1,10 +1,10 @@
-{%- macro bin_file(src, dest=false) %}
+{%- macro bin_file(src, dest=false, srcdir="bin", destdir=".local/bin") %}
 {%- if not dest %}
 {%- set dest = src %}
 {%- endif %}
-/home/{{ grains['username'] }}/.local/bin/{{ dest }}:
+/home/{{ grains['username'] }}/{{ destdir }}/{{ dest }}:
   file.managed:
-    - source: salt://user/dotfiles/files/bin/{{ src }}
+    - source: salt://user/dotfiles/files/{{ srcdir }}/{{ src }}
     - user: {{ grains['username'] }}
     - group: {{ grains.get('usergroup', grains['username']) }}
     - mode: 755

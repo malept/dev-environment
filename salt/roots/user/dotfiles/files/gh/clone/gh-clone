@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+#
+# Clones a repository into ~/Code/@OWNER/REPONAME.
+# Use `gh` if installed, otherwise use `git`.
+
+set -euo pipefail
+
+red="\033[31m"
+bold="\033[1m"
+reset="\033[0m"
+
+fatal() {
+  local msg="$1"
+  echo "${red}${bold}Error:${reset}${msg}" 1>&2
+  exit 1
+}
+
+FULL_REPO="${1:-}"
+
+if [[ -z "$FULL_REPO" || ! "$FULL_REPO" =~ / ]]; then
+  fatal "USAGE: gh clone <owner/repo_name>"
+fi
+
+OWNER="$(dirname "$FULL_REPO")"
+REPO="$(basename "$FULL_REPO")"
+
+OWNER_DIR="$HOME/Code/@$OWNER"
+REPO_DIR="$OWNER_DIR/$REPO"
+
+if [[ -d "$REPO_DIR" ]]; then
+  fatal "$FULL_REPO is already cloned"
+fi
+
+mkdir -p "$OWNER_DIR"
+
+if command -v gh >/dev/null; then
+  gh repo clone "$FULL_REPO" "$REPO_DIR"
+else
+  git clone "git@github.com:$FULL_REPO" "$REPO_DIR"
+fi
