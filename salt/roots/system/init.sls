@@ -59,6 +59,8 @@ wslu:
 /usr/local/bin/xdg-open:
   file.symlink:
     - target: /usr/bin/wslview
+    - require:
+      - file: /usr/local/bin
 {%- endif %}
 
 build-essential:
