@@ -1,7 +1,8 @@
+{% set pillar_get = salt['pillar.get'] -%}
 {{ grains['username'] }}:
   user.present:
     - remove_groups: false
-{%- if salt['pillar.get']('user.managed', true) %}
+{%- if pillar_get('user.managed', true) %}
     - groups:
       - sudo
     - optional_groups:
@@ -11,7 +12,7 @@
       - cdrom
       - dip
       - docker
-{%- if salt['pillar.get']('elasticsearch:version', false) %}
+{%- if pillar_get('elasticsearch:version', false) %}
       - elasticsearch
 {%- endif %}
       - floppy
@@ -22,7 +23,7 @@
       - users
       - vboxusers
       - video
-{%- set extra_groups = salt['pillar.get']('user.extra_groups') %}
+{%- set extra_groups = pillar_get('user.extra_groups') %}
 {%- if extra_groups %}
 {%- for group in extra_groups %}
       - {{ group }}
