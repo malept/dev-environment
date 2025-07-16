@@ -9,10 +9,12 @@
 {{ bin_file('db') }}
 {{ bin_file('setup-ssh-agent') }}
 
+{%- if pillar_get('github:enabled') %}
 {% set gh_clone_dir = '.local/share/gh/extensions/gh-clone' %}
 {{ config_dir(gh_clone_dir) }}
 {{ config_file('gh/clone/manifest.yml.jinja', [gh_clone_dir, 'manifest.yml'] | join('/'), templated=true) }}
 {{ bin_file('gh-clone', srcdir="gh/clone", destdir=gh_clone_dir) }}
+{%- endif %}
 
 {{ config_file('bash_aliases', templated=true) }}
 {{ config_file('bashrc', templated=true) }}
