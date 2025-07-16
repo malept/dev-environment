@@ -6,7 +6,6 @@ file_roots:
     - /srv/salt-formulae/salt-formula
     - /srv/salt-formulae/nginx-formula
     - /srv/salt-formulae/postgres-formula
-    - /srv/salt-formulae/node-formula
     - /srv/salt-formulae/gmusicprocurator-formula
 grains:
   username: mark
