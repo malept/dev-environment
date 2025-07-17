@@ -40,9 +40,6 @@ base:
 {%- if pillar_get('dropbox:enabled') %}
     - dropbox
 {%- endif %}
-{%- if pillar_get('webserver:enabled') %}
-    - webserver
-{%- endif %}
 {%- if pillar_get('android:enabled') %}
     - android
 {%- endif %}
