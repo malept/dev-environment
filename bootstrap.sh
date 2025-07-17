@@ -55,9 +55,9 @@ sudo "$bootstrap" -X stable
 rm "$tmpdir"/bootstrap-salt.{sh,sha256}
 
 sudo cp "$MINION_FILE" /etc/salt/minion
-sudo ln -s "$(pwd)"/salt/roots /srv/salt
-sudo ln -s "$(pwd)"/salt/formulae /srv/salt-formulae
-sudo ln -s "$(pwd)"/salt/pillars /srv/pillar
+sudo ln -s "$devenv_dir"/salt/roots /srv/salt
+sudo ln -s "$devenv_dir"/salt/formulae /srv/salt-formulae
+sudo ln -s "$devenv_dir"/salt/pillars /srv/pillar
 
 if [[ -z $SKIP_SALT_CALL ]]; then
   sudo salt-call --local state.highstate
