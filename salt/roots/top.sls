@@ -1,7 +1,8 @@
 # vim: set ft=sls ts=2 sts=2 sw=2 et :
+{%- set pillar_get = salt['pillar.get'] %}
 base:
   '*':
-{%- if grains['os'] == 'Debian' or salt['pillar.get']('debian:enabled') %}
+{%- if grains['os'] == 'Debian' or pillar_get('debian:enabled') %}
     - debian
 {%- endif %}
     - salt.pkgrepo
@@ -11,34 +12,34 @@ base:
     - user.dotfiles.tmux
     - user.dotfiles.neovim
     - system
-{%- if salt['pillar.get']('X11:enabled') or salt['pillar.get']('wayland:enabled') %}
+{%- if pillar_get('X11:enabled') or pillar_get('wayland:enabled') %}
     - desktop
-{%- elif salt['pillar.get']('fonts:enabled') %}
+{%- elif pillar_get('fonts:enabled') %}
     - desktop.fonts
 {%- endif %}
     - databases
-{%- if salt['pillar.get']('postgres:enabled', false) %}
+{%- if pillar_get('postgres:enabled', false) %}
     - postgres.apt
     - postgres
-{%- if salt['pillar.get']('postgres:config:managed', true) %}
+{%- if pillar_get('postgres:config:managed', true) %}
     - postgres.config
 {%- endif %}
-{%- if salt['pillar.get']('postgres:pgadmin3:enabled') %}
+{%- if pillar_get('postgres:pgadmin3:enabled') %}
     - postgres.pgadmin3
 {%- endif %}
 {%- endif %}
-{%- if salt['pillar.get']('docker:enabled') %}
+{%- if pillar_get('docker:enabled') %}
     - docker
 {%- endif %}
-{%- if salt['pillar.get']('gcloud:enabled') %}
+{%- if pillar_get('gcloud:enabled') %}
     - gcloud-sdk
 {%- endif %}
-{%- if salt['pillar.get']('dropbox:enabled') %}
+{%- if pillar_get('dropbox:enabled') %}
     - dropbox
 {%- endif %}
-{%- if salt['pillar.get']('webserver:enabled') %}
+{%- if pillar_get('webserver:enabled') %}
     - webserver
 {%- endif %}
-{%- if salt['pillar.get']('android:enabled') %}
+{%- if pillar_get('android:enabled') %}
     - android
 {%- endif %}
