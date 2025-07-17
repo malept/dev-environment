@@ -2,6 +2,9 @@
 {{ grains['username'] }}:
   user.present:
     - remove_groups: false
+{%- if pillar_get('nushell:enabled') %}
+    - shell: /usr/bin/nu
+{%- endif %}
 {%- if pillar_get('user.managed', true) %}
     - groups:
       - sudo
@@ -32,3 +35,6 @@
 {%- endif %}
     - require:
       - pkg: sshfs # so the fuse group is added correctly
+{%- if pillar_get('nushell:enabled') %}
+      - pkg: nushell
+{%- endif %}

@@ -11,6 +11,9 @@ base:
     - user.dotfiles
     - user.dotfiles.tmux
     - user.dotfiles.neovim
+{%- if pillar_get('nushell:enabled') %}
+    - user.dotfiles.nushell
+{%- endif %}
     - system
 {%- if pillar_get('X11:enabled') or pillar_get('wayland:enabled') %}
     - desktop

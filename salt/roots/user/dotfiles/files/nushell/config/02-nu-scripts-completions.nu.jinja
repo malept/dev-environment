@@ -1,0 +1,29 @@
+{%- set pillar_get = salt['pillar.get'] %}
+
+{%- macro completion(exe) %}
+source ~/Code/@nushell/nu_scripts/custom-completions/{{ exe }}/{{ exe }}-completions.nu
+{%- endmacro %}
+
+{%- macro conditional_completion(exe, pillar_prefix=false) %}
+{%- if not pillar_prefix %}
+{%- set pillar_prefix=exe %}
+{%- endif %}
+{%- if pillar_get('{}:enabled'.format(pillar_prefix)) %}
+{{ completion(exe) }}
+{%- endif %}
+{%- endmacro %}
+
+{%- set completions = ['curl', 'git', 'less', 'make', 'man', 'nano', 'npm', 'pre-commit', 'rg', 'ssh', 'tar', 'tcpdump', 'uv', 'zoxide'] %}
+{%- for exe in completions %}
+{{ completion(exe) }}
+{%- endfor %}
+
+{{- conditional_completion('adb', pillar_prefix='android') }}
+{{- conditional_completion('aws') }}
+{{- conditional_completion('bat') }}
+{{- conditional_completion('cargo', pillar_prefix='rust') }}
+{{- conditional_completion('docker') }}
+{{- conditional_completion('gh', pillar_prefix='github') }}
+{{- conditional_completion('mysql') }}
+{{- conditional_completion('rustup', pillar_prefix='rust') }}
+{{- conditional_completion('zellij') }}
