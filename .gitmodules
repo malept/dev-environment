@@ -2,10 +2,6 @@
 	path = salt/formulae/postgres-formula
 	url = https://github.com/tfolio/postgres-formula
 	branch = tfolio
-[submodule "salt/formulae/nginx-formula"]
-	path = salt/formulae/nginx-formula
-	url = https://github.com/tfolio/nginx-formula.git
-	branch = tfolio
 [submodule "salt/formulae/gmusicprocurator-formula"]
 	path = salt/formulae/gmusicprocurator-formula
 	url = https://github.com/malept/gmusicprocurator-formula.git
