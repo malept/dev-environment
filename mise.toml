@@ -1,6 +1,13 @@
-[tasks."build:docker"]
-description = "Run salt in a Docker container"
-run = [
-  "docker build . --tag docker.malept.com/dev-environment",
-  "docker run --interactive --tty --rm docker.malept.com/dev-environment sudo salt-call --log-level info state.highstate",
-]
+[tasks."docker:build"]
+description = "Create the base Docker container"
+run = "docker build . --tag docker.malept.com/dev-environment"
+
+[tasks."docker:shell"]
+description = "Run bash in the base Docker container"
+depends = ["docker:build"]
+run = "docker run --interactive --tty --rm docker.malept.com/dev-environment bash"
+
+[tasks."docker:salt"]
+description = "Run salt in the base Docker container"
+depends = ["docker:build"]
+run = "docker run --interactive --tty --rm docker.malept.com/dev-environment sudo salt-call --log-level info state.highstate"

@@ -25,7 +25,7 @@ devenv_dir="$(pwd)"
 
 if ! test -f "$MINION_FILE"; then
   ORIGINAL_MINION_FILE="$MINION_FILE"
-  MINION_FILE="$devenv_dir/salt/$MINION_FILE-minion"
+  MINION_FILE="$devenv_dir/salt/minion/$MINION_FILE"
   if ! test -f "$MINION_FILE"; then
     echo "Could not find minion file: $ORIGINAL_MINION_FILE" >&2
     exit 1
