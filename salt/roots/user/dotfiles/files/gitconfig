@@ -27,8 +27,6 @@
 	defaultBranch = main
 [pull]
 	rebase = true
-[push]
-	default = simple
 [rebase]
 	autoStash = true
 {%- set url_replacements = pillar_get('git:replace_url') %}
